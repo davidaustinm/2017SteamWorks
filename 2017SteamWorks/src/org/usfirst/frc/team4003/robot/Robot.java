@@ -80,7 +80,7 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.start();
 	}
 
-	/**
+	/** 
 	 * This function is called periodically during autonomous
 	 */
 	@Override
