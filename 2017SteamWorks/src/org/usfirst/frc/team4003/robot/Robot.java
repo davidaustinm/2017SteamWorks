@@ -76,6 +76,7 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
+		autonomousCommand = new ExampleCommand();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
