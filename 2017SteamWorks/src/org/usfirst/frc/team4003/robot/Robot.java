@@ -81,7 +81,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	/** 
-	 * This function is Noah's Function
+	 * This function is Noah's Function 
 	 */
 	@Override
 	public void autonomousPeriodic() {
