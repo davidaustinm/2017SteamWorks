@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team4003.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -38,6 +39,7 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	/**
@@ -99,6 +101,9 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		sensors.resetEncoder();
+		sensors.resetPosition();
+		sensors.resetYaw();
 	}
 
 	/**
@@ -107,6 +112,9 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		sensors.updatePosition();
+		SmartDashboard.putNumber("X Coordinate", sensors.getXCoordinate());
+		SmartDashboard.putNumber("Y Coordinate", sensors.getYCoordinate());
 	}
 
 	/**
@@ -114,6 +122,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		
 		LiveWindow.run();
 	}
 }

@@ -14,6 +14,12 @@ public class Sensors extends Subsystem {
 	Encoder leftDrive, rightDrive;
 	AHRS navX;
 	double gyroOffset = 0;
+	double leftEncoderOffset = 0;
+	double rightEncoderOffset = 0;
+	double XCoordinate = 0;
+	double YCoordinate = 0;
+	double lastLeftEncoder = 0, lastRightEncoder = 0;
+	double EncoderTicPerInch = 40.3;
 	
 	public Sensors (){
 		leftDrive = new Encoder(0,1);
@@ -23,10 +29,10 @@ public class Sensors extends Subsystem {
 	}
 	
 	public double getLeftDriveEncoder(){
-		return leftDrive.get();
+		return leftDrive.get() - leftEncoderOffset;
 	}
 	public double getRightDriveEncoder(){
-		return rightDrive.get();
+		return rightDrive.get() - rightEncoderOffset;
 	}
 	public double getYaw(){
 		return -(navX.getYaw()-gyroOffset);
@@ -34,6 +40,37 @@ public class Sensors extends Subsystem {
 	public void resetYaw(){
 		gyroOffset = navX.getYaw();
 	}
+	public void resetEncoder(){
+		leftEncoderOffset = leftDrive.get();
+		rightEncoderOffset = rightDrive.get();
+		lastLeftEncoder = 0;
+		lastRightEncoder = 0;
+	}
+	public void updatePosition(){
+		double currentLeftEncoder = getLeftDriveEncoder();
+		double currentRightEncoder = getRightDriveEncoder();
+		double changeInLeftEncoder = currentLeftEncoder - lastLeftEncoder;
+		double changeInRightEncoder = currentRightEncoder - lastRightEncoder;
+		double encoderDistance = (changeInLeftEncoder + changeInRightEncoder)/2;
+		double heading = Math.toRadians(getYaw());
+		double changeInX = encoderDistance * Math.cos(heading);
+		double changeInY = encoderDistance * Math.sin(heading);
+		XCoordinate += changeInX;
+		YCoordinate += changeInY;
+		lastLeftEncoder = currentLeftEncoder;
+		lastRightEncoder = currentRightEncoder;
+	}
+	public double getXCoordinate(){
+		return XCoordinate/EncoderTicPerInch;
+	}
+	public double getYCoordinate(){
+		return YCoordinate/EncoderTicPerInch;
+	}
+	public void resetPosition(){
+		XCoordinate = 0;
+		YCoordinate = 0;
+	}
+	
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
