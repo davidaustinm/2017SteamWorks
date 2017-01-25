@@ -13,11 +13,12 @@ public class DriveToPoint extends Command {
 	double targetX, targetY;
 	double distance;
 	double lastDistance = 1000;
-    public DriveToPoint(double x, double y) {
+    public DriveToPoint(double x, double y, double speed) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
         targetX = x;
         targetY = y;
+        this.speed = speed;
     }
 
     // Called just before this Command runs the first time

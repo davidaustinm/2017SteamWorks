@@ -84,7 +84,7 @@ public class Robot extends IterativeRobot {
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
-		autonomousCommand = new DriveToPoint (100, 40);
+		autonomousCommand = new DriveToPoint (100, 40, 0.4);
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
