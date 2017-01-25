@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team4003.robot.commands.DriveToPoint;
 import org.usfirst.frc.team4003.robot.commands.ExampleCommand;
 import org.usfirst.frc.team4003.robot.subsystems.*;
 
@@ -80,7 +81,10 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		
+		sensors.resetEncoder();
+		sensors.resetPosition();
+		sensors.resetYaw();
+		autonomousCommand = new DriveToPoint (100, 40);
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -90,6 +94,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		sensors.updatePosition();
 		Scheduler.getInstance().run();
 	}
 
