@@ -1,6 +1,12 @@
+
 package org.usfirst.frc.team4003.robot;
 
+import org.usfirst.frc.team4003.robot.commands.ToggleTracking;
+import org.usfirst.frc.team4003.robot.triggers.TrackingOff;
+import org.usfirst.frc.team4003.robot.triggers.TrackingOn;
+
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Trigger;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -8,6 +14,14 @@ import edu.wpi.first.wpilibj.XboxController;
  */
 public class OI {
 	public XboxController driver = new XboxController(0);
+	Trigger trackingOn = new TrackingOn();
+	Trigger trackingOff = new TrackingOff();
+	public void buildTriggers() {
+		trackingOn.whenActive(new ToggleTracking(true));
+		trackingOff.whenActive(new ToggleTracking(false));
+	}
+	public OI() {
+	}
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
 	//// joystick.

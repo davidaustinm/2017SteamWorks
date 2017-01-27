@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
 	public static final TalonDriveTrain driveTrain = new TalonDriveTrain();
 	public static final Sensors sensors = new Sensors();
 	public static OI oi;
-
+	public static TrackingCamera trackingCamera;
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -37,10 +37,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		oi.buildTriggers();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", chooser);
-		CameraServer.getInstance().startAutomaticCapture();
+		//CameraServer.getInstance().startAutomaticCapture();
+	    trackingCamera = new TrackingCamera();
+	    trackingCamera.startCamera();
 	}
 
 	/**
