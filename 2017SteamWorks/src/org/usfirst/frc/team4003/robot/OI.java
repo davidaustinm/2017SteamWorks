@@ -1,9 +1,8 @@
 
 package org.usfirst.frc.team4003.robot;
 
-import org.usfirst.frc.team4003.robot.commands.ToggleTracking;
-import org.usfirst.frc.team4003.robot.triggers.TrackingOff;
-import org.usfirst.frc.team4003.robot.triggers.TrackingOn;
+import org.usfirst.frc.team4003.robot.commands.*;
+import org.usfirst.frc.team4003.robot.triggers.*;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Trigger;
@@ -16,9 +15,11 @@ public class OI {
 	public XboxController driver = new XboxController(0);
 	Trigger trackingOn = new TrackingOn();
 	Trigger trackingOff = new TrackingOff();
+	Trigger toggleCamera = new ToggleCamera(); 
 	public void buildTriggers() {
 		trackingOn.whenActive(new ToggleTracking(true));
 		trackingOff.whenActive(new ToggleTracking(false));
+		toggleCamera.whenActive(new ToggleCameraCommand());
 	}
 	public OI() {
 	}
