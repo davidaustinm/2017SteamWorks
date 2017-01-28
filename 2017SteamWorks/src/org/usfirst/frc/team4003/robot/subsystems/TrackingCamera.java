@@ -114,6 +114,13 @@ public class TrackingCamera extends Subsystem implements Runnable {
                 ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
                 Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_EXTERNAL, 
                 		Imgproc.CHAIN_APPROX_SIMPLE);
+                ArrayList<MatOfPoint> bigContours = new ArrayList<MatOfPoint>();
+                for (int i = 0; i < contours.size(); i++) {
+                	if (Imgproc.contourArea(contours.get(i)) > 50) {
+                		bigContours.add(contours.get(i));
+                	}
+                }
+                contours = bigContours;
                 for (int i = 0; i < contours.size(); i++) {
                     Rect bbox = Imgproc.boundingRect(contours.get(i));
                     Imgproc.rectangle(source, bbox.tl(), bbox.br(), new Scalar(0,255,0),2);
