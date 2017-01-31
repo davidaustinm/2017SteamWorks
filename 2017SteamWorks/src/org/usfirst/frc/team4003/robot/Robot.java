@@ -9,9 +9,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team4003.robot.commands.DriveToPoint;
-import org.usfirst.frc.team4003.robot.commands.DriveToTarget;
-import org.usfirst.frc.team4003.robot.commands.ExampleCommand;
+import org.usfirst.frc.team4003.robot.commands.*;
 import org.usfirst.frc.team4003.robot.subsystems.*;
 
 /**
@@ -88,7 +86,7 @@ public class Robot extends IterativeRobot {
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
-		autonomousCommand = new DriveToTarget (0.3);
+		autonomousCommand = new DriveToLeftLift();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}

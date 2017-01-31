@@ -13,6 +13,7 @@ public class DriveToPoint extends Command {
 	double targetX, targetY;
 	double distance;
 	double lastDistance = 1000;
+	boolean coast = false;
     public DriveToPoint(double x, double y, double speed) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
@@ -20,9 +21,22 @@ public class DriveToPoint extends Command {
         targetY = y;
         this.speed = speed;
     }
+    public DriveToPoint(double x, double y, double speed, boolean coast) {
+    	this(x,y,speed);
+    	this.coast = coast;
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    }
+    public double normalizeAngle(double angle){
+    	while(angle > 180){
+    		angle -= 360;
+    	}
+    	while(angle < -180){
+    		angle += 360;
+    	}
+    	return angle;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,10 +47,16 @@ public class DriveToPoint extends Command {
     	double changeInX = targetX- currentX;
     	distance = Math.sqrt(Math.pow(changeInX, 2) + Math.pow(changeInY, 2));
     	double alpha = Math.atan2(changeInY, changeInX);
-    	double beta = Robot.sensors.getYaw()- Math.toDegrees(alpha);
+    	double beta = Robot.sensors.getYaw() - Math.toDegrees(alpha);
+    	SmartDashboard.putNumber("Beta", beta);
+    	//beta = normalizeAngle(beta);
+    	//if(beta > 100 || beta < -100){
+    		//beta = normalizeAngle(180 - beta);
+    	//}
     	SmartDashboard.putNumber("x", currentX);
     	SmartDashboard.putNumber("y", currentY);
     	SmartDashboard.putNumber("distance", distance);
+    	
     	double correction = 0.02 * beta;
     	if (correction>0.1) correction = 0.1;
     	if (correction<-0.1) correction = -0.1;
@@ -52,7 +72,7 @@ public class DriveToPoint extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.setPower(0, 0);
+    	if (!coast) Robot.driveTrain.setPower(0, 0);
     }
 
     // Called when another command which requires one or more of the same

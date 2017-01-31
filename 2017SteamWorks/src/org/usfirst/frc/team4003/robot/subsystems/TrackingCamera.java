@@ -61,14 +61,17 @@ public class TrackingCamera extends Subsystem implements Runnable {
          
 	}
 	public void toggleCamera() {
-		synchronized(visionLock){
-			
+		synchronized(visionLock){		
 			frontCamera = !frontCamera;
 		}
 	}
 	public void trackingOn(boolean on) {
 		synchronized(visionLock){
 			trackingOn = on;
+			if(on == false) {
+				targetX = Double.NaN;
+				targetY = Double.NaN;
+			}
 		}
 	}
 	public boolean isTrackingOn() {
@@ -169,7 +172,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 		double x2 = rectangleTwo.x + rectangleTwo.width/2.0;
 		double pegX = (x1 + x2)/2.0;
 		double distanceToCenter = pegX - 159.5;
-		double distanceToTargetPix = 160 / Math.tan(Math.toRadians(35.29));
+		double distanceToTargetPix = 160 / Math.tan(Math.toRadians(35.29)); // 32.93 for 920?
 		double alpha = -Math.toDegrees(Math.atan(distanceToCenter/distanceToTargetPix));
 		double inchesPerPixel = 2 / (double) rectangleTwo.width;
 		double distanceToTarget = inchesPerPixel * distanceToTargetPix;
