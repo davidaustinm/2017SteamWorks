@@ -9,36 +9,38 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DriveForwardForDistance extends Command {
-	double distance, encoderTarget;
-	PID headingPID = new PID(0.02,0.0005,0);
-    public DriveForwardForDistance(double distance, double heading) {
+	double distance, speed, initialX, initialY;
+	
+    public DriveForwardForDistance(double distance, double speed) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
         this.distance = distance;
-        headingPID.setTarget(heading);
+        this.speed = speed;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	encoderTarget = Robot.sensors.getLeftDriveEncoder() + distance;
+    	initialX = Robot.sensors.getXCoordinate();
+    	initialY = Robot.sensors.getYCoordinate();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = .5;
-    	double heading = Robot.sensors.getYaw();
-    	double correction = headingPID.getCorrection(heading);
-    	Robot.driveTrain.setPower(speed - correction, speed + correction);
+    	
+    	Robot.driveTrain.setPower(speed, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.sensors.getLeftDriveEncoder() >= encoderTarget;
+    	double currentX = Robot.sensors.getXCoordinate();
+    	double currentY = Robot.sensors.getYCoordinate();
+    	double distanceTraveled = Math.sqrt(Math.pow(currentX - initialX, 2)+Math.pow(currentY - initialY, 2));
+        return distanceTraveled >= distance;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.setPower(0, 0);
+    	//Robot.driveTrain.setPower(0, 0);
     }
 
     // Called when another command which requires one or more of the same

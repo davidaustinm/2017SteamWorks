@@ -1,7 +1,6 @@
 package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
-import org.usfirst.frc.team4003.robot.utilities.Acceleration;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,12 +8,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class DriveToTarget extends DriveToPoint {
-	double[] target;
-    public DriveToTarget(Acceleration accelerate) {
+public class ShooterCommand extends Command {
+
+    public ShooterCommand() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	super(0, 0, accelerate);
+        requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -23,23 +21,16 @@ public class DriveToTarget extends DriveToPoint {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	target = Robot.trackingCamera.getTarget();
-    	SmartDashboard.putNumber("targetX", target[0]);
-    	SmartDashboard.putNumber("targetY", target[1]);
-    	if(Double.isNaN(target[0])){
-    		return;
+    	if(Robot.oi.driver.getYButton()){
+    		Robot.shooter.setPower(1);
+    		SmartDashboard.putNumber("shooterspeed", Robot.shooter.getSpeed());
     	}
-    	targetX = target[0];
-    	targetY = target[1];
-    	super.execute();
+    	else Robot.shooter.setPower(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double changeInX = targetX - Robot.sensors.getXCoordinate();
-    	double changeInY = targetY - Robot.sensors.getYCoordinate();
-    	double distance = Math.sqrt(Math.pow(changeInX, 2) + Math.pow(changeInY, 2));
-        return Double.isNaN(target[0]) || distance < 2;
+        return false;
     }
 
     // Called once after isFinished returns true

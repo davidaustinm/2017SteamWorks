@@ -50,7 +50,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
         	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video0 --set-ctrl exposure_auto=1");
         	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video1 --set-ctrl exposure_auto=1");
 			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video0 --set-ctrl exposure_absolute=30");
-			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video1 --set-ctrl exposure_absolute=10");
+			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video1 --set-ctrl exposure_absolute=5");
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

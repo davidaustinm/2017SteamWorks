@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4003.robot.commands;
 
+import org.usfirst.frc.team4003.robot.utilities.Acceleration;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -9,12 +11,16 @@ public class DriveToLeftLift extends CommandGroup {
 
     public DriveToLeftLift() {
     	
-    	addSequential(new DriveToPoint(60,0,.3,true));
+    	addSequential(new DriveToPoint(70,0, new Acceleration(.2,.7,.04),true));
     	addSequential(new RotateToHeading(-60,.5,0,true));
-    	addSequential(new DriveToTarget(.3));
+    	addSequential(new DriveToTarget(new Acceleration(.3,.3,0)));
     	//addSequential(new RotateToHeading(20,.3,0,true));
     	addSequential(new SwitchDirection());
-    	addSequential(new DriveToPoint(20,-28,.3));
+    	addSequential(new DriveForwardForDistance(7,.2));
+    	addSequential(new DriveBackToPoint(40, 8, new Acceleration(.2,.4,.01), true));
+    	addSequential(new DriveBackToPoint(22,24, new Acceleration(.3,.3,0)));
+    	addSequential(new SwitchDirection());
+    	//addSequential(new DriveBackToPoint(-60,-28,.3));
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());
