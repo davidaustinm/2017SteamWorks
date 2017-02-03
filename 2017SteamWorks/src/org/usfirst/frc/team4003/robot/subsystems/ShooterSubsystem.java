@@ -21,7 +21,7 @@ public class ShooterSubsystem extends Subsystem {
         master.configPeakOutputVoltage(12, -12);
         master.configEncoderCodesPerRev(420);
 		master.setF(3.6535);
-		master.setP(Math.PI);
+		master.setP(3);
 		slave.changeControlMode(CANTalon.TalonControlMode.Follower);
 		slave.set(master.getDeviceID());
 	}
