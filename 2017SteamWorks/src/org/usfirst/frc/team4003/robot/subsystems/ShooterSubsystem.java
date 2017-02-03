@@ -12,14 +12,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class ShooterSubsystem extends Subsystem {
-	CANTalon shooter0 = new CANTalon(3);
-	CANTalon shooter1 = new CANTalon(5);
+	CANTalon master = new CANTalon(3);
+	CANTalon slave = new CANTalon(5);
 	public ShooterSubsystem() {
-		shooter0.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		master.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		master.changeControlMode(CANTalon.TalonControlMode.Speed);
+		master.configNominalOutputVoltage(0, 0);
+        master.configPeakOutputVoltage(12, -12);
+        master.configEncoderCodesPerRev(420);
+		master.setF(3.6535);
+		master.setP(Math.PI);
+		slave.changeControlMode(CANTalon.TalonControlMode.Follower);
+		slave.set(master.getDeviceID());
 	}
 	public void setPower(double power) {
-		shooter0.set(power);
-		SmartDashboard.putNumber("shooterposition", shooter0.getPosition());
+		master.set(60);
+		SmartDashboard.putNumber("shooterposition", master.getPosition());
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -30,7 +38,10 @@ public class ShooterSubsystem extends Subsystem {
         
     }
     public double getSpeed() {
-    	return shooter0.getSpeed();
+    	return master.getSpeed();
+    }
+    public int getClosedLoopError() {
+    	return master.getClosedLoopError();
     }
 }
 

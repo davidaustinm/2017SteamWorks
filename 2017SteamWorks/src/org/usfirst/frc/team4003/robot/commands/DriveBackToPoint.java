@@ -9,8 +9,8 @@ public class DriveBackToPoint extends DriveToPoint {
 		addToYaw = 180;
 	}
     
-    public DriveBackToPoint(double x, double y, Acceleration accelerate, boolean coast) {
-    	super(x,y,accelerate,coast);
+    public DriveBackToPoint(double x, double y, Acceleration accelerate, boolean coast, double slowDistance) {
+    	super(x,y,accelerate,coast, slowDistance);
     	addToYaw = 180;
     }
 }

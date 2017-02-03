@@ -123,6 +123,8 @@ public class Robot extends IterativeRobot {
 		sensors.updatePosition();
 		SmartDashboard.putNumber("X Coordinate", sensors.getXCoordinate());
 		SmartDashboard.putNumber("Y Coordinate", sensors.getYCoordinate());
+		SmartDashboard.putNumber("shooterspeed", shooter.getSpeed());
+		SmartDashboard.putNumber("Closed Loop Error", shooter.getClosedLoopError());
 	}
 
 	/**

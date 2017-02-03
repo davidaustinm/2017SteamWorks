@@ -2,6 +2,7 @@ package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
 import org.usfirst.frc.team4003.robot.utilities.Acceleration;
+import org.usfirst.frc.team4003.robot.utilities.PID;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,16 +17,21 @@ public class DriveToPoint extends Command {
 	double lastDistance = 1000;
 	boolean coast = false;
 	double addToYaw = 0;
+	PID headingPID = new PID(0.015, 0, 0.005);
+	PID distancePID = null;
     public DriveToPoint(double x, double y, Acceleration accelerate) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
         targetX = x;
         targetY = y;
         this.accelerate = accelerate;
+        headingPID.setTarget(0);
     }
-    public DriveToPoint(double x, double y, Acceleration accelerate, boolean coast) {
+    public DriveToPoint(double x, double y, Acceleration accelerate, boolean coast, double slowDistance) {
     	this(x,y,accelerate);
     	this.coast = coast;	
+    	distancePID = new PID(1/slowDistance, 0,0);
+    	distancePID.setTarget(0);
     }
 
     // Called just before this Command runs the first time
@@ -57,11 +63,18 @@ public class DriveToPoint extends Command {
     	SmartDashboard.putNumber("y", currentY);
     	SmartDashboard.putNumber("distance", distance);
     	
-    	double correction = 0.015 * beta;
+    	double correction = headingPID.getCorrection(beta);
     	if (correction>0.1) correction = 0.1;
     	if (correction<-0.1) correction = -0.1;
     	double speed = accelerate.getSpeed();
-    	Robot.driveTrain.setPower(speed+correction, speed-correction); 
+    	double speedFactor = 1;
+    	if (distancePID != null) {
+    		speedFactor = distancePID.getCorrection(-distance);
+    		if (Math.abs(speedFactor) > 1) speedFactor = 1;
+    	}
+    	double leftPower = (speed + correction) * speedFactor;
+    	double rightPower = (speed - correction) * speedFactor;
+    	Robot.driveTrain.setPower(leftPower, rightPower); 
     }
 
     // Make this return true when this Command no longer needs to run execute()

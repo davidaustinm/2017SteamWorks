@@ -2,6 +2,7 @@ package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -21,11 +22,11 @@ public class ShooterCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.oi.driver.getYButton()){
-    		Robot.shooter.setPower(1);
-    		SmartDashboard.putNumber("shooterspeed", Robot.shooter.getSpeed());
-    	}
-    	else Robot.shooter.setPower(0);
+//    	if(Robot.oi.driver.getYButton()){
+//    		Robot.shooter.setPower(1);
+//    	}
+//    	else Robot.shooter.setPower(0);
+    	Robot.shooter.setPower(-Robot.oi.operator.getY(Hand.kLeft));
     }
 
     // Make this return true when this Command no longer needs to run execute()

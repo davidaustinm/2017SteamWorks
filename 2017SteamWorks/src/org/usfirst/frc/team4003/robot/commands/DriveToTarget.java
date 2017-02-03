@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveToTarget extends DriveToPoint {
 	double[] target;
-    public DriveToTarget(Acceleration accelerate) {
+    public DriveToTarget(Acceleration accelerate, double slowDistance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	super(0, 0, accelerate);
+    	super(0, 0, accelerate, false, slowDistance);
     }
 
     // Called just before this Command runs the first time

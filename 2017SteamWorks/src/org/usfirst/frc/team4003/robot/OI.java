@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
  */
 public class OI {
 	public XboxController driver = new XboxController(0);
+	public XboxController operator = new XboxController(1);
 	Trigger trackingOn = new TrackingOn();
 	Trigger trackingOff = new TrackingOff();
 	Trigger toggleCamera = new ToggleCamera(); 
