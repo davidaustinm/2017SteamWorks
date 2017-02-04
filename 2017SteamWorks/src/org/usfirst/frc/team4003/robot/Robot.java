@@ -1,6 +1,10 @@
 
 package org.usfirst.frc.team4003.robot;
 
+import java.io.*;
+import java.util.Enumeration;
+import java.util.Set;
+
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -36,11 +40,41 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		
 		oi = new OI();
 		oi.buildTriggers();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
+		
 		SmartDashboard.putData("Auto mode", chooser);
+		TrackingCamera.loadKeys();
+		try {
+			Process p1 = Runtime.getRuntime().exec("/usr/bin/v4l2-ctl --list-devices");
+			BufferedReader output = new BufferedReader(new InputStreamReader(p1.getInputStream()));
+			String line = "";
+			while((line = output.readLine()) != null){
+				System.out.println(line);
+				System.out.println("Key count: " + TrackingCamera.cameraHash.keySet().size());
+				Set<String> keys = TrackingCamera.cameraHash.keySet();
+				for(String key:keys) {
+				//for (Enumeration<String> cameraKeys = TrackingCamera.cameraHash.keys(); cameraKeys.hasMoreElements();){
+					//String key = cameraKeys.nextElement();
+					if (line.indexOf(key) >= 0) {
+						line = output.readLine();
+						System.out.println(line);
+						int index = line.indexOf("/dev/video")+10;
+						TrackingCamera.cameraHash.put(key, new Integer(line.substring(index, index+1)));
+					}
+				}
+			}
+			for (Enumeration<String> cameraKeys = TrackingCamera.cameraHash.keys(); cameraKeys.hasMoreElements();){
+				String key = cameraKeys.nextElement();
+				System.out.println(key+" "+TrackingCamera.cameraHash.get(key));
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//CameraServer.getInstance().startAutomaticCapture();
 	    trackingCamera = new TrackingCamera();
 	    trackingCamera.startCamera();
@@ -87,6 +121,14 @@ public class Robot extends IterativeRobot {
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
+		File cam3 = new File("/dev/video2");
+		if (cam3.exists()) {
+			// Track targets on roboRIO.
+			SmartDashboard.putString("Tracking Status", "roboRio");
+		}else {
+			SmartDashboard.putString("Tracking Status", "RasPi");
+		}
+			
 		autonomousCommand = new DriveToLeftLift();
 		if (autonomousCommand != null)
 			autonomousCommand.start();

@@ -26,7 +26,7 @@ public class ShooterSubsystem extends Subsystem {
 		slave.set(master.getDeviceID());
 	}
 	public void setPower(double power) {
-		master.set(60);
+		//master.set(60);
 		SmartDashboard.putNumber("shooterposition", master.getPosition());
 	}
     // Put methods for controlling this subsystem

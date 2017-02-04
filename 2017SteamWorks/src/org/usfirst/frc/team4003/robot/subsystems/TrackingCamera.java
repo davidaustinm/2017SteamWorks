@@ -2,6 +2,7 @@ package org.usfirst.frc.team4003.robot.subsystems;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -35,6 +36,16 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	boolean frontCamera = true;
 	double targetX = Double.NaN;
 	double targetY = Double.NaN;
+	public static Hashtable<String, Integer> cameraHash;
+	
+	public static void loadKeys() {
+		System.out.println("Loading TC...");
+		cameraHash = new Hashtable<String, Integer>();
+        cameraHash.put("C920", new Integer(-1));
+        cameraHash.put("046d:0825", new Integer(-1));
+        System.out.println("Loaded!");
+	}
+	
 	public TrackingCamera() {         
          source = new Mat();
          hsv = new Mat();
@@ -44,20 +55,21 @@ public class TrackingCamera extends Subsystem implements Runnable {
          upperHSV = new Scalar(32,206,255);
          tracking = new Thread(this);
          
+                  
          // Set exposure with v4l2-ctl
          // /usr/bin/v4l2-ctl --set-ctrl exposure_absolute=3
          try {
-        	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video0 --set-ctrl exposure_auto=1");
-        	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video1 --set-ctrl exposure_auto=1");
-			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video0 --set-ctrl exposure_absolute=30");
-			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video1 --set-ctrl exposure_absolute=5");
+        	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("C920").toString() + " --set-ctrl exposure_auto=1");
+        	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("046d:0825").toString() + "  --set-ctrl exposure_auto=1");
+			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("C920").toString() + "  --set-ctrl exposure_absolute=30");
+			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("046d:0825").toString() + "  --set-ctrl exposure_absolute=5");
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-         frontCam = new UsbCamera("front", 1);
-         backCam = new UsbCamera("back", 0);  
+         frontCam = new UsbCamera("front", cameraHash.get("C920"));
+         backCam = new UsbCamera("back", cameraHash.get("046d:0825"));  
          
 	}
 	public void toggleCamera() {
