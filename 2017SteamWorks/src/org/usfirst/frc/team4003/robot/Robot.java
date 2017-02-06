@@ -72,7 +72,7 @@ public class Robot extends IterativeRobot {
 				System.out.println(key+" "+TrackingCamera.cameraHash.get(key));
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+            // Something probably went wrong with our shell call to v4l2-ctl above.
 			e.printStackTrace();
 		}
 		//CameraServer.getInstance().startAutomaticCapture();
