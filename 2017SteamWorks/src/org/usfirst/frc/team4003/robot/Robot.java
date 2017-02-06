@@ -52,30 +52,31 @@ public class Robot extends IterativeRobot {
 			Process p1 = Runtime.getRuntime().exec("/usr/bin/v4l2-ctl --list-devices");
 			BufferedReader output = new BufferedReader(new InputStreamReader(p1.getInputStream()));
 			String line = "";
-			while((line = output.readLine()) != null){
+			while ((line = output.readLine()) != null) {
 				System.out.println(line);
 				System.out.println("Key count: " + TrackingCamera.cameraHash.keySet().size());
 				Set<String> keys = TrackingCamera.cameraHash.keySet();
 				for(String key:keys) {
-				//for (Enumeration<String> cameraKeys = TrackingCamera.cameraHash.keys(); cameraKeys.hasMoreElements();){
-					//String key = cameraKeys.nextElement();
 					if (line.indexOf(key) >= 0) {
+                        // We found a camera we care about.  Advance to next line to identify /dev/video* location.
 						line = output.readLine();
 						System.out.println(line);
-						int index = line.indexOf("/dev/video")+10;
+
+						int index = line.indexOf("/dev/video") + "/dev/video".length();
 						TrackingCamera.cameraHash.put(key, new Integer(line.substring(index, index+1)));
 					}
 				}
 			}
-			for (Enumeration<String> cameraKeys = TrackingCamera.cameraHash.keys(); cameraKeys.hasMoreElements();){
+
+			for (Enumeration<String> cameraKeys = TrackingCamera.cameraHash.keys(); cameraKeys.hasMoreElements();) {
 				String key = cameraKeys.nextElement();
-				System.out.println(key+" "+TrackingCamera.cameraHash.get(key));
+				System.out.println(key + " " + TrackingCamera.cameraHash.get(key));
 			}
 		} catch (IOException e) {
             // Something probably went wrong with our shell call to v4l2-ctl above.
 			e.printStackTrace();
 		}
-		//CameraServer.getInstance().startAutomaticCapture();
+
 	    trackingCamera = new TrackingCamera();
 	    trackingCamera.startCamera();
 	}
