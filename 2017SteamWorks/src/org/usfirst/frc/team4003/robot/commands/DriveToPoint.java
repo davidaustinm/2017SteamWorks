@@ -72,8 +72,8 @@ public class DriveToPoint extends Command {
     		speedFactor = distancePID.getCorrection(-distance);
     		if (Math.abs(speedFactor) > 1) speedFactor = 1;
     	}
-    	double leftPower = (speed + correction) * speedFactor;
-    	double rightPower = (speed - correction) * speedFactor;
+    	double leftPower = (speed - correction) * speedFactor;
+    	double rightPower = (speed + correction) * speedFactor;
     	Robot.driveTrain.setPower(leftPower, rightPower); 
     }
 
