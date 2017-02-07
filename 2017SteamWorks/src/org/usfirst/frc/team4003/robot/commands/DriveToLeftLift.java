@@ -15,11 +15,13 @@ public class DriveToLeftLift extends CommandGroup {
     	addSequential(new RotateToHeading(-60,.5,0,true));
     	addSequential(new DriveToTarget(new Acceleration(.3,.3,0), 10));
     	//addSequential(new RotateToHeading(20,.3,0,true));
+    	/*
     	addSequential(new SwitchDirection());
     	addSequential(new DriveForwardForDistance(7,.2));
-    	addSequential(new DriveBackToPoint(40, 8, new Acceleration(.2,.4,.01), true, 5));
+  		addSequential(new DriveBackToPoint(40, 8, new Acceleration(.2,.4,.01), true, 5));
     	addSequential(new DriveBackToPoint(22,24, new Acceleration(.3,.3,0), false, 5));
     	addSequential(new SwitchDirection());
+    	*/
     	//addSequential(new DriveBackToPoint(-60,-28,.3));
     	
         // Add Commands here:

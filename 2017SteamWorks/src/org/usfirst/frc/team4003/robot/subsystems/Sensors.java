@@ -21,6 +21,17 @@ public class Sensors extends Subsystem {
 	double lastLeftEncoder = 0, lastRightEncoder = 0;
 	double EncoderTicPerInch = 40.3;
 	
+	static final int BLUE = 1;
+	static final int RED = 2;
+	public int allianceColor = RED;
+	
+	public void setAllianceColor(int color){
+		allianceColor = color;
+	}
+	public int getAllianceColor(){
+		return allianceColor;
+	}
+	
 	public Sensors (){
 		leftDrive = new Encoder(0,1);
 		leftDrive.setReverseDirection(true);

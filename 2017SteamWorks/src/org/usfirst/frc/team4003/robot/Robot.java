@@ -129,7 +129,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putString("Tracking Status", "RasPi");
 		}
 			
-		autonomousCommand = new CrossLineAuton(2,1);
+		autonomousCommand = new DriveToRedBoilerHopper();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -167,6 +167,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Y Coordinate", sensors.getYCoordinate());
 		SmartDashboard.putNumber("shooterspeed", shooter.getSpeed());
 		SmartDashboard.putNumber("Closed Loop Error", shooter.getClosedLoopError());
+		SmartDashboard.putNumber("Yaw", sensors.getYaw());
 	}
 
 	/**

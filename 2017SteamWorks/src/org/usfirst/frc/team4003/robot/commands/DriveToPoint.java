@@ -80,7 +80,7 @@ public class DriveToPoint extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	boolean finished = distance>lastDistance;
-    	finished = distance < 2;
+    	//finished = distance < 2;
     	lastDistance = distance;
         return finished;
     }
