@@ -129,7 +129,7 @@ public class Robot extends IterativeRobot {
 			SmartDashboard.putString("Tracking Status", "RasPi");
 		}
 			
-		autonomousCommand = new DriveToRedBoilerHopper();
+		autonomousCommand = new DriveToRightLift();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -140,6 +140,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		sensors.updatePosition();
+		SmartDashboard.putNumber("X Coordinate", sensors.getXCoordinate());
+		SmartDashboard.putNumber("Y Coordinate", sensors.getYCoordinate());
 		Scheduler.getInstance().run();
 	}
 

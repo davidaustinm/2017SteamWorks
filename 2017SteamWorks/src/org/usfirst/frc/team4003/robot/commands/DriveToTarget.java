@@ -39,11 +39,12 @@ public class DriveToTarget extends DriveToPoint {
     	double changeInX = targetX - Robot.sensors.getXCoordinate();
     	double changeInY = targetY - Robot.sensors.getYCoordinate();
     	double distance = Math.sqrt(Math.pow(changeInX, 2) + Math.pow(changeInY, 2));
-        return Double.isNaN(target[0]) || distance < 2;
+        return Double.isNaN(target[0]) || distance < 5;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.driveTrain.setPower(0, 0);
     }
 
     // Called when another command which requires one or more of the same
