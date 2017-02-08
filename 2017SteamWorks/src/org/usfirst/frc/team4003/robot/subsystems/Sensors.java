@@ -23,13 +23,17 @@ public class Sensors extends Subsystem {
 	
 	static final int BLUE = 1;
 	static final int RED = 2;
-	public int allianceColor = RED;
+	public int allianceColor = BLUE;
 	
 	public void setAllianceColor(int color){
 		allianceColor = color;
 	}
 	public int getAllianceColor(){
 		return allianceColor;
+	}
+	
+	public boolean isAllianceColorRed(){
+		return allianceColor == RED;
 	}
 	
 	public Sensors (){

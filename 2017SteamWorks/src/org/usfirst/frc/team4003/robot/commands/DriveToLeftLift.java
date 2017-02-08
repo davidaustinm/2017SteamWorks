@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4003.robot.commands;
 
+import org.usfirst.frc.team4003.robot.Robot;
 import org.usfirst.frc.team4003.robot.utilities.Acceleration;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -10,10 +11,31 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveToLeftLift extends CommandGroup {
 
     public DriveToLeftLift() {
+    	if(Robot.sensors.isAllianceColorRed()){
+    		addSequential(new DriveToPoint(83,0, new Acceleration(.2,.6,.04),true, 20));
+        	addSequential(new RotateToHeading(55,0,0.3,false));
+        	addSequential(new WaitForTime(100));
+        	addSequential(new DriveToTarget(new Acceleration(.3,.3,0), 10));
+        	addSequential(new WaitForTime(1000));
+        	addSequential(new SwitchDirection());
+        	addSequential(new DriveForwardForDistance(7, .4));
+        	addSequential(new DriveBackToPoint(15,-62, new Acceleration(.3,.5,0.02),false,15));
+        	addSequential(new SwitchDirection());
+        	
+    	}else{
+    		addSequential(new DriveToPoint(83,0, new Acceleration(.2,.6,.04),true, 20));
+        	addSequential(new RotateToHeading(-55,.4,0,false));
+        	addSequential(new WaitForTime(100));
+        	addSequential(new DriveToTarget(new Acceleration(.3,.3,0), 10));
+        	addSequential(new WaitForTime(1000));
+        	addSequential(new SwitchDirection());
+        	addSequential(new DriveForwardForDistance(7, .4));
+        	addSequential(new DriveBackToPoint(26,72, new Acceleration(.3,.5,0.02),false,15));
+        	addSequential(new SwitchDirection());
+        	
+    	}
     	
-    	addSequential(new DriveToPoint(70,0, new Acceleration(.2,.8,.04),true, 20));
-    	addSequential(new RotateToHeading(-60,.5,0,true));
-    	addSequential(new DriveToTarget(new Acceleration(.3,.3,0), 10));
+    	
     	//addSequential(new RotateToHeading(20,.3,0,true));
     	/*
     	addSequential(new SwitchDirection());
@@ -23,22 +45,6 @@ public class DriveToLeftLift extends CommandGroup {
     	addSequential(new SwitchDirection());
     	*/
     	//addSequential(new DriveBackToPoint(-60,-28,.3));
-    	
-        // Add Commands here:
-        // e.g. addSequential(new Command1());
-        //      addSequential(new Command2());
-        // these will run in order.
-
-        // To run multiple commands at the same time,
-        // use addParallel()
-        // e.g. addParallel(new Command1());
-        //      addSequential(new Command2());
-        // Command1 and Command2 will run in parallel.
-
-        // A command group will require all of the subsystems that each member
-        // would require.
-        // e.g. if Command1 requires chassis, and Command2 requires arm,
-        // a CommandGroup containing them would require both the chassis and the
-        // arm.
+    
     }
 }
