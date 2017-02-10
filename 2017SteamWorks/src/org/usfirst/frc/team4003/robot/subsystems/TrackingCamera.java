@@ -33,6 +33,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	boolean trackingOn = true;
 	UsbCamera frontCam;
 	UsbCamera backCam;
+	UsbCamera visionCam;
 	boolean frontCamera = true;
 	double targetX = Double.NaN;
 	double targetY = Double.NaN;
@@ -43,6 +44,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 		cameraHash = new Hashtable<String, Integer>();
         cameraHash.put("C920", new Integer(-1));
         cameraHash.put("046d:0825", new Integer(-1));
+        cameraHash.put("Tracking", new Integer(-1));
         System.out.println("Loaded!");
 	}
 	
@@ -61,8 +63,8 @@ public class TrackingCamera extends Subsystem implements Runnable {
          try {
         	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("C920").toString() + " --set-ctrl exposure_auto=1");
         	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("046d:0825").toString() + "  --set-ctrl exposure_auto=1");
-			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("C920").toString() + "  --set-ctrl exposure_absolute=10");
-			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("046d:0825").toString() + "  --set-ctrl exposure_absolute=5");
+			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("C920").toString() + "  --set-ctrl exposure_absolute=30");
+			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("046d:0825").toString() + "  --set-ctrl exposure_absolute=400");
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

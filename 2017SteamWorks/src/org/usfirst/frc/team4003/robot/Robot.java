@@ -54,18 +54,26 @@ public class Robot extends IterativeRobot {
 			String line = "";
 			while((line = output.readLine()) != null){
 				System.out.println(line);
-				System.out.println("Key count: " + TrackingCamera.cameraHash.keySet().size());
-				Set<String> keys = TrackingCamera.cameraHash.keySet();
-				for(String key:keys) {
-				//for (Enumeration<String> cameraKeys = TrackingCamera.cameraHash.keys(); cameraKeys.hasMoreElements();){
-					//String key = cameraKeys.nextElement();
-					if (line.indexOf(key) >= 0) {
-						line = output.readLine();
-						System.out.println(line);
-						int index = line.indexOf("/dev/video")+10;
-						TrackingCamera.cameraHash.put(key, new Integer(line.substring(index, index+1)));
+				if(line.indexOf("0-1.1") > 0){
+					line = output.readLine();
+					System.out.println(line);
+					int index = line.indexOf("/dev/video") + "/dev/video".length();
+					TrackingCamera.cameraHash.put("Tracking", new Integer(line.substring(index, index+1)));
+				} else {
+					System.out.println("Key count: " + TrackingCamera.cameraHash.keySet().size());
+					Set<String> keys = TrackingCamera.cameraHash.keySet();
+					for(String key:keys) {
+					//for (Enumeration<String> cameraKeys = TrackingCamera.cameraHash.keys(); cameraKeys.hasMoreElements();){
+						//String key = cameraKeys.nextElement();
+						if (line.indexOf(key) >= 0) {
+							line = output.readLine();
+							System.out.println(line);
+							int index = line.indexOf("/dev/video") + "/dev/video".length();
+							TrackingCamera.cameraHash.put(key, new Integer(line.substring(index, index+1)));
+						}
 					}
 				}
+				
 			}
 			for (Enumeration<String> cameraKeys = TrackingCamera.cameraHash.keys(); cameraKeys.hasMoreElements();){
 				String key = cameraKeys.nextElement();
