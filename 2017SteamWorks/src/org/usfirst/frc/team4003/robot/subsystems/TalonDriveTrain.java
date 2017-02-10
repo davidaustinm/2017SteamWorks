@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class TalonDriveTrain extends Subsystem {
 	Talon left1, left2, right1, right2;
+	int switchCount = 0;
 	public TalonDriveTrain() {
 		left1 = new Talon(0);
 		left2 = new Talon(1);
@@ -37,6 +38,11 @@ public class TalonDriveTrain extends Subsystem {
 		left2.setInverted(!left2.getInverted());
 		right1.setInverted(!right1.getInverted());
 		right2.setInverted(!right2.getInverted());
+		switchCount = 1-switchCount;
+	}
+	
+	public int getSwitchCount() {
+		return switchCount;
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.

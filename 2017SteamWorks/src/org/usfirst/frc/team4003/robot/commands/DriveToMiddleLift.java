@@ -28,6 +28,9 @@ public class DriveToMiddleLift extends CommandGroup {
         	//addSequential(new DriveToTarget(new Acceleration(.2,.3,0), 10));
         	addSequential(new WaitForTime(1500));
         	addSequential(new SwitchDirection());
+        	addSequential(new DriveForwardForDistance(10, 0.2));
+        	addSequential(new CircleDrive(50, -180, 0, 0.4));
+        	/*
         	addSequential(new DriveForwardForDistance(65,.4));
         	addSequential(new SwitchDirection());
         	addSequential(new RotateToHeading(-75,.4,0));
@@ -35,6 +38,7 @@ public class DriveToMiddleLift extends CommandGroup {
         	addSequential(new DriveToPoint(162,-112, new Acceleration(.1,.45,.04),true,5));
         	addSequential(new RotateToHeading(-90,.4,0));
         	addSequential(new DriveForwardForDistance(15,.4));
+        	*/
     	}
     	
     }
