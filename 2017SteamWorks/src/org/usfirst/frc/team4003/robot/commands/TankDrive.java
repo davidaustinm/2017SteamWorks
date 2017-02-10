@@ -21,8 +21,7 @@ public class TankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.setPower(-Robot.oi.driver.getY(Hand.kLeft),
-    			-Robot.oi.driver.getY(Hand.kRight));
+    	Robot.driveTrain.setPower(.5*-Robot.oi.driver.getY(Hand.kLeft), .5*-Robot.oi.driver.getY(Hand.kRight));
     }
 
     // Make this return true when this Command no longer needs to run execute()

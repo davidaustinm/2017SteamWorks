@@ -12,10 +12,11 @@ public class DriveToLeftLift extends CommandGroup {
 
     public DriveToLeftLift() {
     	if(Robot.sensors.isAllianceColorRed()){
-    		addSequential(new DriveToPoint(83,0, new Acceleration(.2,.6,.04),true, 20));
+    		addSequential(new DriveToPoint(85,0, new Acceleration(.2,.6,.04),true, 20));
         	addSequential(new RotateToHeading(55,0,0.3,false));
         	addSequential(new WaitForTime(100));
-        	addSequential(new DriveToTarget(new Acceleration(.3,.3,0), 10));
+        	//addSequential(new DriveToTarget(new Acceleration(.3,.3,0), 10));
+        	addSequential(new DriveToPoint(112,24, new Acceleration(.2,.3,.04),false,10));
         	addSequential(new WaitForTime(1000));
         	addSequential(new SwitchDirection());
         	addSequential(new DriveForwardForDistance(7, .4));
@@ -23,10 +24,11 @@ public class DriveToLeftLift extends CommandGroup {
         	addSequential(new SwitchDirection());
         	
     	}else{
-    		addSequential(new DriveToPoint(83,0, new Acceleration(.2,.6,.04),true, 20));
+    		addSequential(new DriveToPoint(86,0, new Acceleration(.2,.6,.04),true, 20));
         	addSequential(new RotateToHeading(-55,.4,0,false));
         	addSequential(new WaitForTime(100));
-        	addSequential(new DriveToTarget(new Acceleration(.3,.3,0), 10));
+        	//addSequential(new DriveToTarget(new Acceleration(.3,.3,0), 10));
+        	addSequential(new DriveToPoint(110,-23, new Acceleration(.2,.3,.04),false,10));
         	addSequential(new WaitForTime(1000));
         	addSequential(new SwitchDirection());
         	addSequential(new DriveForwardForDistance(7, .4));
