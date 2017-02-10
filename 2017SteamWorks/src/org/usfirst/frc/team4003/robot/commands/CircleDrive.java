@@ -87,12 +87,16 @@ public class CircleDrive extends Command {
     		leftPower = tmp;
     	}
     	leftPower -= correction;
-    	if (leftPower < 0) leftPower = 0;
+    	leftPower = clip(leftPower, 0, 1);
     	rightPower += correction;
-    	if (rightPower < 0) rightPower = 0;
-    	if (leftPower > 1) leftPower = 1;
-    	if (rightPower > 1) rightPower = 1;
+    	rightPower = clip(rightPower, 0, 1);
     	Robot.driveTrain.setPower(leftPower, rightPower);
+    }
+    
+    public double clip(double x, double min, double max) {
+    	if (x > max) return max;
+    	if (x < min) return min;
+    	return x;
     }
 
     // Make this return true when this Command no longer needs to run execute()
