@@ -52,38 +52,43 @@ public class Robot extends IterativeRobot {
 			Process p1 = Runtime.getRuntime().exec("/usr/bin/v4l2-ctl --list-devices");
 			BufferedReader output = new BufferedReader(new InputStreamReader(p1.getInputStream()));
 			String line = "";
-			while((line = output.readLine()) != null){
+			while((line = output.readLine()) != null) {
 				System.out.println(line);
-				if(line.indexOf("0-1.1") > 0){
+
+				if(line.indexOf("0-1.1") > 0) {
+					// A line containing 0-1.1 indicates a camera plugged directly into the roboRio on a specific port.
+					// This will be used as the tracking camera.  A physical indicator of said USB port should probably be
+					// made on the unit.
 					line = output.readLine();
 					System.out.println(line);
+					// We want the number immediately after /dev/video on this line and a nice trick to counting how many spaces
+					// your literal strings consists of is the "literal".length() trick... better than magic numbers.
 					int index = line.indexOf("/dev/video") + "/dev/video".length();
-					TrackingCamera.cameraHash.put("Tracking", new Integer(line.substring(index, index+1)));
+					TrackingCamera.cameraHash.put("Tracking", new Integer(line.substring(index, index + 1)));
 				} else {
+					// This camera is plugged into the non-tracking camera port or, more likely, into a hub on the non-tracking port.
 					System.out.println("Key count: " + TrackingCamera.cameraHash.keySet().size());
 					Set<String> keys = TrackingCamera.cameraHash.keySet();
 					for(String key:keys) {
-					//for (Enumeration<String> cameraKeys = TrackingCamera.cameraHash.keys(); cameraKeys.hasMoreElements();){
-						//String key = cameraKeys.nextElement();
 						if (line.indexOf(key) >= 0) {
 							line = output.readLine();
 							System.out.println(line);
 							int index = line.indexOf("/dev/video") + "/dev/video".length();
-							TrackingCamera.cameraHash.put(key, new Integer(line.substring(index, index+1)));
+							TrackingCamera.cameraHash.put(key, new Integer(line.substring(index, index + 1)));
 						}
 					}
 				}
 				
 			}
-			for (Enumeration<String> cameraKeys = TrackingCamera.cameraHash.keys(); cameraKeys.hasMoreElements();){
+			for (Enumeration<String> cameraKeys = TrackingCamera.cameraHash.keys(); cameraKeys.hasMoreElements();) {
 				String key = cameraKeys.nextElement();
-				System.out.println(key+" "+TrackingCamera.cameraHash.get(key));
+				System.out.println(key + " " + TrackingCamera.cameraHash.get(key));
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//CameraServer.getInstance().startAutomaticCapture();
+
 	    trackingCamera = new TrackingCamera();
 	    trackingCamera.startCamera();
 	}
@@ -129,11 +134,15 @@ public class Robot extends IterativeRobot {
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
+		
+		/* JJB: Not sure if this is how we're going to determine how to flip between local and pi
+		 * camera vision.  I forgot what I was thinking here.  Revisit on 2017-02-11 
+		 */
 		File cam3 = new File("/dev/video2");
 		if (cam3.exists()) {
 			// Track targets on roboRIO.
 			SmartDashboard.putString("Tracking Status", "roboRio");
-		}else {
+		} else {
 			SmartDashboard.putString("Tracking Status", "RasPi");
 		}
 			
