@@ -2,41 +2,33 @@ package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ArcadeDrive extends Command {
-	boolean didJerk;
-	double lastYPower;
+public class GearChanger extends Command {
+	boolean toggled;
 
-    public ArcadeDrive() {
+    public GearChanger() {
+    	toggled = false;
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.driveTrain);
+        requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	didJerk = false;
+    	if(!toggled){
+    		Robot.driveTrain.setLimit(.5, .5);
+    		toggled = true;
+    	} else{
+    		Robot.driveTrain.setLimit(1, 1);
+    		toggled = true;
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double yValues = Robot.oi.driver.getY(Hand.kLeft);
-    	double xValues = Robot.oi.driver.getX(Hand.kRight)*.8;
-    	double power = (0.2 * yValues) + (0.8 * lastYPower);
-    	
-    	if (Math.abs(yValues) <= 0.05) {
-    		power = (0.3 * yValues) + (0.7 * lastYPower);
-    		
-    	}
-    	
-    	System.out.println("Joystick Value: " + yValues + " | Power: " + power);
-    	Robot.driveTrain.arcadeDrive(-power, -xValues, true);
-    	lastYPower = power;
     }
 
     // Make this return true when this Command no longer needs to run execute()

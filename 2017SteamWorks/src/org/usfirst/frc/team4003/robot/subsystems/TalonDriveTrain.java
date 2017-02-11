@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj.hal.FRCNetComm.tResourceType;
 public class TalonDriveTrain extends Subsystem {
 	Talon left1, left2, right1, right2;
 	int switchCount = 0;
+	double yLimit, xLimit;
+	
 	public TalonDriveTrain() {
 		left1 = new Talon(0);
 		left2 = new Talon(1);
@@ -23,6 +25,9 @@ public class TalonDriveTrain extends Subsystem {
 		right1.setInverted(true);
 		right2 = new Talon(3);
 		right2.setInverted(true);
+		
+		yLimit = 1;
+		xLimit = 1;
 	}
 	
 	public void setPower(double left, double right) {
@@ -31,14 +36,19 @@ public class TalonDriveTrain extends Subsystem {
 		right1.set(right);
 		right2.set(right);
 		
-		RobotDrive rDrive = new RobotDrive(0, 1);
-		rDrive.arcadeDrive(0, 1);
+	}
+	
+	public void setLimit(double xValue, double yValue){
+		yLimit = yValue;
+		xLimit = xValue;
 	}
 	
 	public void arcadeDrive(double moveValue, double rotateValue, boolean squaredInputs) {
 
 	    double leftMotorSpeed;
 	    double rightMotorSpeed;
+	    moveValue *= yLimit;
+	    rotateValue *= xLimit;
 
 	    if (squaredInputs) {
 	      // square the inputs (while preserving the sign) to increase fine control
