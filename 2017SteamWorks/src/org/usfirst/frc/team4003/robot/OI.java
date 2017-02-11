@@ -5,6 +5,8 @@ import org.usfirst.frc.team4003.robot.commands.*;
 import org.usfirst.frc.team4003.robot.triggers.*;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 
 /**
@@ -17,12 +19,16 @@ public class OI {
 	Trigger trackingOn = new TrackingOn();
 	Trigger trackingOff = new TrackingOff();
 	Trigger toggleCamera = new ToggleCamera(); 
+	Button toggleSpeed = new JoystickButton(driver,4);
+	
 	public void buildTriggers() {
 		trackingOn.whenActive(new ToggleTracking(true));
 		trackingOff.whenActive(new ToggleTracking(false));
 		toggleCamera.whenActive(new ToggleCameraCommand());
 	}
+	
 	public OI() {
+		toggleSpeed.whenPressed(new GearChanger());
 	}
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
