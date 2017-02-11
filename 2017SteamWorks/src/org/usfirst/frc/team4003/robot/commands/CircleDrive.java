@@ -4,6 +4,7 @@ import org.usfirst.frc.team4003.robot.Robot;
 import org.usfirst.frc.team4003.robot.utilities.PID;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -34,9 +35,9 @@ public class CircleDrive extends Command {
         this.initAngle = initAngle;
         this.finalAngle = finalAngle;
         this.speed = speed;
-        radiusPID = new PID(0.05, 0.001, 0);
+        radiusPID = new PID(0.02, 0.0, 0);
         radiusPID.setTarget(radius);
-        headingPID = new PID(0.02, 0.005, 0);
+        headingPID = new PID(0.02, 0.0, 0);
         headingPID.setTarget(0);
         if (finalAngle > initAngle) {
         	direction = CCW;
@@ -68,14 +69,22 @@ public class CircleDrive extends Command {
     	double currentY = Robot.sensors.getYCoordinate();
     	double changeInX = currentX - centerX;
     	double changeInY = currentY - centerY;
+    	SmartDashboard.putNumber("centerX", centerX);
+    	SmartDashboard.putNumber("centerY", centerY);
+    	
     	double currentRadius = Math.sqrt(Math.pow(changeInX, 2) + Math.pow(changeInY, 2));
     	double heading = Robot.sensors.getYaw() + Robot.driveTrain.getSwitchCount() * 180;
     	currentAngle = normalizeAngle(Math.toDegrees(Math.atan2(changeInY, changeInX)), cutpoint);
+    	
+    	
     	double targetHeading;
     	if (direction == CCW) targetHeading = currentAngle + 90;
     	else targetHeading = currentAngle - 90;
+    	SmartDashboard.putNumber("targetHeading", targetHeading);
+    	SmartDashboard.putNumber("heading", heading);
     	double angleError = normalizeAngle(targetHeading - heading, -180);
-    	double correction = headingPID.getCorrection(angleError);
+    	double correction = -headingPID.getCorrection(angleError);
+    	
     	if (direction == CCW) correction -= radiusPID.getCorrection(currentRadius);
     	else correction += radiusPID.getCorrection(currentRadius);
     	
@@ -86,10 +95,12 @@ public class CircleDrive extends Command {
     		rightPower = leftPower;
     		leftPower = tmp;
     	}
+    	
     	leftPower -= correction;
     	leftPower = clip(leftPower, 0, 1);
     	rightPower += correction;
     	rightPower = clip(rightPower, 0, 1);
+    	
     	Robot.driveTrain.setPower(leftPower, rightPower);
     }
     
