@@ -30,22 +30,32 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	Scalar lowerHSV, upperHSV;
 	Thread tracking;
 	Object visionLock = new Object();
+
 	boolean trackingOn = true;
+
 	UsbCamera frontCam;
 	UsbCamera backCam;
 	UsbCamera visionCam;
+
 	boolean frontCamera = true;
 	double targetX = Double.NaN;
 	double targetY = Double.NaN;
 	public static Hashtable<String, Integer> cameraHash;
+
+
+	//TODO: Use these!
+	protected static final String GEAR_CAM = "C920";
+	protected static final String INTAKE_CAM = "046d:0825";
 	
 	public static void loadKeys() {
-		System.out.println("Loading TC...");
+		//TODO: Remove magic strings and make constants out of them.
 		cameraHash = new Hashtable<String, Integer>();
         cameraHash.put("C920", new Integer(-1));
         cameraHash.put("046d:0825", new Integer(-1));
+		/* The 'Tracking' camera isn't identified by a string in the name but rather USB port position.
+		 * but we stick the value of it here to keep things tidy.
+		 */
         cameraHash.put("Tracking", new Integer(-1));
-        System.out.println("Loaded!");
 	}
 	
 	public TrackingCamera() {         
@@ -59,28 +69,32 @@ public class TrackingCamera extends Subsystem implements Runnable {
          
                   
          // Set exposure with v4l2-ctl
-         // /usr/bin/v4l2-ctl --set-ctrl exposure_absolute=3
+         // example: /usr/bin/v4l2-ctl --set-ctrl exposure_absolute=3
          try {
+			//TODO: Remove magic strings and make constants out of them.
         	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("C920").toString() + " --set-ctrl exposure_auto=1");
         	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("046d:0825").toString() + "  --set-ctrl exposure_auto=1");
 			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("C920").toString() + "  --set-ctrl exposure_absolute=30");
 			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("046d:0825").toString() + "  --set-ctrl exposure_absolute=400");
+			// TODO: Set tracking camera exposures IF we have one.
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-         frontCam = new UsbCamera("front", cameraHash.get("C920"));
-         backCam = new UsbCamera("back", cameraHash.get("046d:0825"));  
+		//TODO: Strings.. I've created a monster.
+        frontCam = new UsbCamera("front", cameraHash.get("C920"));
+        backCam = new UsbCamera("back", cameraHash.get("046d:0825"));  
          
 	}
 	public void toggleCamera() {
-		synchronized(visionLock){		
+		synchronized(visionLock) {
 			frontCamera = !frontCamera;
 		}
 	}
+
 	public void trackingOn(boolean on) {
-		synchronized(visionLock){
+		synchronized(visionLock) {
 			trackingOn = on;
 			if(on == false) {
 				targetX = Double.NaN;
@@ -88,43 +102,55 @@ public class TrackingCamera extends Subsystem implements Runnable {
 			}
 		}
 	}
+
 	public boolean isTrackingOn() {
-		synchronized(visionLock){
+		synchronized(visionLock) {
 			return trackingOn;
 		}
 	}
+
 	public void startCamera() {
 		tracking.start();
 	}
+
 	public void run() {
-		//camera = CameraServer.getInstance().startAutomaticCapture("Camera", 0);
-		
         frontCam.setResolution(320,240);
         backCam.setResolution(320,240);
+
         frontCam.setFPS(20);
         backCam.setFPS(20);
-        //camera.setExposureManual(3);
+
         CameraServer.getInstance().addCamera(frontCam);
         CameraServer.getInstance().addCamera(backCam);
+
         CvSink frontSink = CameraServer.getInstance().getVideo(frontCam);
         CvSink backSink = CameraServer.getInstance().getVideo(backCam);
+
         CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320,240);
+
+		/* Grab the initial frame immediately.  There's a 1-2 second delay on getting that frame
+		 * so get it out of the way before we need anything.
+		 */
+
         frontSink.grabFrame(source);
         backSink.grabFrame(source);
+
         boolean localFrontCamera = true;
         while(true) {
-        	synchronized(visionLock){
+        	synchronized(visionLock) {
         		localFrontCamera = frontCamera;
         	}
+
         	double poseX = Robot.sensors.getXCoordinate();
         	double poseY = Robot.sensors.getYCoordinate();
         	double poseYaw = Robot.sensors.getYaw();
         	
-        	if(localFrontCamera){
+        	if (localFrontCamera) {
         		frontSink.grabFrame(source);
-        	}else {
+        	} else {
         		backSink.grabFrame(source);
         	}
+
             if (isTrackingOn()) {
             	Imgproc.cvtColor(source, hsv, Imgproc.COLOR_BGR2HSV);
                 Core.inRange(hsv, lowerHSV, upperHSV, mask);
@@ -151,32 +177,30 @@ public class TrackingCamera extends Subsystem implements Runnable {
                 }
             }
             outputStream.putFrame(source);
-            
         }
-        
-        /*
-        CameraServer.getInstance().removeCamera("Camera");
-        CameraServer.getInstance().removeServer("Blur");
-        */
 	}
-	public void setTarget(double x, double y){
-		synchronized(visionLock){
+
+	public void setTarget(double x, double y) {
+		synchronized(visionLock) {
 			targetX = x;
 			targetY = y;
 		}
 	}
-	public double[] getTarget(){
-		synchronized(visionLock){
+
+	public double[] getTarget() {
+		synchronized(visionLock) {
 			return new double[]{targetX, targetY};
 		}
 	}
-	public void analyzeFrontContours(ArrayList<MatOfPoint> contours, double poseX, double poseY, double poseYaw){
+
+	public void analyzeFrontContours(ArrayList<MatOfPoint> contours, double poseX, double poseY, double poseYaw) {
 		if(contours.size() < 2){
 			SmartDashboard.putNumber("angle", Double.NaN);
 			SmartDashboard.putNumber("distance", Double.NaN);
 			setTarget(Double.NaN, Double.NaN);
 			return;
 		}
+
 		MatOfPoint  bestOne = getBestContour(contours, .4);
 		contours.remove(bestOne);
 		MatOfPoint bestTwo = getBestContour(contours, .4);
@@ -200,13 +224,14 @@ public class TrackingCamera extends Subsystem implements Runnable {
 		SmartDashboard.putNumber("poseY", poseY);
 		SmartDashboard.putNumber("poseYaw", poseYaw);
 	}
-	public void analyzeBackContours(ArrayList<MatOfPoint> contours, double poseX, double poseY, double poseYaw){
-		
+
+	public void analyzeBackContours(ArrayList<MatOfPoint> contours, double poseX, double poseY, double poseYaw) {
 	}	
+
 	public MatOfPoint getBestContour(ArrayList<MatOfPoint> contours, double aspectRatio) {
 		double bestError = Math.abs(getAspectRatio(contours.get(0)) - aspectRatio);
 		MatOfPoint bestContour = contours.get(0);
-		for(int i = 1; i < contours.size(); i++){
+		for(int i = 1; i < contours.size(); i++) {
 			double currentError = Math.abs(getAspectRatio(contours.get(i)) - aspectRatio);
 			if(currentError < bestError){
 				bestError = currentError;
@@ -217,7 +242,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	}
 	public double getAspectRatio(MatOfPoint contour) {
 		Rect bbox = Imgproc.boundingRect(contour);
-		return bbox.width/(double)bbox.height;
+		return bbox.width / (double)bbox.height;
 	}
 	
     public void initDefaultCommand() {
