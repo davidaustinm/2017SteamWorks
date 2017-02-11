@@ -1,9 +1,14 @@
 package org.usfirst.frc.team4003.robot.subsystems;
 
+import org.usfirst.frc.team4003.robot.commands.ArcadeDrive;
 import org.usfirst.frc.team4003.robot.commands.TankDrive;
 
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.hal.HAL;
+import edu.wpi.first.wpilibj.hal.FRCNetComm.tInstances;
+import edu.wpi.first.wpilibj.hal.FRCNetComm.tResourceType;
 
 /**
  *
@@ -25,6 +30,53 @@ public class TalonDriveTrain extends Subsystem {
 		left2.set(left);
 		right1.set(right);
 		right2.set(right);
+		
+		RobotDrive rDrive = new RobotDrive(0, 1);
+		rDrive.arcadeDrive(0, 1);
+	}
+	
+	public void arcadeDrive(double moveValue, double rotateValue, boolean squaredInputs) {
+
+	    double leftMotorSpeed;
+	    double rightMotorSpeed;
+
+	    if (squaredInputs) {
+	      // square the inputs (while preserving the sign) to increase fine control
+	      // while permitting full power
+	      if (moveValue >= 0.0) {
+	        moveValue = moveValue * moveValue;
+	      } else {
+	        moveValue = -(moveValue * moveValue);
+	      }
+	      if (rotateValue >= 0.0) {
+	        rotateValue = rotateValue * rotateValue;
+	      } else {
+	        rotateValue = -(rotateValue * rotateValue);
+	      }
+	    }
+
+	    if (moveValue > 0.0) {
+	      if (rotateValue > 0.0) {
+	        leftMotorSpeed = moveValue - rotateValue;
+	        rightMotorSpeed = Math.max(moveValue, rotateValue);
+	      } else {
+	        leftMotorSpeed = Math.max(moveValue, -rotateValue);
+	        rightMotorSpeed = moveValue + rotateValue;
+	      }
+	    } else {
+	      if (rotateValue > 0.0) {
+	        leftMotorSpeed = -Math.max(-moveValue, rotateValue);
+	        rightMotorSpeed = moveValue + rotateValue;
+	      } else {
+	        leftMotorSpeed = moveValue - rotateValue;
+	        rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
+	      }
+	    }
+	    
+	    left1.set(leftMotorSpeed);
+	    left2.set(leftMotorSpeed);
+	    right1.set(rightMotorSpeed);
+	    right2.set(rightMotorSpeed);
 	}
 	
 	public void switchDirection(){
@@ -49,7 +101,7 @@ public class TalonDriveTrain extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new TankDrive());
+        setDefaultCommand(new ArcadeDrive());
     	
     }
 }
