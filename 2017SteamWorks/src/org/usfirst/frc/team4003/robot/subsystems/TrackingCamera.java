@@ -35,7 +35,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 
 	UsbCamera frontCam;
 	UsbCamera backCam;
-	UsbCamera visionCam;
+	UsbCamera trackingCam;
 
 	boolean frontCamera = true;
 	double targetX = Double.NaN;
@@ -46,12 +46,13 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	//TODO: Use these!
 	protected static final String GEAR_CAM = "C920";
 	protected static final String INTAKE_CAM = "046d:0825";
+	protected static final String TRACKING_CAM = "Tracking";
 	
 	public static void loadKeys() {
 		//TODO: Remove magic strings and make constants out of them.
 		cameraHash = new Hashtable<String, Integer>();
-        cameraHash.put("C920", new Integer(-1));
-        cameraHash.put("046d:0825", new Integer(-1));
+        cameraHash.put(GEAR_CAM, new Integer(-1));
+        cameraHash.put(INTAKE_CAM, new Integer(-1));
 		/* The 'Tracking' camera isn't identified by a string in the name but rather USB port position.
 		 * but we stick the value of it here to keep things tidy.
 		 */
@@ -63,29 +64,32 @@ public class TrackingCamera extends Subsystem implements Runnable {
          hsv = new Mat();
          mask = new Mat();
          hierarchy = new Mat();
-         lowerHSV = new Scalar(0,108,94);
-         upperHSV = new Scalar(32,206,255);
+         lowerHSV = new Scalar(40,0,60);
+         upperHSV = new Scalar(180,360,300);
          tracking = new Thread(this);
          
                   
          // Set exposure with v4l2-ctl
          // example: /usr/bin/v4l2-ctl --set-ctrl exposure_absolute=3
          try {
-			//TODO: Remove magic strings and make constants out of them.
-        	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("C920").toString() + " --set-ctrl exposure_auto=1");
-        	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("046d:0825").toString() + "  --set-ctrl exposure_auto=1");
-			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("C920").toString() + "  --set-ctrl exposure_absolute=30");
-			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("046d:0825").toString() + "  --set-ctrl exposure_absolute=400");
+        	if (cameraHash.get(TRACKING_CAM).intValue() > 0){
+        		Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("Tracking").toString() + " --set-ctrl exposure_auto=1");
+        		Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get("Tracking").toString() + "  --set-ctrl exposure_absolute=2047");
+        		trackingCam = new UsbCamera("track", cameraHash.get(TRACKING_CAM));
+        	}
+        	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get(GEAR_CAM).toString() + " --set-ctrl exposure_auto=1");
+        	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get(INTAKE_CAM).toString() + "  --set-ctrl exposure_auto=1");
+			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get(GEAR_CAM).toString() + "  --set-ctrl exposure_absolute=30");
+			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get(INTAKE_CAM).toString() + "  --set-ctrl exposure_absolute=400");
 			// TODO: Set tracking camera exposures IF we have one.
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//TODO: Strings.. I've created a monster.
-        frontCam = new UsbCamera("front", cameraHash.get("C920"));
-        backCam = new UsbCamera("back", cameraHash.get("046d:0825"));  
-         
+        frontCam = new UsbCamera("front", cameraHash.get(GEAR_CAM));
+        backCam = new UsbCamera("back", cameraHash.get(INTAKE_CAM));  
+                 
 	}
 	public void toggleCamera() {
 		synchronized(visionLock) {
@@ -114,7 +118,16 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	}
 
 	public void run() {
-        frontCam.setResolution(320,240);
+		CvSink trackingSink = null;
+		if (isTrackingLocal()) {
+	        trackingCam.setResolution(320, 240);
+	        trackingCam.setFPS(20);
+	        CameraServer.getInstance().addCamera(trackingCam);
+	        trackingSink = CameraServer.getInstance().getVideo(trackingCam);
+	        trackingSink.grabFrame(source);
+		}
+
+		frontCam.setResolution(320,240);
         backCam.setResolution(320,240);
 
         frontCam.setFPS(20);
@@ -135,22 +148,25 @@ public class TrackingCamera extends Subsystem implements Runnable {
         frontSink.grabFrame(source);
         backSink.grabFrame(source);
 
+
         boolean localFrontCamera = true;
         while(true) {
         	synchronized(visionLock) {
         		localFrontCamera = frontCamera;
         	}
-
         	double poseX = Robot.sensors.getXCoordinate();
         	double poseY = Robot.sensors.getYCoordinate();
         	double poseYaw = Robot.sensors.getYaw();
-        	
-        	if (localFrontCamera) {
-        		frontSink.grabFrame(source);
+        	if (isTrackingOn() && isTrackingLocal()) {
+        		trackingSink.grabFrame(source);
         	} else {
-        		backSink.grabFrame(source);
+        		if (localFrontCamera) {
+            		
+            		frontSink.grabFrame(source);
+            	} else {
+            		backSink.grabFrame(source);
+            	}
         	}
-
             if (isTrackingOn()) {
             	Imgproc.cvtColor(source, hsv, Imgproc.COLOR_BGR2HSV);
                 Core.inRange(hsv, lowerHSV, upperHSV, mask);
@@ -170,14 +186,14 @@ public class TrackingCamera extends Subsystem implements Runnable {
                     //Imgproc.drawContours(source, contours, i, new Scalar(255,0,0),3);
                     Imgproc.contourArea(contours.get(i));
                 }
-                if(localFrontCamera) {
-                	analyzeFrontContours(contours, poseX, poseY, poseYaw);
-                }else {
-                	analyzeBackContours(contours, poseX, poseY, poseYaw);
-                }
+              	analyzeFrontContours(contours, poseX, poseY, poseYaw);
             }
             outputStream.putFrame(source);
         }
+	}
+	
+	protected boolean isTrackingLocal() {
+		return cameraHash.get(TRACKING_CAM).intValue() > 0;
 	}
 
 	public void setTarget(double x, double y) {

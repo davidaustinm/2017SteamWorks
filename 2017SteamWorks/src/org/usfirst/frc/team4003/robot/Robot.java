@@ -134,17 +134,6 @@ public class Robot extends IterativeRobot {
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
-		
-		/* JJB: Not sure if this is how we're going to determine how to flip between local and pi
-		 * camera vision.  I forgot what I was thinking here.  Revisit on 2017-02-11 
-		 */
-		File cam3 = new File("/dev/video2");
-		if (cam3.exists()) {
-			// Track targets on roboRIO.
-			SmartDashboard.putString("Tracking Status", "roboRio");
-		} else {
-			SmartDashboard.putString("Tracking Status", "RasPi");
-		}
 			
 		autonomousCommand = new DriveToMiddleLift();
 		if (autonomousCommand != null)
