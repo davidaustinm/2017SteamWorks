@@ -176,6 +176,12 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		sensors.updatePosition();
+		NetworkTable robotData = NetworkTable.getTable("robotData");
+		robotData.putNumber("robotX", sensors.getXCoordinate());
+		robotData.putNumber("robotY", sensors.getYCoordinate());
+		robotData.putNumber("robotYaw", sensors.getYaw());
+		SmartDashboard.putNumber("PiTargetX", robotData.getNumber("targetX", Double.NaN));
+		SmartDashboard.putNumber("PiTargetY", robotData.getNumber("targetY", Double.NaN));
 		SmartDashboard.putNumber("X Coordinate", sensors.getXCoordinate());
 		SmartDashboard.putNumber("Y Coordinate", sensors.getYCoordinate());
 		SmartDashboard.putNumber("shooterspeed", shooter.getSpeed());

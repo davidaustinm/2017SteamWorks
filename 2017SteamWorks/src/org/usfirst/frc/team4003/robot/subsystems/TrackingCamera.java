@@ -169,7 +169,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
             		backSink.grabFrame(source);
             	}
         	}
-            if (isTrackingOn()) {
+            if (isTrackingOn() && isTrackingLocal()) {
             	Imgproc.cvtColor(source, hsv, Imgproc.COLOR_BGR2HSV);
                 Core.inRange(hsv, lowerHSV, upperHSV, mask);
                 ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
