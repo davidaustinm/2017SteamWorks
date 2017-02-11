@@ -6,6 +6,7 @@ import java.util.Enumeration;
 import java.util.Set;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -29,6 +30,7 @@ public class Robot extends IterativeRobot {
 	public static final TalonDriveTrain driveTrain = new TalonDriveTrain();
 	public static final Sensors sensors = new Sensors();
 	public static final ShooterSubsystem shooter = new ShooterSubsystem();
+	public static final Pneunamatics solenoid = new Pneunamatics();
 	public static OI oi;
 	public static TrackingCamera trackingCamera;
 	Command autonomousCommand;
@@ -40,6 +42,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		Compressor c = new Compressor(0);
+		c.setClosedLoopControl(true);
+		c.start();
 		
 		oi = new OI();
 		oi.buildTriggers();

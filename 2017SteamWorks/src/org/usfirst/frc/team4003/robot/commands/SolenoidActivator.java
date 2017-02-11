@@ -2,33 +2,31 @@ package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class GearChanger extends Command {
+public class SolenoidActivator extends Command {
 	boolean toggled;
 
-    public GearChanger() {
-    	toggled = false;
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.driveTrain);
+    public SolenoidActivator(boolean toggled) {
+    	this.toggled = toggled;
+    	requires(Robot.solenoid);
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
     	if(!toggled){
-    		Robot.driveTrain.setLimit(.5, .5);
-    		toggled = true;
+    		Robot.solenoid.exampleDouble.set(DoubleSolenoid.Value.kForward);
     	} else{
-    		Robot.driveTrain.setLimit(1, 1);
-    		toggled = false;
+    		Robot.solenoid.exampleDouble.set(DoubleSolenoid.Value.kReverse);
     	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

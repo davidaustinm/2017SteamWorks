@@ -19,7 +19,9 @@ public class OI {
 	Trigger trackingOn = new TrackingOn();
 	Trigger trackingOff = new TrackingOff();
 	Trigger toggleCamera = new ToggleCamera(); 
-	Button toggleSpeed = new JoystickButton(driver,4);
+	//Button toggleSpeed = new JoystickButton(driver,);
+	Button toggleSolenoidOFF = new JoystickButton(driver,6);
+	Button toggleSolenoidON = new JoystickButton(driver,5);
 	
 	public void buildTriggers() {
 		trackingOn.whenActive(new ToggleTracking(true));
@@ -28,7 +30,9 @@ public class OI {
 	}
 	
 	public OI() {
-		toggleSpeed.whenPressed(new GearChanger());
+		//toggleSpeed.whenPressed(new GearChanger());
+		toggleSolenoidOFF.whenPressed(new SolenoidActivator(true));
+		toggleSolenoidON.whenPressed(new SolenoidActivator(false));
 	}
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
