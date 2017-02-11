@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.networktables.*;
 
 import org.usfirst.frc.team4003.robot.commands.*;
 import org.usfirst.frc.team4003.robot.subsystems.*;
@@ -151,6 +152,10 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		sensors.updatePosition();
+		NetworkTable robotData = NetworkTable.getTable("robotData");
+		robotData.putNumber("robotX", sensors.getXCoordinate());
+		robotData.putNumber("robotY", sensors.getYCoordinate());
+		robotData.putNumber("robotYaw", sensors.getYaw());
 		SmartDashboard.putNumber("X Coordinate", sensors.getXCoordinate());
 		SmartDashboard.putNumber("Y Coordinate", sensors.getYCoordinate());
 		Scheduler.getInstance().run();
@@ -176,6 +181,12 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		sensors.updatePosition();
+		NetworkTable robotData = NetworkTable.getTable("robotData");
+		robotData.putNumber("robotX", sensors.getXCoordinate());
+		robotData.putNumber("robotY", sensors.getYCoordinate());
+		robotData.putNumber("robotYaw", sensors.getYaw());
+		SmartDashboard.putNumber("PiTargetX", robotData.getNumber("targetX", Double.NaN));
+		SmartDashboard.putNumber("PiTargetY", robotData.getNumber("targetY", Double.NaN));
 		SmartDashboard.putNumber("X Coordinate", sensors.getXCoordinate());
 		SmartDashboard.putNumber("Y Coordinate", sensors.getYCoordinate());
 		SmartDashboard.putNumber("shooterspeed", shooter.getSpeed());
