@@ -17,6 +17,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -43,11 +44,12 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	public static Hashtable<String, Integer> cameraHash;
 
 
-	//TODO: Use these!
 	protected static final String GEAR_CAM = "C920";
 	protected static final String INTAKE_CAM = "046d:0825";
 	protected static final String TRACKING_CAM = "Tracking";
-	
+
+	protected NetworkTable rdt = NetworkTable.getTable("robotData");
+
 	public static void loadKeys() {
 		//TODO: Remove magic strings and make constants out of them.
 		cameraHash = new Hashtable<String, Integer>();
@@ -200,11 +202,15 @@ public class TrackingCamera extends Subsystem implements Runnable {
 		synchronized(visionLock) {
 			targetX = x;
 			targetY = y;
+			rdt.putNumber("targetX", x);
+			rdt.putNumber("targetY", y);
 		}
 	}
 
 	public double[] getTarget() {
 		synchronized(visionLock) {
+			targetX = rdt.getNumber("targetX", Double.NaN);
+			targetY = rdt.getNumber("targetY", Double.NaN);
 			return new double[]{targetX, targetY};
 		}
 	}
