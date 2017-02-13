@@ -48,7 +48,6 @@ public class Robot extends IterativeRobot {
 		c.start();
 		
 		oi = new OI();
-		oi.buildTriggers();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		

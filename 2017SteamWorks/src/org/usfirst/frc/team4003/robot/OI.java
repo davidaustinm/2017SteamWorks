@@ -16,23 +16,22 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
 public class OI {
 	public XboxController driver = new XboxController(0);
 	public XboxController operator = new XboxController(1);
-	Trigger trackingOn = new TrackingOn();
-	Trigger trackingOff = new TrackingOff();
-	Trigger toggleCamera = new ToggleCamera(); 
-	//Button toggleSpeed = new JoystickButton(driver,);
-	Button toggleSolenoidOFF = new JoystickButton(driver,6);
-	Button toggleSolenoidON = new JoystickButton(driver,5);
 	
-	public void buildTriggers() {
-		trackingOn.whenActive(new ToggleTracking(true));
-		trackingOff.whenActive(new ToggleTracking(false));
-		toggleCamera.whenActive(new ToggleCameraCommand());
-	}
+	//Button toggleSpeed = new JoystickButton(driver,);
+	XboxTrigger toggleSolenoidOFF = new XboxTrigger(driver, XboxTrigger.LB);
+	XboxTrigger toggleSolenoidON = new XboxTrigger(driver, XboxTrigger.RB);
+	XboxTrigger trackingOn = new XboxTrigger(driver, XboxTrigger.A);
+	XboxTrigger trackingOff = new XboxTrigger(driver, XboxTrigger.B);
+	XboxTrigger toggleCamera = new XboxTrigger(driver, XboxTrigger.X);
 	
 	public OI() {
 		//toggleSpeed.whenPressed(new GearChanger());
-		toggleSolenoidOFF.whenPressed(new SolenoidActivator(true));
-		toggleSolenoidON.whenPressed(new SolenoidActivator(false));
+		toggleSolenoidOFF.whenActive(new SolenoidActivator(true));
+		toggleSolenoidON.whenActive(new SolenoidActivator(false));
+		trackingOn.whenActive(new ToggleTracking(true));
+		trackingOff.whenActive(new ToggleTracking(false));
+		toggleCamera.whenActive(new ToggleCameraCommand());
+		
 	}
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
