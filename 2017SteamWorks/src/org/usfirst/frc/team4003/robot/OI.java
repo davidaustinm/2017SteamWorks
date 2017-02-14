@@ -23,6 +23,12 @@ public class OI {
 	XboxTrigger trackingOn = new XboxTrigger(driver, XboxTrigger.A);
 	XboxTrigger trackingOff = new XboxTrigger(driver, XboxTrigger.B);
 	XboxTrigger toggleCamera = new XboxTrigger(driver, XboxTrigger.X);
+	XboxTrigger shiftHigh = new XboxTrigger(driver, XboxTrigger.DPADRIGHT);
+	XboxTrigger shiftLow = new XboxTrigger(driver, XboxTrigger.DPADLEFT);
+	XboxTrigger flipperOn = new XboxTrigger(operator, XboxTrigger.DPADRIGHT);
+	XboxTrigger reentryOn = new XboxTrigger(operator, XboxTrigger.DPADLEFT);
+	XboxTrigger gearReleaseOpen = new XboxTrigger(operator, XboxTrigger.A);
+	XboxTrigger gearReleaseClose = new XboxTrigger(operator, XboxTrigger.Y);
 	
 	public OI() {
 		//toggleSpeed.whenPressed(new GearChanger());
@@ -31,6 +37,12 @@ public class OI {
 		trackingOn.whenActive(new ToggleTracking(true));
 		trackingOff.whenActive(new ToggleTracking(false));
 		toggleCamera.whenActive(new ToggleCameraCommand());
+		shiftHigh.whenActive(new ShiftToggle(true));
+		shiftLow.whenActive(new ShiftToggle(false));
+		flipperOn.whenActive(new IntakeValveToggle(RobotMap.INTAKEFLIPPER, true));
+		reentryOn.whenActive(new IntakeValveToggle(RobotMap.INTAKEREENTRY, true));
+		gearReleaseOpen.whenActive(new GearReleaseToggle(true));
+		gearReleaseClose.whenActive(new GearReleaseToggle(false));
 		
 	}
 	//// CREATING BUTTONS

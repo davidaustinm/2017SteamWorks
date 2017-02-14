@@ -27,15 +27,53 @@ import org.usfirst.frc.team4003.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	public static final TalonDriveTrain driveTrain = new TalonDriveTrain();
-	public static final Sensors sensors = new Sensors();
-	public static final ShooterSubsystem shooter = new ShooterSubsystem();
-	public static final Pneunamatics solenoid = new Pneunamatics();
+	public static ExampleSubsystem exampleSubsystem;
+	public static TalonDriveTrain driveTrain;
+	public static Sensors sensors;
+	public static ShooterSubsystem shooter;
+	public static Pneunamatics solenoid;;
+	public static ShifterSubsystem gearShifter;
+	public static IntakeValves intakeValves;
+	public static GearReleaseSubsystem gearRelease;
+	public static BeaterSubsystem beaters;
+	public static ReentryFeedSubsystem intakeFeed;
+	public static ClimbDrumSubsystem climbDrum;
+	
+	public static GearReleaseCommand gearReleaseCommand;
+	public static IntakeValueCommand intakeValveCommand;
+	public static GearShiftCommand gearShiftCommand;
+	
 	public static OI oi;
 	public static TrackingCamera trackingCamera;
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
+	
+	static {
+		driveTrain = new TalonDriveTrain();
+		sensors = new Sensors();
+		shooter = new ShooterSubsystem();
+		solenoid = new Pneunamatics();
+		
+		intakeFeed = new ReentryFeedSubsystem();
+		climbDrum = new ClimbDrumSubsystem();
+		/* 
+	
+		beaters = new BeaterSubsystem();
+
+		gearRelease = new GearRelease();
+		gearReleaseCommand = new GearReleaseCommand();
+		gearReleaseCommand.start();
+		
+		intakeValves = new IntakeValves();
+		intakeValveCommand = new IntakeValueCommand();
+		intakeValveCommand.start();
+		
+		gearShifter = new ShifterSubsystem();
+		gearShiftCommand = new GearShiftCommand();
+		gearShiftCommand.start();
+		*/
+		
+	}
 
 	/**
 	 * This function is run when the robot is first started up and should be
