@@ -1,5 +1,7 @@
 package org.usfirst.frc.team4003.robot.subsystems;
 
+import org.usfirst.frc.team4003.robot.RobotMap;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -37,9 +39,9 @@ public class Sensors extends Subsystem {
 	}
 	
 	public Sensors (){
-		leftDrive = new Encoder(0,1);
+		leftDrive = new Encoder(RobotMap.LEFTDRIVEENCODERA, RobotMap.LEFTDRIVEENCODERB);
 		leftDrive.setReverseDirection(true);
-		rightDrive = new Encoder(2,3);
+		rightDrive = new Encoder(RobotMap.RIGHTDRIVEENCODERA, RobotMap.RIGHTDRIVEENCODERB);
 		navX = new AHRS(SerialPort.Port.kMXP);
 	}
 	

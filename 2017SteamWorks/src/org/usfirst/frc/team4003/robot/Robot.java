@@ -54,10 +54,11 @@ public class Robot extends IterativeRobot {
 		shooter = new ShooterSubsystem();
 		solenoid = new Pneunamatics();
 		
-		intakeFeed = new ReentryFeedSubsystem();
-		climbDrum = new ClimbDrumSubsystem();
+		
 		/* 
 	
+		intakeFeed = new ReentryFeedSubsystem();
+		climbDrum = new ClimbDrumSubsystem();
 		beaters = new BeaterSubsystem();
 
 		gearRelease = new GearRelease();
