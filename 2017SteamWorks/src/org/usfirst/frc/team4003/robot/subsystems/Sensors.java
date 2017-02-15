@@ -25,7 +25,7 @@ public class Sensors extends Subsystem {
 	
 	static final int BLUE = 1;
 	static final int RED = 2;
-	public int allianceColor = BLUE;
+	public int allianceColor = RED;
 	
 	public void setAllianceColor(int color){
 		allianceColor = color;

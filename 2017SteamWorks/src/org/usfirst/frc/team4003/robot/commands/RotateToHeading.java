@@ -17,6 +17,7 @@ public class RotateToHeading extends Command {
     public RotateToHeading(double degrees, double leftSpeed, double rightSpeed) {
     	this.degrees = degrees;
     	headingPID.setTarget(degrees);
+    	//headingPID.setTarget(0);
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
         this.leftSpeed = leftSpeed;
@@ -26,9 +27,16 @@ public class RotateToHeading extends Command {
     	this(degrees, leftSpeed, rightSpeed);
     	this.coast = coast;
     }
+    
+    public double normalizeAngle(double x) {
+    	while (x > 180) x -= 360;
+    	while (x < -180) x += 360;
+    	return x;
+    }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	double error = normalizeAngle(degrees - Robot.sensors.getYaw());
     	double correction = headingPID.getCorrection(Robot.sensors.getYaw());
     	if (correction > 1) correction = 1;
     	if (correction < -1) correction = -1;

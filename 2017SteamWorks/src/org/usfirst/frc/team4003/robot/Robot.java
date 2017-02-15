@@ -27,7 +27,7 @@ import org.usfirst.frc.team4003.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
-	public static ExampleSubsystem exampleSubsystem;
+	public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static TalonDriveTrain driveTrain;
 	public static Sensors sensors;
 	public static ShooterSubsystem shooter;
@@ -47,12 +47,13 @@ public class Robot extends IterativeRobot {
 	public static TrackingCamera trackingCamera;
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
+	AutonSelector autonSelector = new AutonSelector();
 	
 	static {
 		driveTrain = new TalonDriveTrain();
 		sensors = new Sensors();
 		shooter = new ShooterSubsystem();
-		solenoid = new Pneunamatics();
+		//solenoid = new Pneunamatics();
 		
 		
 		/* 
@@ -89,7 +90,6 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		
 		SmartDashboard.putData("Auto mode", chooser);
 		TrackingCamera.loadKeys();
 		try {
@@ -150,6 +150,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		autonSelector.update();
 	}
 
 	/**
@@ -179,7 +180,7 @@ public class Robot extends IterativeRobot {
 		sensors.resetPosition();
 		sensors.resetYaw();
 			
-		autonomousCommand = new DriveToMiddleLift();
+		autonomousCommand = new DriveToRightLift();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}

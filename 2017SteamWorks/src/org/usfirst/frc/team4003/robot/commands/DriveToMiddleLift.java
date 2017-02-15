@@ -12,24 +12,30 @@ public class DriveToMiddleLift extends CommandGroup {
 
     public DriveToMiddleLift() {
     	if(Robot.sensors.isAllianceColorRed()){
-    		addSequential(new DriveToPoint(81,0, new Acceleration(.2,.50,.04),false, 20));
-        	//addSequential(new DriveToTarget(new Acceleration(.2,.6,0), 10));
+    		
+    		addSequential(new DriveToPoint(81,0, new Acceleration(.2,.5,.04),false, 20));
+        	//addSequential(new DriveToTarget(new Acceleration(.2,.3,0), 10));
         	addSequential(new WaitForTime(1500));
         	addSequential(new SwitchDirection());
-        	addSequential(new DriveForwardForDistance(45,.4));
+        	addSequential(new DriveForwardForDistance(10, 0.2));
+        	addSequential(new CircleDrive(45, 270, 90, 0.30));
+        	/*
+        	addSequential(new DriveForwardForDistance(65,.4));
         	addSequential(new SwitchDirection());
-        	addSequential(new RotateToHeading(65,0,.3));
-        	addSequential(new DriveForwardForDistance(22,.4));
-        	addSequential(new DriveToPoint(162,112, new Acceleration(.1,.35,.04),false,0));
-        	addSequential(new RotateToHeading(90,0,.4));
+        	addSequential(new RotateToHeading(-75,.4,0));
+        	addSequential(new DriveForwardForDistance(34,.4));
+        	*/
+        	addSequential(new DriveBackToPoint(162,112, new Acceleration(.1,.45,.04),true,5));
+        	addSequential(new RotateToHeading(-90,0,.4));
         	addSequential(new DriveForwardForDistance(15,.4));
+        	
     	} else {
     		addSequential(new DriveToPoint(81,0, new Acceleration(.2,.5,.04),false, 20));
         	//addSequential(new DriveToTarget(new Acceleration(.2,.3,0), 10));
         	addSequential(new WaitForTime(1500));
         	addSequential(new SwitchDirection());
         	addSequential(new DriveForwardForDistance(10, 0.2));
-        	addSequential(new CircleDrive(45, 90, 270, 0.3));
+        	addSequential(new CircleDrive(45, 90, 270, 0.35));
         	/*
         	addSequential(new DriveForwardForDistance(65,.4));
         	addSequential(new SwitchDirection());
@@ -37,7 +43,7 @@ public class DriveToMiddleLift extends CommandGroup {
         	addSequential(new DriveForwardForDistance(34,.4));
         	*/
         	addSequential(new DriveBackToPoint(162,-112, new Acceleration(.1,.45,.04),true,5));
-        	addSequential(new RotateToHeading(-90,.4,0));
+        	addSequential(new RotateToHeading(90,.4,0));
         	addSequential(new DriveForwardForDistance(15,.4));
         	
     	}

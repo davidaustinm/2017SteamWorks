@@ -37,7 +37,7 @@ public class CircleDrive extends Command {
         this.speed = speed;
         radiusPID = new PID(0.02, 0.0, 0);
         radiusPID.setTarget(radius);
-        headingPID = new PID(0.02, 0.0, 0);
+        headingPID = new PID(0.03, 0.0, 0);
         headingPID.setTarget(0);
         if (finalAngle > initAngle) {
         	direction = CCW;
@@ -112,8 +112,8 @@ public class CircleDrive extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if (direction == CCW) return currentAngle > finalAngle;
-        return currentAngle < finalAngle;
+    	if (direction == CCW) return currentAngle > finalAngle-5;
+        return currentAngle < finalAngle+5;
     }
 
     // Called once after isFinished returns true

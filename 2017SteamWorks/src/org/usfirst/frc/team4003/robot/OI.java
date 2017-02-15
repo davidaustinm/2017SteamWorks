@@ -32,18 +32,21 @@ public class OI {
 	
 	public OI() {
 		//toggleSpeed.whenPressed(new GearChanger());
-		toggleSolenoidOFF.whenActive(new SolenoidActivator(true));
-		toggleSolenoidON.whenActive(new SolenoidActivator(false));
+		
+		//toggleSolenoidOFF.whenActive(new SolenoidActivator(true));
+		//toggleSolenoidON.whenActive(new SolenoidActivator(false));
 		trackingOn.whenActive(new ToggleTracking(true));
 		trackingOff.whenActive(new ToggleTracking(false));
 		toggleCamera.whenActive(new ToggleCameraCommand());
+		
+		/*
 		shiftHigh.whenActive(new ShiftToggle(true));
 		shiftLow.whenActive(new ShiftToggle(false));
 		flipperOn.whenActive(new IntakeValveToggle(RobotMap.INTAKEFLIPPER, true));
 		reentryOn.whenActive(new IntakeValveToggle(RobotMap.INTAKEREENTRY, true));
 		gearReleaseOpen.whenActive(new GearReleaseToggle(true));
 		gearReleaseClose.whenActive(new GearReleaseToggle(false));
-		
+		*/
 	}
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a
