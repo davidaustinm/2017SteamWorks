@@ -87,6 +87,7 @@ public class REVDigitBoard {
     	chars = new byte[10];
 	}
 	
+/*
 	public void display(String text) {
 		clear();
 		
@@ -103,6 +104,61 @@ public class REVDigitBoard {
 		i2c.writeBulk(chars);
 		Timer.delay(.1);
 	}
+
+	public void display(String text) {
+		clear();
+
+		text = text.toUpperCase();
+		// Add spaces until we get a string 4 chars long.
+		while (text.length() < 4) text += " ";
+
+		// Uh, duh... obviously... 
+		chars[0] = (byte)(0b00001111);
+		chars[1] = (byte)(0b00001111);
+		// Fourth character goes into bytes 2 and 3
+		chars[2] = charRegistry.get(text.charAt(3))[0];
+		chars[3] = charRegistry.get(text.charAt(3))[1];
+		// Third character goes into bytes 4 and 5
+		chars[4] = charRegistry.get(text.charAt(2))[0];
+		chars[5] = charRegistry.get(text.charAt(2))[1];
+
+		// Second character goes into bytes 6 and 7 
+		chars[6] = charRegistry.get(text.charAt(1))[0];
+		chars[7] = charRegistry.get(text.charAt(1))[1];
+		// First character goes into bytes 8 and 9
+		chars[8] = charRegistry.get(text.charAt(0))[0];
+		chars[9] = charRegistry.get(text.charAt(0))[1];
+
+		i2c.writeBulk(chars);
+		Timer.delay(.1);
+	}
+*/
+
+	public void display(String text) {
+		clear();
+
+		text = text.toUpperCase();
+		// Add spaces until we get a string 4 chars long.
+		while (text.length() < 4) text += " ";
+
+		// Uh, duh... obviously... 
+		chars[0] = (byte)(0b00001111);
+		chars[1] = (byte)(0b00001111);
+
+		// Loop from the 4th char in the string back to the beginning
+		// pushing the byte data into the chars[] array starting at position 2.
+		int charPos = 2;
+		for(int i = 3; i >= 0; i--) {
+			byte[] charData = charRegistry.get(text.charAt(i));
+			chars[charPos + 0] = charData[0];
+			chars[charPos + 1] = charData[1];
+			charPos += 2;
+		}
+
+		i2c.writeBulk(chars);
+		Timer.delay(.1);
+	}
+
 	
 	public void clear() {
 		for(int c = 0; c < 10; c++) {
