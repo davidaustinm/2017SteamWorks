@@ -26,7 +26,7 @@ public class OI {
 	XboxTrigger shiftHigh = new XboxTrigger(driver, XboxTrigger.DPADRIGHT);
 	XboxTrigger shiftLow = new XboxTrigger(driver, XboxTrigger.DPADLEFT);
 	XboxTrigger flipperOn = new XboxTrigger(operator, XboxTrigger.DPADRIGHT);
-	XboxTrigger reentryOn = new XboxTrigger(operator, XboxTrigger.DPADLEFT);
+	XboxTrigger reentryOn = new XboxTrigger(driver, XboxTrigger.DPADLEFT);
 	XboxTrigger gearReleaseOpen = new XboxTrigger(operator, XboxTrigger.A);
 	XboxTrigger gearReleaseClose = new XboxTrigger(operator, XboxTrigger.Y);
 	
@@ -43,10 +43,11 @@ public class OI {
 		shiftHigh.whenActive(new ShiftToggle(true));
 		shiftLow.whenActive(new ShiftToggle(false));
 		flipperOn.whenActive(new IntakeValveToggle(RobotMap.INTAKEFLIPPER, true));
-		reentryOn.whenActive(new IntakeValveToggle(RobotMap.INTAKEREENTRY, true));
+		
 		gearReleaseOpen.whenActive(new GearReleaseToggle(true));
 		gearReleaseClose.whenActive(new GearReleaseToggle(false));
 		*/
+		reentryOn.whenActive(new IntakeValveToggle(RobotMap.INTAKEREENTRY, true));
 	}
 	//// CREATING BUTTONS
 	// One type of button is a joystick button which is any button on a

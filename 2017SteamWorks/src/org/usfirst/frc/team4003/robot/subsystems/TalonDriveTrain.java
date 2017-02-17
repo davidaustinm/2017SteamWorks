@@ -3,6 +3,8 @@ package org.usfirst.frc.team4003.robot.subsystems;
 import org.usfirst.frc.team4003.robot.commands.ArcadeDrive;
 import org.usfirst.frc.team4003.robot.commands.TankDrive;
 
+import com.ctre.CANTalon;
+
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -14,27 +16,34 @@ import edu.wpi.first.wpilibj.hal.FRCNetComm.tResourceType;
  *
  */
 public class TalonDriveTrain extends Subsystem {
-	Talon left1, left2, right1, right2;
+	CANTalon left1, left2, left3, right1, right2, right3;
 	int switchCount = 0;
 	double yLimit, xLimit;
 	
 	public TalonDriveTrain() {
-		left1 = new Talon(0);
-		left2 = new Talon(1);
-		right1 = new Talon(2);
+		left1 = new CANTalon(3);
+		left2 = new CANTalon(4);
+		left3 = new CANTalon(5);
+		right1 = new CANTalon(0);
 		right1.setInverted(true);
-		right2 = new Talon(3);
+		right2 = new CANTalon(1);
 		right2.setInverted(true);
+		right3 = new CANTalon(2);
+		right3.setInverted(true);
 		
 		yLimit = 1;
 		xLimit = 1;
 	}
 	
 	public void setPower(double left, double right) {
+		left *= .65;
+		right *= .65;
 		left1.set(left);
 		left2.set(left);
+		left3.set(left);
 		right1.set(right);
 		right2.set(right);
+		right3.set(right);
 		
 	}
 	
@@ -85,21 +94,28 @@ public class TalonDriveTrain extends Subsystem {
 	    
 	    left1.set(leftMotorSpeed);
 	    left2.set(leftMotorSpeed);
+	    left3.set(leftMotorSpeed);
 	    right1.set(rightMotorSpeed);
 	    right2.set(rightMotorSpeed);
+	    right3.set(rightMotorSpeed);
 	}
 	
 	public void switchDirection(){
-		Talon temp = left1;
+		CANTalon temp = left1;
 		left1 = right1;
 		right1 = temp;
 		temp = left2;
 		left2 = right2;
 		right2 = temp;
+		temp = left3;
+		left3 = right3;
+		right3 = temp;
 		left1.setInverted(!left1.getInverted());
 		left2.setInverted(!left2.getInverted());
+		left3.setInverted(!left3.getInverted());
 		right1.setInverted(!right1.getInverted());
 		right2.setInverted(!right2.getInverted());
+		right3.setInverted(!right3.getInverted());
 		switchCount = 1-switchCount;
 	}
 	

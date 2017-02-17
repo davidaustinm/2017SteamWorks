@@ -12,8 +12,9 @@ public class DriveToRedBoilerHopper extends CommandGroup {
 
     public DriveToRedBoilerHopper() {
     	if(Robot.sensors.isAllianceColorRed()){
-    		addSequential(new DriveToPoint(70,0, new Acceleration(.3,.70,0.02),false,10));
-        	addSequential(new RotateToHeading(-85,.50,0));
+    		addSequential(new SwitchDirection());
+    		addSequential(new DriveBackToPoint(-70,0, new Acceleration(.3,.6,0.02),false,10));
+        	addSequential(new RotateToHeading(85,.50,0));
         	addSequential(new DriveForwardForDistance(12,.5));
         	addSequential(new WaitForTime(1500));
         	addSequential(new SwitchDirection());
@@ -21,7 +22,7 @@ public class DriveToRedBoilerHopper extends CommandGroup {
         	addSequential(new DriveForwardForDistance(50,.7));
         	addSequential(new RotateToHeading(45,0,0.5));
         	addSequential(new DriveForwardForDistance(10,.4));
-        	addSequential(new SwitchDirection());
+        	//addSequential(new SwitchDirection());
         	
     	} else{
     		addSequential(new DriveToPoint(70,0, new Acceleration(.3,.70,0.02),false,10));

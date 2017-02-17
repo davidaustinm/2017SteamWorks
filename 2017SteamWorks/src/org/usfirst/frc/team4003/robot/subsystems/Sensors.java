@@ -21,7 +21,7 @@ public class Sensors extends Subsystem {
 	double XCoordinate = 0;
 	double YCoordinate = 0;
 	double lastLeftEncoder = 0, lastRightEncoder = 0;
-	double EncoderTicPerInch = 40.3;
+	double EncoderTicPerInch = 6;		//tested at 600 tics over 100 inches
 	
 	static final int BLUE = 1;
 	static final int RED = 2;
@@ -40,8 +40,9 @@ public class Sensors extends Subsystem {
 	
 	public Sensors (){
 		leftDrive = new Encoder(RobotMap.LEFTDRIVEENCODERA, RobotMap.LEFTDRIVEENCODERB);
-		leftDrive.setReverseDirection(true);
+		leftDrive.setReverseDirection(false);
 		rightDrive = new Encoder(RobotMap.RIGHTDRIVEENCODERA, RobotMap.RIGHTDRIVEENCODERB);
+		rightDrive.setReverseDirection(true);
 		navX = new AHRS(SerialPort.Port.kMXP);
 	}
 	

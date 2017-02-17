@@ -149,7 +149,7 @@ public class REVDigitBoard {
 		// pushing the byte data into the chars[] array starting at position 2.
 		int charPos = 2;
 		for(int i = 3; i >= 0; i--) {
-			byte[] charData = charRegistry.get(text.charAt(i));
+			byte[] charData = charRegistry.get(text.charAt(i) + "");
 			chars[charPos + 0] = charData[0];
 			chars[charPos + 1] = charData[1];
 			charPos += 2;

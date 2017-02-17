@@ -60,7 +60,6 @@ public class Robot extends IterativeRobot {
 	
 		intakeFeed = new ReentryFeedSubsystem();
 		climbDrum = new ClimbDrumSubsystem();
-		beaters = new BeaterSubsystem();
 
 		gearRelease = new GearRelease();
 		gearReleaseCommand = new GearReleaseCommand();
@@ -74,6 +73,7 @@ public class Robot extends IterativeRobot {
 		gearShiftCommand = new GearShiftCommand();
 		gearShiftCommand.start();
 		*/
+		beaters = new BeaterSubsystem();
 		
 	}
 
@@ -180,7 +180,7 @@ public class Robot extends IterativeRobot {
 		sensors.resetPosition();
 		sensors.resetYaw();
 			
-		autonomousCommand = new DriveToRightLift();
+		autonomousCommand = new DriveToRedBoilerHopper();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -231,6 +231,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("shooterspeed", shooter.getSpeed());
 		SmartDashboard.putNumber("Closed Loop Error", shooter.getClosedLoopError());
 		SmartDashboard.putNumber("Yaw", sensors.getYaw());
+		SmartDashboard.putNumber("Right Encoder", sensors.getRightDriveEncoder());
+		SmartDashboard.putNumber("Left Encoder", sensors.getLeftDriveEncoder());
 	}
 
 	/**
