@@ -25,6 +25,8 @@ public class RobotMap {
 	public static final int BEATERS = 0;
 	public static final int REENTRYFEED = 1;
 	public static final int CLIMBDRUM = 2;
+	public static final int AGITATOR = 3;
+	public static final int SHOOTERFEED = 4;
 	
 	// pneumatics
 	public static final int SHIFTER = 1;

@@ -28,6 +28,8 @@ import org.usfirst.frc.team4003.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
+	private static final int BEATERSUBSYSTEM = 0;
+	// subsystems
 	public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static TalonDriveTrain driveTrain;
 	public static Sensors sensors;
@@ -39,6 +41,21 @@ public class Robot extends IterativeRobot {
 	public static BeaterSubsystem beaters;
 	public static ReentryFeedSubsystem intakeFeed;
 	public static ClimbDrumSubsystem climbDrum;
+	public static Agitator agitator;
+	public static ShooterFeed shooterFeed;
+	
+	public static int DRIVETRAINSUBSYSTEM = 0;
+	public static int BEATERSUBYSTEM = 1;
+	public static int REENTRYFEEDSUBSYSTEM = 2;
+	public static int CLIMBSUBSYSTEM = 3;
+	public static int SHOOTERSUBSYSTEM = 4;
+	public static int SHOOTERFEEDSUBSYSTEM = 5;
+	public static int AGITATOR = 6;
+	public static int SHIFTERSUBSYSTEM = 7;
+	public static int INTAKEVALVESSYSTEM = 8;
+	public static int GEARRELEASESUBSYSTEM = 9;
+	
+	public static boolean[] systemLoad = new boolean[10];
 	
 	public static GearReleaseCommand gearReleaseCommand;
 	public static IntakeValueCommand intakeValveCommand;
@@ -52,30 +69,45 @@ public class Robot extends IterativeRobot {
 	AutonSelector autonSelector = new AutonSelector();
 	
 	static {
-		driveTrain = new TalonDriveTrain();
 		sensors = new Sensors();
-		shooter = new ShooterSubsystem();
-		shooterCommand = new ShooterCommand();
-		shooterCommand.start();
-		//solenoid = new Pneunamatics();
 		
-		intakeFeed = new ReentryFeedSubsystem();
-		climbDrum = new ClimbDrumSubsystem();
-
-		gearRelease = new GearReleaseSubsystem();
-		gearReleaseCommand = new GearReleaseCommand();
-		gearReleaseCommand.start();
+		systemLoad[DRIVETRAINSUBSYSTEM] = true;
+		systemLoad[BEATERSUBYSTEM] = true;
+		systemLoad[REENTRYFEEDSUBSYSTEM] = false;
+		systemLoad[CLIMBSUBSYSTEM] = true;
+		systemLoad[SHOOTERSUBSYSTEM] = false;
+		systemLoad[SHOOTERFEEDSUBSYSTEM] = false;
+		systemLoad[AGITATOR] = false;
+		systemLoad[SHIFTERSUBSYSTEM] = true;
+		systemLoad[INTAKEVALVESSYSTEM] = true;
+		systemLoad[GEARRELEASESUBSYSTEM] = true;
 		
-		intakeValves = new IntakeValves();
-		intakeValveCommand = new IntakeValueCommand();
-		intakeValveCommand.start();
-		
-		gearShifter = new ShifterSubsystem();
-		gearShiftCommand = new GearShiftCommand();
-		gearShiftCommand.start();
-		
-		beaters = new BeaterSubsystem();
-		
+		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new TalonDriveTrain();
+		if (systemLoad[BEATERSUBYSTEM]) beaters = new BeaterSubsystem();
+		if (systemLoad[REENTRYFEEDSUBSYSTEM]) intakeFeed = new ReentryFeedSubsystem();
+		if (systemLoad[CLIMBSUBSYSTEM]) climbDrum = new ClimbDrumSubsystem();
+		if (systemLoad[SHOOTERSUBSYSTEM]) {
+			shooter = new ShooterSubsystem();
+			shooterCommand = new ShooterCommand();
+			shooterCommand.start();
+		}
+		if (systemLoad[SHIFTERSUBSYSTEM]) {
+			gearShifter = new ShifterSubsystem();
+			gearShiftCommand = new GearShiftCommand();
+			gearShiftCommand.start();
+		}
+		if (systemLoad[INTAKEVALVESSYSTEM]) {
+			intakeValves = new IntakeValves();
+			intakeValveCommand = new IntakeValueCommand();
+			intakeValveCommand.start();
+		}
+		if (systemLoad[GEARRELEASESUBSYSTEM]) {
+			gearRelease = new GearReleaseSubsystem();
+			gearReleaseCommand = new GearReleaseCommand();
+			gearReleaseCommand.start();
+		}
+		if (systemLoad[AGITATOR]) agitator = new Agitator();
+		if (systemLoad[SHOOTERFEEDSUBSYSTEM]) shooterFeed = new ShooterFeed();
 	}
 
 	/**
@@ -91,7 +123,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
-		SmartDashboard.putData("Auto mode", chooser);
+		//SmartDashboard.putData("Auto mode", chooser);
 		TrackingCamera.loadKeys();
 		try {
 			Process p1 = Runtime.getRuntime().exec("/usr/bin/v4l2-ctl --list-devices");
@@ -180,8 +212,8 @@ public class Robot extends IterativeRobot {
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
-		driveTrain.setMaxSpeed(.65);
-		(new FeedHopper()).start();
+		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain.setMaxSpeed(.65);
+		if (systemLoad[INTAKEVALVESSYSTEM]) (new FeedHopper()).start();
 		
 		int color;
 		if (autonSelector.getAllianceColor() == "R") {
@@ -241,7 +273,7 @@ public class Robot extends IterativeRobot {
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
-		driveTrain.setMaxSpeed(.8);
+		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain.setMaxSpeed(.8);
 	}
 
 	/**
@@ -251,8 +283,8 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		boolean gearReleaseState = Math.abs(oi.operator.getTriggerAxis(Hand.kRight)) > .5;
 		boolean shooterState = Math.abs(oi.operator.getTriggerAxis(Hand.kLeft)) > .5;
-		shooterCommand.set(shooterState);
-		gearReleaseCommand.set(gearReleaseState);
+		if (systemLoad[SHOOTERSUBSYSTEM]) shooterCommand.set(shooterState);
+		if (systemLoad[GEARRELEASESUBSYSTEM]) gearReleaseCommand.set(gearReleaseState);
 		sensors.updatePosition();
 		NetworkTable robotData = NetworkTable.getTable("robotData");
 		robotData.putNumber("robotX", sensors.getXCoordinate());
