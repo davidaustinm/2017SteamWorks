@@ -37,11 +37,11 @@ public class RotateToHeading extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double error = normalizeAngle(degrees - Robot.sensors.getYaw());
+    	//double error = normalizeAngle(degrees - Robot.sensors.getYaw());
     	double correction = headingPID.getCorrection(Robot.sensors.getYaw());
     	if (correction > 1) correction = 1;
     	if (correction < -1) correction = -1;
-    	SmartDashboard.putNumber("rotate correction:", correction);
+    	//SmartDashboard.putNumber("rotate correction:", correction);
     	Robot.driveTrain.setPower(-leftSpeed * correction, rightSpeed * correction);
     }
 
