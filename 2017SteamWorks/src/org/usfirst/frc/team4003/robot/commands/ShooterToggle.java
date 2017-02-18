@@ -2,36 +2,32 @@ package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ShooterCommand extends Command {
-	boolean on = false;
+public class ShooterToggle extends Command {
+	boolean on;
 
-    public ShooterCommand() {
+    public ShooterToggle(boolean on) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.shooter);
+        // eg. requires(chassis);
+    	this.on = on;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.shooterCommand.set(on);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.set(on);
-    }
-    public void set(boolean on){
-    	this.on = on;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

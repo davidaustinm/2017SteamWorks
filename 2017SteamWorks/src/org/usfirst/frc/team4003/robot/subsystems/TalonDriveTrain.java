@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4003.robot.subsystems;
 
+import org.usfirst.frc.team4003.robot.Robot;
 import org.usfirst.frc.team4003.robot.commands.ArcadeDrive;
 import org.usfirst.frc.team4003.robot.commands.TankDrive;
 
@@ -7,6 +8,7 @@ import com.ctre.CANTalon;
 
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.hal.HAL;
 import edu.wpi.first.wpilibj.hal.FRCNetComm.tInstances;
@@ -19,12 +21,13 @@ public class TalonDriveTrain extends Subsystem {
 	CANTalon left1, left2, left3, right1, right2, right3;
 	int switchCount = 0;
 	double yLimit, xLimit;
+	double maxSpeed = 1;
 	
 	public TalonDriveTrain() {
 		left1 = new CANTalon(3);
 		left2 = new CANTalon(4);
 		left3 = new CANTalon(5);
-		right1 = new CANTalon(0);
+		right1 = new CANTalon(6);
 		right1.setInverted(true);
 		right2 = new CANTalon(1);
 		right2.setInverted(true);
@@ -35,9 +38,15 @@ public class TalonDriveTrain extends Subsystem {
 		xLimit = 1;
 	}
 	
+	public void setMaxSpeed(double speed){
+		maxSpeed = speed;
+	}
+	
 	public void setPower(double left, double right) {
-		left *= .65;
-		right *= .65;
+		if(Math.abs(Robot.oi.driver.getTriggerAxis(Hand.kLeft)) < .5){
+			left *= maxSpeed;
+			right *= maxSpeed;
+		}
 		left1.set(left);
 		left2.set(left);
 		left3.set(left);

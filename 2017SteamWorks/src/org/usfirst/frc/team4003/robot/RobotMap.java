@@ -18,6 +18,8 @@ public class RobotMap {
 	public static final int LEFTDRIVEENCODERB = 1;
 	public static final int RIGHTDRIVEENCODERA = 2;
 	public static final int RIGHTDRIVEENCODERB = 3;
+	public static final int HORIZONTALDRUMSWITCH = 4;
+	public static final int VERTICALDRUMSWITCH = 5;
 	
 	// PWM
 	public static final int BEATERS = 0;

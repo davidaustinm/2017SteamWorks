@@ -2,6 +2,7 @@ package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -20,8 +21,8 @@ public class ClimbDrumCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double power = 1;
-    	if (Robot.oi.operator.getXButton()) power = 0.3;
+    	double power = -(Robot.oi.operator.getY(Hand.kRight));
+    	if (Math.abs(Robot.sensors.getPitch()) < 5 && Math.abs(Robot.sensors.getRoll()) < 5) power *= 0.3;
     	Robot.climbDrum.setPower(power);
     }
 

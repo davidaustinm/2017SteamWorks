@@ -41,6 +41,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	boolean frontCamera = true;
 	double targetX = Double.NaN;
 	double targetY = Double.NaN;
+	double cameraOffset = 9;
 	public static Hashtable<String, Integer> cameraHash;
 
 
@@ -239,6 +240,9 @@ public class TrackingCamera extends Subsystem implements Runnable {
 		double phi = Math.toRadians(alpha + poseYaw);
 		double targetX = poseX + distanceToTarget * Math.cos(phi);
 		double targetY = poseY + distanceToTarget * Math.sin(phi);
+		double theta = Math.toRadians(poseYaw + 90);
+		targetX += cameraOffset * Math.cos(theta);
+		targetY += cameraOffset * Math.sin(theta);
 		setTarget(targetX, targetY);
 		SmartDashboard.putNumber("angle", alpha);
 		SmartDashboard.putNumber("distance", distanceToTarget);

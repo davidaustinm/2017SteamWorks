@@ -4,6 +4,7 @@ import org.usfirst.frc.team4003.robot.RobotMap;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -15,17 +16,22 @@ public class Sensors extends Subsystem {
 
 	Encoder leftDrive, rightDrive;
 	AHRS navX;
+	DigitalInput horizontalDrumSwitch;
+	DigitalInput verticalDrumSwitch;
 	double gyroOffset = 0;
+	double pitchOffset = 0;
+	double rollOffset = 0;
 	double leftEncoderOffset = 0;
 	double rightEncoderOffset = 0;
 	double XCoordinate = 0;
 	double YCoordinate = 0;
 	double lastLeftEncoder = 0, lastRightEncoder = 0;
 	double EncoderTicPerInch = 6;		//tested at 600 tics over 100 inches
+	double bumperOffset = 3;
 	
 	public static final int BLUE = 1;
 	public static final int RED = 2;
-	public int allianceColor = BLUE;
+	public int allianceColor = RED;
 	
 	public void setAllianceColor(int color){
 		allianceColor = color;
@@ -44,8 +50,16 @@ public class Sensors extends Subsystem {
 		rightDrive = new Encoder(RobotMap.RIGHTDRIVEENCODERA, RobotMap.RIGHTDRIVEENCODERB);
 		rightDrive.setReverseDirection(true);
 		navX = new AHRS(SerialPort.Port.kMXP);
+		horizontalDrumSwitch = new DigitalInput(RobotMap.HORIZONTALDRUMSWITCH);
+		verticalDrumSwitch = new DigitalInput(RobotMap.VERTICALDRUMSWITCH);
 	}
 	
+	public boolean getHorizontalDrumSwitch(){
+		return horizontalDrumSwitch.get();
+	}
+	public boolean getVerticalDrumSwitch(){
+		return verticalDrumSwitch.get();
+	}
 	public double getLeftDriveEncoder(){
 		return leftDrive.get() - leftEncoderOffset;
 	}
@@ -53,10 +67,25 @@ public class Sensors extends Subsystem {
 		return rightDrive.get() - rightEncoderOffset;
 	}
 	public double getYaw(){
-		return -(navX.getYaw()-gyroOffset);
+		double yaw = -(navX.getYaw()-gyroOffset);
+		while(yaw > 180){
+			yaw -= 360;
+		}
+		while(yaw < -180){
+			yaw += 360;
+		}
+		return yaw;
+	}
+	public double getPitch(){
+		return navX.getPitch() - pitchOffset;
+	}
+	public double getRoll(){
+		return navX.getRoll() - rollOffset;
 	}
 	public void resetYaw(){
 		gyroOffset = navX.getYaw();
+		pitchOffset = navX.getPitch();
+		rollOffset = navX.getRoll();
 	}
 	public void resetEncoder(){
 		leftEncoderOffset = leftDrive.get();
@@ -79,7 +108,7 @@ public class Sensors extends Subsystem {
 		lastRightEncoder = currentRightEncoder;
 	}
 	public double getXCoordinate(){
-		return XCoordinate/EncoderTicPerInch;
+		return XCoordinate/EncoderTicPerInch + bumperOffset;
 	}
 	public double getYCoordinate(){
 		return YCoordinate/EncoderTicPerInch;

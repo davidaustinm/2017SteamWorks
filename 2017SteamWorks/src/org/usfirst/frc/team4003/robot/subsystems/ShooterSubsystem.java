@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterSubsystem extends Subsystem {
 	CANTalon master = new CANTalon(3);
 	CANTalon slave = new CANTalon(5);
+	double SPEED = 2000;
 	public ShooterSubsystem() {
 		master.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		master.changeControlMode(CANTalon.TalonControlMode.Speed);
@@ -25,6 +26,10 @@ public class ShooterSubsystem extends Subsystem {
 		slave.changeControlMode(CANTalon.TalonControlMode.Follower);
 		slave.set(master.getDeviceID());
 	}
+	public void set(boolean on){
+		if(on) master.set(SPEED);
+		else master.set(0);
+	}
 	public void setPower(double power) {
 		//master.set(60);
 		SmartDashboard.putNumber("shooterposition", master.getPosition());
@@ -34,7 +39,7 @@ public class ShooterSubsystem extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new ShooterCommand());
+        //setDefaultCommand(new ShooterCommand());
         
     }
     public double getSpeed() {

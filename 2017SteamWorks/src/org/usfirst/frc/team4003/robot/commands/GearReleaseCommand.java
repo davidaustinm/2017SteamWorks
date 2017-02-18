@@ -2,13 +2,14 @@ package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class GearReleaseCommand extends Command {
-	boolean on = true;
+	boolean on = false;
     public GearReleaseCommand() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.gearRelease);
@@ -20,6 +21,7 @@ public class GearReleaseCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//boolean on = Math.abs(Robot.oi.operator.getTriggerAxis(Hand.kRight)) > .5;
     	Robot.gearRelease.set(on);
     }
     public void set(boolean on) {

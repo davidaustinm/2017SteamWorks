@@ -7,6 +7,7 @@ import java.util.Set;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -42,6 +43,7 @@ public class Robot extends IterativeRobot {
 	public static GearReleaseCommand gearReleaseCommand;
 	public static IntakeValueCommand intakeValveCommand;
 	public static GearShiftCommand gearShiftCommand;
+	public static ShooterCommand shooterCommand;
 	
 	public static OI oi;
 	public static TrackingCamera trackingCamera;
@@ -53,15 +55,14 @@ public class Robot extends IterativeRobot {
 		driveTrain = new TalonDriveTrain();
 		sensors = new Sensors();
 		shooter = new ShooterSubsystem();
+		shooterCommand = new ShooterCommand();
+		shooterCommand.start();
 		//solenoid = new Pneunamatics();
 		
-		
-		/* 
-	
 		intakeFeed = new ReentryFeedSubsystem();
 		climbDrum = new ClimbDrumSubsystem();
 
-		gearRelease = new GearRelease();
+		gearRelease = new GearReleaseSubsystem();
 		gearReleaseCommand = new GearReleaseCommand();
 		gearReleaseCommand.start();
 		
@@ -72,7 +73,7 @@ public class Robot extends IterativeRobot {
 		gearShifter = new ShifterSubsystem();
 		gearShiftCommand = new GearShiftCommand();
 		gearShiftCommand.start();
-		*/
+		
 		beaters = new BeaterSubsystem();
 		
 	}
@@ -179,6 +180,8 @@ public class Robot extends IterativeRobot {
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
+		driveTrain.setMaxSpeed(.65);
+		(new FeedHopper()).start();
 		
 		int color;
 		if (autonSelector.getAllianceColor() == "R") {
@@ -238,6 +241,7 @@ public class Robot extends IterativeRobot {
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
+		driveTrain.setMaxSpeed(.8);
 	}
 
 	/**
@@ -245,7 +249,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Scheduler.getInstance().run();
+		boolean gearReleaseState = Math.abs(oi.operator.getTriggerAxis(Hand.kRight)) > .5;
+		boolean shooterState = Math.abs(oi.operator.getTriggerAxis(Hand.kLeft)) > .5;
+		shooterCommand.set(shooterState);
+		gearReleaseCommand.set(gearReleaseState);
 		sensors.updatePosition();
 		NetworkTable robotData = NetworkTable.getTable("robotData");
 		robotData.putNumber("robotX", sensors.getXCoordinate());
@@ -260,6 +267,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Yaw", sensors.getYaw());
 		SmartDashboard.putNumber("Right Encoder", sensors.getRightDriveEncoder());
 		SmartDashboard.putNumber("Left Encoder", sensors.getLeftDriveEncoder());
+		Scheduler.getInstance().run();
 	}
 
 	/**

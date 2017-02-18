@@ -16,6 +16,7 @@ public class DriveToRightLift extends CommandGroup {
         	addSequential(new RotateToHeading(-50, 0.4, 0));
         	//addSequential(new DriveToTarget(new Acceleration(.3, .3, 0), 5));
         	addSequential( new DriveToPoint(107,-51, new Acceleration(.2, .3, 0.02),true, 10));
+        	addSequential(new GearReleaseToggle(true));
         	addSequential(new WaitForTime(1000));
         	addSequential(new SwitchDirection());
         	addSequential(new DriveForwardForDistance(10, .2));
@@ -29,6 +30,7 @@ public class DriveToRightLift extends CommandGroup {
         	addSequential(new RotateToHeading(50, 0, .4));
         	//addSequential(new DriveToTarget(new Acceleration(.3, .3, 0), 5));
         	addSequential( new DriveToPoint(109,49, new Acceleration(.2, .3, 0.02),true, 10));
+        	addSequential(new GearReleaseToggle(true));
         	addSequential(new WaitForTime(1000));
         	addSequential(new SwitchDirection());
         	addSequential(new DriveForwardForDistance(10, .3));
