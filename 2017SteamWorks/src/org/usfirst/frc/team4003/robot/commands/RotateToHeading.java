@@ -4,6 +4,7 @@ import org.usfirst.frc.team4003.robot.Robot;
 import org.usfirst.frc.team4003.robot.utilities.PID;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -40,7 +41,7 @@ public class RotateToHeading extends Command {
     	double correction = headingPID.getCorrection(Robot.sensors.getYaw());
     	if (correction > 1) correction = 1;
     	if (correction < -1) correction = -1;
-    	
+    	SmartDashboard.putNumber("rotate correction:", correction);
     	Robot.driveTrain.setPower(-leftSpeed * correction, rightSpeed * correction);
     }
 

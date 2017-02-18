@@ -179,6 +179,33 @@ public class Robot extends IterativeRobot {
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
+		
+		int color;
+		if (autonSelector.getAllianceColor() == "R") {
+			sensors.setAllianceColor(Sensors.RED);
+			color = 0;
+		}
+		else {
+			sensors.setAllianceColor(Sensors.BLUE);
+			color = 1;
+		}
+		
+		switch(autonSelector.getStartingPosition()) {
+			case("L"): 
+				if (color == 0) autonomousCommand = new DriveToRightLift();
+				else autonomousCommand = new DriveToLeftLift();
+				break;	
+			case("M"): 
+				autonomousCommand = new DriveToMiddleLift();
+				break;	
+			case("R"):
+				if (color == 0) autonomousCommand = new DriveToLeftLift();
+				else autonomousCommand = new DriveToRightLift();
+				break;
+			case("H"):
+				autonomousCommand = new DriveToRedBoilerHopper();
+				break;
+		}
 			
 		autonomousCommand = new DriveToRedBoilerHopper();
 		if (autonomousCommand != null)

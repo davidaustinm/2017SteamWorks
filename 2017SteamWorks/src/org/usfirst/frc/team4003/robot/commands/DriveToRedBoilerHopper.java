@@ -13,18 +13,33 @@ public class DriveToRedBoilerHopper extends CommandGroup {
     public DriveToRedBoilerHopper() {
     	if(Robot.sensors.isAllianceColorRed()){
     		addSequential(new SwitchDirection());
-    		addSequential(new DriveBackToPoint(-70,0, new Acceleration(.3,.6,0.02),false,10));
-        	addSequential(new RotateToHeading(85,.50,0));
-        	addSequential(new DriveForwardForDistance(12,.5));
+    		addSequential(new DriveBackToPoint(-64,0, new Acceleration(.3,.5,0.02),false,10));
+        	addSequential(new RotateToHeading(-85,.50,0));
+        	addSequential(new DriveForwardForDistance(10,.5));
         	addSequential(new WaitForTime(1500));
         	addSequential(new SwitchDirection());
         	addSequential(new RotateToHeading(-45,0,0.5));
-        	addSequential(new DriveForwardForDistance(50,.7));
-        	addSequential(new RotateToHeading(45,0,0.5));
+        	addSequential(new DriveForwardForDistance(62,.7));
+        	addSequential(new RotateToHeading(-135,0,0.5));
+        	addSequential(new SwitchDirection());
         	addSequential(new DriveForwardForDistance(10,.4));
         	//addSequential(new SwitchDirection());
         	
     	} else{
+    		addSequential(new SwitchDirection());
+    		addSequential(new DriveBackToPoint(-64,0, new Acceleration(.3,.5,0.02),false,10));
+        	addSequential(new RotateToHeading(85,0,.50));
+        	addSequential(new DriveForwardForDistance(10,.5));
+        	addSequential(new WaitForTime(1500));
+        	addSequential(new SwitchDirection());
+        	addSequential(new RotateToHeading(45,0.5,0));
+        	addSequential(new DriveForwardForDistance(52,.7));
+        	addSequential(new RotateToHeading(130,0.5,0));
+        	addSequential(new SwitchDirection());
+        	addSequential(new DriveForwardForDistance(18,.4));
+        	//addSequential(new SwitchDirection());
+    		/*
+    		
     		addSequential(new DriveToPoint(70,0, new Acceleration(.3,.70,0.02),false,10));
         	addSequential(new RotateToHeading(85,0,0.4));
         	addSequential(new DriveForwardForDistance(15,.5));
@@ -35,7 +50,7 @@ public class DriveToRedBoilerHopper extends CommandGroup {
         	addSequential(new RotateToHeading(-45,0.35,0));
         	addSequential(new DriveForwardForDistance(22,.4));
         	addSequential(new SwitchDirection());
-        	
+        	*/
     	}
     	
     }

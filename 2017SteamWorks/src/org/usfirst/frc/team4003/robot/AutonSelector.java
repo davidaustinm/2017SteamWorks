@@ -5,23 +5,54 @@ public class AutonSelector {
 	static final int STARTPOS = 1;
 	static final int ENDPOS = 2;
 	int state = COLOR;
+	
 	boolean lastA = false;
 	boolean lastB = false;
-	int colorState = 0;
-	int startPosState = 0;
-	int endPosState = 0;
-	String[] colorStates = {"0", "1"};
-	String[] startPosStates = {"0", "1", "2"};
-	String[] endPosStates = {"0", "1"};
+	
+	int colorStateRed = 0;
+	int colorStateBlue = 1;
+	int colorState = colorStateRed;
+	
+	int startPosLeft = 0;
+	int startPosCenter = 1;
+	int startPosRight = 2;
+	int startPosHopper = 3;
+	int startPosState = startPosLeft;
+	
+	int endPosBoiler = 0;
+	int endPosHopper = 1;
+	int endPosState = endPosBoiler;
+	
+	String[] colorStates;
+	String[] startPosStates;
+	String[] endPosStates;
 	String[] stateString = {"C", "S", "E"};
+
 	REVDigitBoard digitBoard = new REVDigitBoard();
+	
+	public AutonSelector() {
+		colorStates = new String[2];
+		colorStates[colorStateRed] = "R";
+		colorStates[colorStateBlue] = "B";
+		
+		startPosStates = new String[4];
+		startPosStates[startPosLeft] = "L";
+		startPosStates[startPosCenter] = "C";
+		startPosStates[startPosRight] = "R";
+		startPosStates[startPosHopper] = "H";
+		
+		endPosStates = new String[2];
+		endPosStates[endPosBoiler] = "B";
+		endPosStates[endPosHopper] = "H";
+	}
+	
 	public void update() {
 		boolean currentA = digitBoard.getAButton();
 		boolean currentB = digitBoard.getBButton();
 		
 		if (!lastA && currentA) {
 			state++;
-			if (state == 3) state = 0;
+			if (state == stateString.length) state = 0;
 		}
 		if (!lastB && currentB) {
 			switch(state){
@@ -47,5 +78,15 @@ public class AutonSelector {
 		System.out.println("state: " + String.valueOf(state));
 		lastA = currentA;
 		lastB = currentB;
+	}
+	
+	public String getAllianceColor() {
+		return colorStates[colorState];
+	}
+	public String getStartingPosition() {
+		return startPosStates[startPosState];
+	}
+	public String getEndingPosition() {
+		return endPosStates[endPosState];
 	}
 }

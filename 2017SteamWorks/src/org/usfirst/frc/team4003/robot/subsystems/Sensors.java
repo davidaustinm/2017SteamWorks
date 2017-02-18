@@ -23,9 +23,9 @@ public class Sensors extends Subsystem {
 	double lastLeftEncoder = 0, lastRightEncoder = 0;
 	double EncoderTicPerInch = 6;		//tested at 600 tics over 100 inches
 	
-	static final int BLUE = 1;
-	static final int RED = 2;
-	public int allianceColor = RED;
+	public static final int BLUE = 1;
+	public static final int RED = 2;
+	public int allianceColor = BLUE;
 	
 	public void setAllianceColor(int color){
 		allianceColor = color;
