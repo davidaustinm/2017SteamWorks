@@ -29,8 +29,8 @@ public class RobotMap {
 	public static final int SHOOTERFEED = 4;
 	
 	// pneumatics
-	public static final int SHIFTER = 1;
+	public static final int SHIFTER = 3;
 	public static final int INTAKEFLIPPER = 2;
-	public static final int INTAKEREENTRY = 3;
-	public static final int GEARRELEASE = 4;
+	public static final int INTAKEREENTRY = 3;	//Reentry is on the same tube as the flipper
+	public static final int GEARRELEASE = 1;
 }

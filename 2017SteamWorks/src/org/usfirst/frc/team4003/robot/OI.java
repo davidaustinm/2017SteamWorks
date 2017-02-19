@@ -42,8 +42,6 @@ public class OI {
 		shiftLow.whenActive(new ShiftToggle(false));
 		intakeDivert.whenActive(new IntakeValveToggle(RobotMap.INTAKEFLIPPER, true));
 		intakeDivert.whenActive(new IntakeValveToggle(RobotMap.INTAKEREENTRY, true));
-		//gearReleaseOpen.whenActive(new GearReleaseToggle(true));
-		//gearReleaseClose.whenActive(new GearReleaseToggle(false));
 		homeClimbHorizontal.whenActive(new HomeClimbDrum(HomeClimbDrum.HORIZONTAL));
 		homeClimbVertical.whenActive(new HomeClimbDrum(HomeClimbDrum.VERTICAL));
 		switchDirection.whenActive(new SwitchDirection());

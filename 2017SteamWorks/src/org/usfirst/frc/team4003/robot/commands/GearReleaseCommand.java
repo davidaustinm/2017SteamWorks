@@ -21,7 +21,8 @@ public class GearReleaseCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//boolean on = Math.abs(Robot.oi.operator.getTriggerAxis(Hand.kRight)) > .5;
+    	boolean on = Math.abs(Robot.oi.operator.getTriggerAxis(Hand.kRight)) > .5;
+    	System.out.println(on);
     	Robot.gearRelease.set(on);
     }
     public void set(boolean on) {

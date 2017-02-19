@@ -26,11 +26,11 @@ public class IntakeValveToggle extends Command {
     protected void execute() {
     	if (valve == RobotMap.INTAKEFLIPPER) {
     		Robot.intakeValveCommand.setFlipperState(on);
-    		Robot.intakeValveCommand.setReentryState(!on);
+    		//Robot.intakeValveCommand.setReentryState(!on);
     	}
     	if (valve == RobotMap.INTAKEREENTRY) {
     		Robot.intakeValveCommand.setReentryState(on);
-    		Robot.intakeValveCommand.setFlipperState(!on);
+    		//Robot.intakeValveCommand.setFlipperState(!on);
     	}
     }
 

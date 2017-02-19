@@ -22,7 +22,7 @@ public class IntakeValueCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.intakeValves.setFlipper(flipperState);
-    	Robot.intakeValves.setReentry(reentryState);
+    	//Robot.intakeValves.setReentry(reentryState);
     }
     
     public void setFlipperState(boolean state) {
