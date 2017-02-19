@@ -294,8 +294,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("PiTargetY", robotData.getNumber("targetY", Double.NaN));
 		SmartDashboard.putNumber("X Coordinate", sensors.getXCoordinate());
 		SmartDashboard.putNumber("Y Coordinate", sensors.getYCoordinate());
-		SmartDashboard.putNumber("shooterspeed", shooter.getSpeed());
-		SmartDashboard.putNumber("Closed Loop Error", shooter.getClosedLoopError());
+		//SmartDashboard.putNumber("shooterspeed", shooter.getSpeed());
+		//SmartDashboard.putNumber("Closed Loop Error", shooter.getClosedLoopError());
 		SmartDashboard.putNumber("Yaw", sensors.getYaw());
 		SmartDashboard.putNumber("Right Encoder", sensors.getRightDriveEncoder());
 		SmartDashboard.putNumber("Left Encoder", sensors.getLeftDriveEncoder());

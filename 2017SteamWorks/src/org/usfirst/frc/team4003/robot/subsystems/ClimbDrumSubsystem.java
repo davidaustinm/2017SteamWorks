@@ -14,9 +14,11 @@ public class ClimbDrumSubsystem extends Subsystem {
 	Spark drum;
 	public ClimbDrumSubsystem() {
 		drum = new Spark(RobotMap.CLIMBDRUM);
+		drum.setInverted(true);
 	}
 	
 	public void setPower(double power) {
+		//if (power < 0) power = 0;
 		drum.set(power);
 	}
 

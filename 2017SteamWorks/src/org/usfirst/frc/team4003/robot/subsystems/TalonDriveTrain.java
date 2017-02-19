@@ -47,6 +47,7 @@ public class TalonDriveTrain extends Subsystem {
 			left *= maxSpeed;
 			right *= maxSpeed;
 		}
+		//System.out.println("left power: " + left);
 		left1.set(left);
 		left2.set(left);
 		left3.set(left);
@@ -100,6 +101,11 @@ public class TalonDriveTrain extends Subsystem {
 	        rightMotorSpeed = -Math.max(-moveValue, -rotateValue);
 	      }
 	    }
+	    
+	    if(Math.abs(Robot.oi.driver.getTriggerAxis(Hand.kLeft)) < .5){
+			leftMotorSpeed *= maxSpeed;
+			rightMotorSpeed *= maxSpeed;
+		}
 	    
 	    left1.set(leftMotorSpeed);
 	    left2.set(leftMotorSpeed);

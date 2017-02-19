@@ -22,7 +22,7 @@ public class ClimbDrumCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double power = -(Robot.oi.operator.getY(Hand.kRight));
-    	if (Math.abs(Robot.sensors.getPitch()) < 5 && Math.abs(Robot.sensors.getRoll()) < 5) power *= 0.3;
+    	if (Math.abs(Robot.sensors.getPitch()) < 5 && Math.abs(Robot.sensors.getRoll()) < 5) power *= 0.5;
     	Robot.climbDrum.setPower(power);
     }
 

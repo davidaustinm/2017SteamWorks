@@ -55,10 +55,10 @@ public class Sensors extends Subsystem {
 	}
 	
 	public boolean getHorizontalDrumSwitch(){
-		return horizontalDrumSwitch.get();
+		return !horizontalDrumSwitch.get();
 	}
 	public boolean getVerticalDrumSwitch(){
-		return verticalDrumSwitch.get();
+		return !verticalDrumSwitch.get();
 	}
 	public double getLeftDriveEncoder(){
 		return leftDrive.get() - leftEncoderOffset;
