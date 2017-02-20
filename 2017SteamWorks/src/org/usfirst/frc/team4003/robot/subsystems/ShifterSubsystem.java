@@ -14,6 +14,7 @@ public class ShifterSubsystem extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	Solenoid shifterValve;
+	public GearShiftCommand gearShiftCommand;
 	public ShifterSubsystem() {
 		shifterValve = new Solenoid(RobotMap.SHIFTER);
 	}
@@ -25,6 +26,8 @@ public class ShifterSubsystem extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new GearShiftCommand());
+    	gearShiftCommand = new GearShiftCommand();
+    	setDefaultCommand(gearShiftCommand);
     }
 }
 

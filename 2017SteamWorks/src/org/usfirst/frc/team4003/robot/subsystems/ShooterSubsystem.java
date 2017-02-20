@@ -15,6 +15,7 @@ public class ShooterSubsystem extends Subsystem {
 	CANTalon master = new CANTalon(3);
 	CANTalon slave = new CANTalon(5);
 	double SPEED = 2000;
+	public ShooterCommand shooterCommand;
 	public ShooterSubsystem() {
 		master.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		master.changeControlMode(CANTalon.TalonControlMode.Speed);
@@ -40,6 +41,8 @@ public class ShooterSubsystem extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new ShooterCommand());
+    	shooterCommand = new ShooterCommand();
+    	setDefaultCommand(shooterCommand);
         
     }
     public double getSpeed() {

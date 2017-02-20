@@ -13,9 +13,11 @@ public class GearReleaseSubsystem extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+	public GearReleaseCommand gearReleaseCommand;
 	Solenoid gearRelease;
 	public GearReleaseSubsystem() {
 		gearRelease = new Solenoid(RobotMap.GEARRELEASE);
+		
 	}
 	public void set(boolean on) {
 		gearRelease.set(on);
@@ -23,7 +25,8 @@ public class GearReleaseSubsystem extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new GearReleaseCommand());
+    	gearReleaseCommand = new GearReleaseCommand();
+        setDefaultCommand(gearReleaseCommand);
     }
 }
 

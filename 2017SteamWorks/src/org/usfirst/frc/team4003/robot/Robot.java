@@ -89,22 +89,22 @@ public class Robot extends IterativeRobot {
 		if (systemLoad[SHOOTERSUBSYSTEM]) {
 			shooter = new ShooterSubsystem();
 			shooterCommand = new ShooterCommand();
-			shooterCommand.start();
+			//shooterCommand.start();
 		}
 		if (systemLoad[SHIFTERSUBSYSTEM]) {
 			gearShifter = new ShifterSubsystem();
 			gearShiftCommand = new GearShiftCommand();
-			gearShiftCommand.start();
+			//gearShiftCommand.start();
 		}
 		if (systemLoad[INTAKEVALVESSYSTEM]) {
 			intakeValves = new IntakeValves();
 			intakeValveCommand = new IntakeValueCommand();
-			intakeValveCommand.start();
+			//intakeValveCommand.start();
 		}
 		if (systemLoad[GEARRELEASESUBSYSTEM]) {
 			gearRelease = new GearReleaseSubsystem();
-			gearReleaseCommand = new GearReleaseCommand();
-			gearReleaseCommand.start();
+			
+			//gearReleaseCommand.start();
 		}
 		if (systemLoad[AGITATOR]) agitator = new Agitator();
 		if (systemLoad[SHOOTERFEEDSUBSYSTEM]) shooterFeed = new ShooterFeed();
@@ -168,6 +168,9 @@ public class Robot extends IterativeRobot {
 
 	    trackingCamera = new TrackingCamera();
 	    trackingCamera.startCamera();
+	    
+	    
+		
 	}
 
 	/**
@@ -241,6 +244,9 @@ public class Robot extends IterativeRobot {
 				autonomousCommand = new DriveToRedBoilerHopper();
 				break;
 		}
+		if (systemLoad[GEARRELEASESUBSYSTEM]) {
+			gearReleaseCommand = gearRelease.gearReleaseCommand;
+		}
 			
 		autonomousCommand = new DriveToRedBoilerHopper();
 		if (autonomousCommand != null)
@@ -274,6 +280,18 @@ public class Robot extends IterativeRobot {
 		sensors.resetPosition();
 		sensors.resetYaw();
 		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain.setMaxSpeed(.8);
+		if (systemLoad[GEARRELEASESUBSYSTEM]) {
+			gearReleaseCommand = gearRelease.gearReleaseCommand;
+		}
+		if (systemLoad[SHOOTERSUBSYSTEM]) {
+			shooterCommand = shooter.shooterCommand;
+		}
+	    if (systemLoad[SHIFTERSUBSYSTEM]) {
+			gearShiftCommand = gearShifter.gearShiftCommand;
+		}
+		if (systemLoad[INTAKEVALVESSYSTEM]) {
+			intakeValveCommand = intakeValves.intakeCommand;
+		}
 	}
 
 	/**
