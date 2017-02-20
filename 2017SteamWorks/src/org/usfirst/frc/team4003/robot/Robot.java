@@ -244,8 +244,18 @@ public class Robot extends IterativeRobot {
 				autonomousCommand = new DriveToRedBoilerHopper();
 				break;
 		}
+		
 		if (systemLoad[GEARRELEASESUBSYSTEM]) {
 			gearReleaseCommand = gearRelease.gearReleaseCommand;
+		}
+		if (systemLoad[SHOOTERSUBSYSTEM]) {
+			shooterCommand = shooter.shooterCommand;
+		}
+	    if (systemLoad[SHIFTERSUBSYSTEM]) {
+			gearShiftCommand = gearShifter.gearShiftCommand;
+		}
+		if (systemLoad[INTAKEVALVESSYSTEM]) {
+			intakeValveCommand = intakeValves.intakeCommand;
 		}
 			
 		autonomousCommand = new DriveToRedBoilerHopper();
