@@ -69,8 +69,8 @@ public class CircleDrive extends Command {
     	double currentY = Robot.sensors.getYCoordinate();
     	double changeInX = currentX - centerX;
     	double changeInY = currentY - centerY;
-    	SmartDashboard.putNumber("centerX", centerX);
-    	SmartDashboard.putNumber("centerY", centerY);
+    	//SmartDashboard.putNumber("centerX", centerX);
+    	//SmartDashboard.putNumber("centerY", centerY);
     	
     	double currentRadius = Math.sqrt(Math.pow(changeInX, 2) + Math.pow(changeInY, 2));
     	double heading = Robot.sensors.getYaw() + Robot.driveTrain.getSwitchCount() * 180;
@@ -80,8 +80,8 @@ public class CircleDrive extends Command {
     	double targetHeading;
     	if (direction == CCW) targetHeading = currentAngle + 90;
     	else targetHeading = currentAngle - 90;
-    	SmartDashboard.putNumber("targetHeading", targetHeading);
-    	SmartDashboard.putNumber("heading", heading);
+    	//SmartDashboard.putNumber("targetHeading", targetHeading);
+    	//SmartDashboard.putNumber("heading", heading);
     	double angleError = normalizeAngle(targetHeading - heading, -180);
     	double correction = -headingPID.getCorrection(angleError);
     	

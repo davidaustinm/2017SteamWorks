@@ -217,8 +217,10 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	}
 	public void analyzeFrontContours(ArrayList<MatOfPoint> contours, double poseX, double poseY, double poseYaw) {
 		if(contours.size() < 2){
+			/*
 			SmartDashboard.putNumber("angle", Double.NaN);
 			SmartDashboard.putNumber("distance", Double.NaN);
+			*/
 			setTarget(Double.NaN, Double.NaN);
 			return;
 		}
@@ -243,11 +245,13 @@ public class TrackingCamera extends Subsystem implements Runnable {
 		targetX += cameraOffset * Math.cos(theta);
 		targetY += cameraOffset * Math.sin(theta);
 		setTarget(targetX, targetY);
+		/*
 		SmartDashboard.putNumber("angle", alpha);
 		SmartDashboard.putNumber("distance", distanceToTarget);
 		SmartDashboard.putNumber("poseX", poseX);
 		SmartDashboard.putNumber("poseY", poseY);
 		SmartDashboard.putNumber("poseYaw", poseYaw);
+		*/
 	}
 
 	public void analyzeBackContours(ArrayList<MatOfPoint> contours, double poseX, double poseY, double poseYaw) {

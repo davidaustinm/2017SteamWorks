@@ -241,6 +241,7 @@ public class Robot extends IterativeRobot {
 				else autonomousCommand = new DriveToRightLift();
 				break;
 			case("H"):
+				sensors.setBumperOffset(-3);
 				autonomousCommand = new DriveToRedBoilerHopper();
 				break;
 		}
@@ -324,9 +325,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Y Coordinate", sensors.getYCoordinate());
 		//SmartDashboard.putNumber("shooterspeed", shooter.getSpeed());
 		//SmartDashboard.putNumber("Closed Loop Error", shooter.getClosedLoopError());
+		/*
 		SmartDashboard.putNumber("Yaw", sensors.getYaw());
 		SmartDashboard.putNumber("Right Encoder", sensors.getRightDriveEncoder());
 		SmartDashboard.putNumber("Left Encoder", sensors.getLeftDriveEncoder());
+		*/
 		Scheduler.getInstance().run();
 	}
 

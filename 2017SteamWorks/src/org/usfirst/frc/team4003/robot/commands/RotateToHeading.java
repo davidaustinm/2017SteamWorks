@@ -41,9 +41,9 @@ public class RotateToHeading extends Command {
     	double correction = headingPID.getCorrection(Robot.sensors.getYaw());
     	if (correction > 1) correction = 1;
     	if (correction < -1) correction = -1;
-    	SmartDashboard.putNumber("rotate correction:", correction);
+    	//SmartDashboard.putNumber("rotate correction:", correction);
     	Robot.driveTrain.setPower(-leftSpeed * correction, rightSpeed * correction);
-    	SmartDashboard.putNumber("YAW", Robot.sensors.getYaw());
+    	//SmartDashboard.putNumber("YAW", Robot.sensors.getYaw());
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -58,10 +58,10 @@ public class DriveToPoint extends Command {
     	double beta = Robot.sensors.getYaw() + addToYaw - Math.toDegrees(alpha);
     	
     	beta = normalizeAngle(beta);
-    	SmartDashboard.putNumber("Beta", beta);
-    	SmartDashboard.putNumber("x", currentX);
-    	SmartDashboard.putNumber("y", currentY);
-    	SmartDashboard.putNumber("distance", distance);
+    	//SmartDashboard.putNumber("Beta", beta);
+    	//SmartDashboard.putNumber("x", currentX);
+    	//SmartDashboard.putNumber("y", currentY);
+    	//SmartDashboard.putNumber("distance", distance);
     	
     	double correction = headingPID.getCorrection(beta);
     	if (correction>0.1) correction = 0.1;

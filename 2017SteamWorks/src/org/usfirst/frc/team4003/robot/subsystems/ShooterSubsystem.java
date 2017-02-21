@@ -34,8 +34,7 @@ public class ShooterSubsystem extends Subsystem {
 	
 	 
 	public void setPower(double power) {
-		
-		SmartDashboard.putNumber("shooterposition", master.getPosition());
+		//SmartDashboard.putNumber("shooterposition", master.getPosition());
 	}
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
