@@ -41,7 +41,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	boolean frontCamera = true;
 	double targetX = Double.NaN;
 	double targetY = Double.NaN;
-	double cameraOffset = 9;
+	double cameraOffset = 10;
 	public static Hashtable<String, Integer> cameraHash;
 
 
@@ -215,7 +215,6 @@ public class TrackingCamera extends Subsystem implements Runnable {
 			return new double[]{targetX, targetY};
 		}
 	}
-
 	public void analyzeFrontContours(ArrayList<MatOfPoint> contours, double poseX, double poseY, double poseYaw) {
 		if(contours.size() < 2){
 			SmartDashboard.putNumber("angle", Double.NaN);
