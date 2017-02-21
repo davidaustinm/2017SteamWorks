@@ -31,8 +31,10 @@ public class ShooterSubsystem extends Subsystem {
 		if(on) master.set(SPEED);
 		else master.set(0);
 	}
+	
+	 
 	public void setPower(double power) {
-		//master.set(60);
+		
 		SmartDashboard.putNumber("shooterposition", master.getPosition());
 	}
     // Put methods for controlling this subsystem
@@ -47,6 +49,9 @@ public class ShooterSubsystem extends Subsystem {
     }
     public double getSpeed() {
     	return master.getSpeed();
+    }
+    public boolean isAtSpeed() {
+    	return master.getSpeed() > 0.8*SPEED;
     }
     public int getClosedLoopError() {
     	return master.getClosedLoopError();

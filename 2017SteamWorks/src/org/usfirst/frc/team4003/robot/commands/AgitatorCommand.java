@@ -2,19 +2,16 @@ package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class ShooterCommand extends Command {
-	boolean on = false;
+public class AgitatorCommand extends Command {
 
-    public ShooterCommand() {
+    public AgitatorCommand() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.shooter);
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
@@ -23,13 +20,10 @@ public class ShooterCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.set(on);
-    }
-    public boolean isShooterOn(){
-    	return on;
-    }
-    public void set(boolean on){
-    	this.on = on;
+    	double power = 0;
+    	if(Robot.shooterCommand.isShooterOn()||Robot.intakeValves.isLowBoilerFeedOn())
+    		power = 1;
+    	Robot.agitator.setPower(power);
     }
 
     // Make this return true when this Command no longer needs to run execute()

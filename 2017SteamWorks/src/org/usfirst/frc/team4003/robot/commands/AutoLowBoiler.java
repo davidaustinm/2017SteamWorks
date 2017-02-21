@@ -10,7 +10,6 @@ public class AutoLowBoiler extends CommandGroup {
     public AutoLowBoiler() {
         addSequential(new FeedLowBoiler());
         addParallel(new AutonRunBeater(5000));
-        
     }
 
 }
