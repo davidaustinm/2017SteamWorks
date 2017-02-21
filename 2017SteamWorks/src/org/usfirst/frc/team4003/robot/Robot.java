@@ -66,7 +66,7 @@ public class Robot extends IterativeRobot {
 	public static TrackingCamera trackingCamera;
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-	AutonSelector autonSelector = new AutonSelector();
+	public static AutonSelector autonSelector = new AutonSelector();
 	
 	static {
 		sensors = new Sensors();
@@ -202,7 +202,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		autonomousCommand = chooser.getSelected();
+		//autonomousCommand = chooser.getSelected();
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -215,37 +215,35 @@ public class Robot extends IterativeRobot {
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
-		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain.setMaxSpeed(.65);
+		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain.setMaxSpeed(0.65); // was 0.65
 		if (systemLoad[INTAKEVALVESSYSTEM]) (new FeedHopper()).start();
 		
 		int color;
-		if (autonSelector.getAllianceColor() == "R") {
-			sensors.setAllianceColor(Sensors.RED);
-			color = 0;
-		}
-		else {
-			sensors.setAllianceColor(Sensors.BLUE);
-			color = 1;
-		}
+		if (autonSelector.getAllianceColor() == "R") color = Sensors.RED;
+		else color = Sensors.BLUE;
+		sensors.setAllianceColor(color);
 		
 		switch(autonSelector.getStartingPosition()) {
 			case("L"): 
-				if (color == 0) autonomousCommand = new DriveToRightLift();
+				if (color == Sensors.RED) autonomousCommand = new DriveToRightLift();
 				else autonomousCommand = new DriveToLeftLift();
 				break;	
-			case("M"): 
+			case("C"): 
 				autonomousCommand = new DriveToMiddleLift();
 				break;	
 			case("R"):
-				if (color == 0) autonomousCommand = new DriveToLeftLift();
+				if (color == Sensors.RED) autonomousCommand = new DriveToLeftLift();
 				else autonomousCommand = new DriveToRightLift();
 				break;
 			case("H"):
 				sensors.setBumperOffset(-3);
 				autonomousCommand = new DriveToRedBoilerHopper();
 				break;
+			default:
+				autonomousCommand = new DoNothing();
 		}
-		
+		System.out.println("Color: " + color);
+		System.out.println(autonomousCommand);
 		if (systemLoad[GEARRELEASESUBSYSTEM]) {
 			gearReleaseCommand = gearRelease.gearReleaseCommand;
 		}
@@ -259,7 +257,7 @@ public class Robot extends IterativeRobot {
 			intakeValveCommand = intakeValves.intakeCommand;
 		}
 			
-		autonomousCommand = new DriveToRedBoilerHopper();
+		//autonomousCommand = new DriveToRedBoilerHopper();
 		if (autonomousCommand != null)
 			autonomousCommand.start();
 	}
@@ -290,9 +288,13 @@ public class Robot extends IterativeRobot {
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
-		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain.setMaxSpeed(.8);
+		if (systemLoad[DRIVETRAINSUBSYSTEM]) {
+			driveTrain.setMaxSpeed(.8);
+			if (driveTrain.getSwitchCount() == 0) driveTrain.switchDirection();
+		}
 		if (systemLoad[GEARRELEASESUBSYSTEM]) {
 			gearReleaseCommand = gearRelease.gearReleaseCommand;
+			gearRelease.setState(false);
 		}
 		if (systemLoad[SHOOTERSUBSYSTEM]) {
 			shooterCommand = shooter.shooterCommand;
@@ -302,6 +304,7 @@ public class Robot extends IterativeRobot {
 		}
 		if (systemLoad[INTAKEVALVESSYSTEM]) {
 			intakeValveCommand = intakeValves.intakeCommand;
+			(new FeedHopper()).start();
 		}
 	}
 

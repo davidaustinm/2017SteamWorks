@@ -50,9 +50,9 @@ public class Sensors extends Subsystem {
 	
 	public Sensors (){
 		leftDrive = new Encoder(RobotMap.LEFTDRIVEENCODERA, RobotMap.LEFTDRIVEENCODERB);
-		leftDrive.setReverseDirection(false);
+		leftDrive.setReverseDirection(true);
 		rightDrive = new Encoder(RobotMap.RIGHTDRIVEENCODERA, RobotMap.RIGHTDRIVEENCODERB);
-		rightDrive.setReverseDirection(true);
+		rightDrive.setReverseDirection(false);
 		navX = new AHRS(SerialPort.Port.kMXP);
 		horizontalDrumSwitch = new DigitalInput(RobotMap.HORIZONTALDRUMSWITCH);
 		verticalDrumSwitch = new DigitalInput(RobotMap.VERTICALDRUMSWITCH);
@@ -113,6 +113,7 @@ public class Sensors extends Subsystem {
 	}
 	public double getXCoordinate(){
 		return XCoordinate/EncoderTicPerInch + bumperOffset;
+		//return XCoordinate/EncoderTicPerInch;
 	}
 	public double getYCoordinate(){
 		return YCoordinate/EncoderTicPerInch;

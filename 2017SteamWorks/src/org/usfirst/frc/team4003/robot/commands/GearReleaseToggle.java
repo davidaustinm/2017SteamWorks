@@ -17,7 +17,7 @@ public class GearReleaseToggle extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.gearRelease.set(on);
+    	Robot.gearRelease.setState(on);
     }
 
     // Called repeatedly when this Command is scheduled to run

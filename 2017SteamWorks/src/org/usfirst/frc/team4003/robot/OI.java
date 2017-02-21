@@ -48,7 +48,7 @@ public class OI {
 		driveToTarget.whileActive(new TeleopDriveToTarget());
 		feedHopper.whenActive(new FeedHopper());
 		feedLowBoiler.whenActive(new FeedLowBoiler());
-		backupDistance.whileActive(new BackupLoadGear());
+		backupDistance.whenActive(new BackupLoadGear());
 	}
 
 }

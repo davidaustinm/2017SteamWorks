@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class GearReleaseCommand extends Command {
 	boolean on = false;
+	boolean lastTrigger = false;
     public GearReleaseCommand() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.gearRelease);
@@ -21,12 +22,14 @@ public class GearReleaseCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	boolean on = Math.abs(Robot.oi.operator.getTriggerAxis(Hand.kRight)) > .5;
-    	System.out.println(on);
-    	Robot.gearRelease.set(on);
+    	boolean trigger = Math.abs(Robot.oi.operator.getTriggerAxis(Hand.kRight)) > .5;
+    	if (trigger != lastTrigger) set(trigger);
+    	lastTrigger = trigger;
+    	//System.out.println(on);
+    	Robot.gearRelease.set();
     }
     public void set(boolean on) {
-    	this.on = on;
+    	Robot.gearRelease.setState(on);
     }
 
     // Make this return true when this Command no longer needs to run execute()

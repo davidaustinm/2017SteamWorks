@@ -12,8 +12,8 @@ public class DriveToMiddleLift extends CommandGroup {
 
     public DriveToMiddleLift() {
     	if(Robot.sensors.isAllianceColorRed()){
-    		
-    		addSequential(new DriveToPoint(81,0, new Acceleration(.2,.5,.04),false, 20));
+    		System.out.println("Drive to middle red");
+    		addSequential(new DriveToPoint(78,0, new Acceleration(.2,.5,.04),false, 20));
         	//addSequential(new DriveToTarget(new Acceleration(.2,.3,0), 10));
         	addSequential(new GearReleaseToggle(true));
         	addSequential(new WaitForTime(1500));
@@ -26,12 +26,13 @@ public class DriveToMiddleLift extends CommandGroup {
         	addSequential(new RotateToHeading(-75,.4,0));
         	addSequential(new DriveForwardForDistance(34,.4));
         	*/
-        	addSequential(new DriveBackToPoint(159,112, new Acceleration(.1,.45,.04),true,5));
-        	addSequential(new RotateToHeading(-90,0,.4));
+        	addSequential(new DriveBackToPoint(144,112, new Acceleration(.1,.45,.04),true,5));
+        	addSequential(new RotateToHeading(-90,0,.5));
         	addSequential(new DriveForwardForDistance(5,.4));
         	
     	} else {
-    		addSequential(new DriveToPoint(81,0, new Acceleration(.2,.5,.04),false, 20));
+    		System.out.println("drive to middle blue");
+    		addSequential(new DriveToPoint(78,0, new Acceleration(.2,.5,.04),false, 20));
         	//addSequential(new DriveToTarget(new Acceleration(.2,.3,0), 10));
         	addSequential(new GearReleaseToggle(true));
         	addSequential(new WaitForTime(1500));
@@ -44,8 +45,8 @@ public class DriveToMiddleLift extends CommandGroup {
         	addSequential(new RotateToHeading(-75,.4,0));
         	addSequential(new DriveForwardForDistance(34,.4));
         	*/
-        	addSequential(new DriveBackToPoint(160,-112, new Acceleration(.1,.45,.04),true,5));
-        	addSequential(new RotateToHeading(90,.4,0));
+        	addSequential(new DriveBackToPoint(144,-112, new Acceleration(.1,.45,.04),true,5));
+        	addSequential(new RotateToHeading(90,.5,0));
         	addSequential(new DriveForwardForDistance(5,.4));
         	
     	}

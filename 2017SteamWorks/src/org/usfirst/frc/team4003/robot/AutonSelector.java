@@ -6,8 +6,8 @@ public class AutonSelector {
 	static final int ENDPOS = 2;
 	int state = COLOR;
 	
-	boolean lastA = false;
-	boolean lastB = false;
+	boolean lastA = true;
+	boolean lastB = true;
 	
 	int colorStateRed = 0;
 	int colorStateBlue = 1;
@@ -17,10 +17,13 @@ public class AutonSelector {
 	int startPosCenter = 1;
 	int startPosRight = 2;
 	int startPosHopper = 3;
+	int startNothing = 4;
 	int startPosState = startPosLeft;
 	
 	int endPosBoiler = 0;
-	int endPosHopper = 1;
+	int endPosLow = 1;
+	int endPosHopper = 2;
+	int endPosGear = 3;
 	int endPosState = endPosBoiler;
 	
 	String[] colorStates;
@@ -35,15 +38,18 @@ public class AutonSelector {
 		colorStates[colorStateRed] = "R";
 		colorStates[colorStateBlue] = "B";
 		
-		startPosStates = new String[4];
+		startPosStates = new String[5];
 		startPosStates[startPosLeft] = "L";
 		startPosStates[startPosCenter] = "C";
 		startPosStates[startPosRight] = "R";
 		startPosStates[startPosHopper] = "H";
+		startPosStates[startNothing] = "N";
 		
-		endPosStates = new String[2];
+		endPosStates = new String[4];
 		endPosStates[endPosBoiler] = "B";
+		endPosStates[endPosLow] = "L";
 		endPosStates[endPosHopper] = "H";
+		endPosStates[endPosGear] = "G";
 	}
 	
 	public void update() {
@@ -82,11 +88,14 @@ public class AutonSelector {
 	
 	public String getAllianceColor() {
 		return colorStates[colorState];
+		//return "R";
 	}
 	public String getStartingPosition() {
 		return startPosStates[startPosState];
+		//return "L";
 	}
 	public String getEndingPosition() {
 		return endPosStates[endPosState];
+		//return "G";
 	}
 }

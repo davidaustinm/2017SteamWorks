@@ -30,6 +30,7 @@ public class IntakeValves extends Subsystem {
 	}
 	
 	public void setFlipper(boolean on) {
+		on = !on;
 		if(flipperState = true && !on){
 //			feedTime = System.currentTimeMillis() + 500;
 		}

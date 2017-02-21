@@ -20,7 +20,7 @@ public class GearShiftCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.gearShifter.set(shifterState);
+    	Robot.gearShifter.set(!shifterState);
     }
     
     public void shiftHigh(boolean high) {

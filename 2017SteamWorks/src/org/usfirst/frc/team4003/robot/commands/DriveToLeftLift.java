@@ -12,30 +12,68 @@ public class DriveToLeftLift extends CommandGroup {
 
     public DriveToLeftLift() {
     	if(Robot.sensors.isAllianceColorRed()){
-    		addSequential(new DriveToPoint(70,0, new Acceleration(.2,.6,.04),true, 20));
+    		System.out.println("Left lift red");
+    		addSequential(new DriveToPoint(62,0, new Acceleration(.1,.6,.02),true, 20));
         	addSequential(new RotateToHeading(55,0,0.5,false));
         	addSequential(new WaitForTime(100));
         	//addSequential(new DriveToTarget(new Acceleration(.3,.3,0), 10));
-        	addSequential(new DriveToPoint(108,26, new Acceleration(.2,.3,.04),false,10));
+        	addSequential(new DriveToPoint(100,26, new Acceleration(.2,.3,.04),false,10));
         	addSequential(new GearReleaseToggle(true));
         	addSequential(new WaitForTime(1000));
         	addSequential(new SwitchDirection());
         	addSequential(new DriveForwardForDistance(7, .4));
-        	addSequential(new DriveBackToPoint(12,-59, new Acceleration(.3,.5,0.02),false,20));
-        	addSequential(new SwitchDirection());
+        	switch(Robot.autonSelector.getEndingPosition()) {
+        		case "B": {
+	        		addSequential(new DriveBackToPoint(12,-59, new Acceleration(.3,.5,0.02),false,20));
+	        		// then shoot high boiler
+	        		break;
+	        	}
+        	
+	        	case "H": {
+	        		addSequential(new DriveBackToPoint(85, -73, new Acceleration(0.3,0.5, 0.02), false, 15));
+	        		break;
+	        	}
+	        	default:
+	        	case "L": {
+	        		addSequential(new DriveBackToPoint(14, -61, new Acceleration(.3,.5,0.02),false,20));
+	        		addSequential(new AutoLowBoiler());
+	        		break;
+	        	}
+        	}
+        	
+        	//addSequential(new SwitchDirection());
         	
     	}else{
-    		addSequential(new DriveToPoint(80,0, new Acceleration(.2,.6,.04),true, 20));
+    		System.out.println("Left lift blue");
+    		addSequential(new DriveToPoint(75,0, new Acceleration(.2,.6,.04),true, 20));
         	addSequential(new RotateToHeading(-55,.5,0,false));
         	addSequential(new WaitForTime(100));
         	//addSequential(new DriveToTarget(new Acceleration(.3,.3,0), 10));
-        	addSequential(new DriveToPoint(107,-27, new Acceleration(.2,.3,.04),false,10));
+        	addSequential(new DriveToPoint(109,-27, new Acceleration(.2,.3,.04),false,10));
         	addSequential(new GearReleaseToggle(true));
         	addSequential(new WaitForTime(1000));
         	addSequential(new SwitchDirection());
         	addSequential(new DriveForwardForDistance(7, .4));
-        	addSequential(new DriveBackToPoint(20,68, new Acceleration(.3,.5,0.02),false,20));
-        	addSequential(new SwitchDirection());
+        	switch(Robot.autonSelector.getEndingPosition()) {
+    			case "B": {
+    				addSequential(new DriveBackToPoint(20,68, new Acceleration(.3,.5,0.02),false,20));
+	        		// then shoot high boiler
+	        		break;
+	        	}
+	    	
+	        	case "H": {
+	        		addSequential(new DriveBackToPoint(85, 70, new Acceleration(0.3,0.5, 0.02), false, 20));
+	        		break;
+	        	}
+	        	default:
+	        	case "L": {
+	        		addSequential(new DriveBackToPoint(17, 65, new Acceleration(.3,.5,0.02),false,20));
+	        		addSequential(new AutoLowBoiler());
+	        		break;
+	        	}
+        	}
+        	
+        	//addSequential(new SwitchDirection());
         	
     	}
     	
