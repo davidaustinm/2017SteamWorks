@@ -23,7 +23,7 @@ public class OI {
 	XboxTrigger toggleCamera = new XboxTrigger(driver, XboxTrigger.X);
 	XboxTrigger shiftHigh = new XboxTrigger(driver, XboxTrigger.DPADUP);		//Done -- Shift to high speed
 	XboxTrigger shiftLow = new XboxTrigger(driver, XboxTrigger.DPADDOWN);		//Done -- Shift to low speed
-	XboxTrigger intakeDivert = new XboxTrigger(operator, XboxTrigger.B);		//Done -- Changes flipper to low goal and opens hopper
+	//XboxTrigger intakeDivert = new XboxTrigger(operator, XboxTrigger.B);		//Done -- Changes flipper to low goal and opens hopper
 	//XboxTrigger gearReleaseOpen = new XboxTrigger(operator, XboxTrigger.A);
 	//XboxTrigger gearReleaseClose = new XboxTrigger(operator, XboxTrigger.Y);
 	XboxTrigger homeClimbHorizontal = new XboxTrigger(operator, XboxTrigger.RB);//Done
@@ -40,8 +40,8 @@ public class OI {
 		
 		shiftHigh.whenActive(new ShiftToggle(true));
 		shiftLow.whenActive(new ShiftToggle(false));
-		intakeDivert.whenActive(new IntakeValveToggle(RobotMap.INTAKEFLIPPER, true));
-		intakeDivert.whenActive(new IntakeValveToggle(RobotMap.INTAKEREENTRY, true));
+		//intakeDivert.whenActive(new IntakeValveToggle(RobotMap.INTAKEFLIPPER, true));
+		//intakeDivert.whenActive(new IntakeValveToggle(RobotMap.INTAKEREENTRY, true));
 		homeClimbHorizontal.whenActive(new HomeClimbDrum(HomeClimbDrum.HORIZONTAL));
 		homeClimbVertical.whenActive(new HomeClimbDrum(HomeClimbDrum.VERTICAL));
 		switchDirection.whenActive(new SwitchDirection());
@@ -50,31 +50,5 @@ public class OI {
 		feedLowBoiler.whenActive(new FeedLowBoiler());
 		backupDistance.whileActive(new BackupLoadGear());
 	}
-	//// CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	//// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
 
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	//// TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
 }

@@ -17,7 +17,7 @@ public class FeedHopper extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.intakeValveCommand.setFlipperState(true);
-    	Robot.intakeValveCommand.setReentryState(false);
+    	//Robot.intakeValveCommand.setReentryState(false);
     }
 
     // Called repeatedly when this Command is scheduled to run

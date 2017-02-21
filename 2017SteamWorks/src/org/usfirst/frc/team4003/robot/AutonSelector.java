@@ -72,10 +72,10 @@ public class AutonSelector {
 					break;
 			}
 		}
-		String displayString = String.valueOf(state)+String.valueOf(colorState)+
-				String.valueOf(startPosState)+String.valueOf(endPosState);
+		String displayString = stateString[state] + colorStates[colorState] + startPosStates[startPosState]
+				+ endPosStates[endPosState];
 		digitBoard.display(displayString);
-		System.out.println("state: " + String.valueOf(state));
+//		System.out.println("state: " + String.valueOf(state));
 		lastA = currentA;
 		lastB = currentB;
 	}

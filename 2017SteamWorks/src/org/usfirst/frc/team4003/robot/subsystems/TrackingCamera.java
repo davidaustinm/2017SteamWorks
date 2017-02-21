@@ -45,8 +45,8 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	public static Hashtable<String, Integer> cameraHash;
 
 
-	protected static final String GEAR_CAM = "C920";
-	protected static final String INTAKE_CAM = "046d:0825";
+	protected static final String INTAKE_CAM = "C920";
+	protected static final String GEAR_CAM = "046d:0825";
 	protected static final String TRACKING_CAM = "Tracking";
 
 	protected NetworkTable rdt = NetworkTable.getTable("robotData");

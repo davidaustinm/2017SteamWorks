@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class IntakeValueCommand extends Command {
-	boolean flipperState = true;
+	boolean flipperState = false;
 	boolean reentryState = false;
     public IntakeValueCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -26,6 +26,7 @@ public class IntakeValueCommand extends Command {
     }
     
     public void setFlipperState(boolean state) {
+    	Robot.intakeValves.resetTimer();
     	flipperState = state;
     }
     public void setReentryState(boolean state) {

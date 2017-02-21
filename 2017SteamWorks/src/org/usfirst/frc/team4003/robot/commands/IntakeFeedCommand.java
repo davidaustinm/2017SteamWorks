@@ -22,12 +22,12 @@ public class IntakeFeedCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double power = 0;
-    	if(Robot.shooter.isAtSpeed()){
-    		power = -1;
+    	if(Robot.shooter != null && Robot.shooter.isAtSpeed()){
+    		power = -0.5;
+    	} else if(Robot.intakeValves.isLowBoilerFeedOn()){
+    		power = 0.5;
     	}
-    	else if(Robot.intakeValves.isLowBoilerFeedOn()){
-    		power = 1;
-    	}
+//    	System.out.println("Feed power: " + power);
     	Robot.intakeFeed.setPower(power);
     }
 

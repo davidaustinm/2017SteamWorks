@@ -73,7 +73,7 @@ public class Robot extends IterativeRobot {
 		
 		systemLoad[DRIVETRAINSUBSYSTEM] = true;
 		systemLoad[BEATERSUBYSTEM] = true;
-		systemLoad[REENTRYFEEDSUBSYSTEM] = false;
+		systemLoad[REENTRYFEEDSUBSYSTEM] = true;
 		systemLoad[CLIMBSUBSYSTEM] = true;
 		systemLoad[SHOOTERSUBSYSTEM] = false;
 		systemLoad[SHOOTERFEEDSUBSYSTEM] = false;
