@@ -26,7 +26,7 @@ public class ArcadeDrive extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double yValues = Robot.oi.driver.getY(Hand.kLeft);
-    	double xValues = Robot.oi.driver.getX(Hand.kRight)*.8;
+    	double xValues = Robot.oi.driver.getX(Hand.kRight)*1;
     	double power = (0.2 * yValues) + (0.8 * lastYPower);
     	
     	if (Math.abs(yValues) <= 0.15) {

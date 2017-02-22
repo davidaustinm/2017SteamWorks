@@ -17,7 +17,8 @@ public class AutonSelector {
 	int startPosCenter = 1;
 	int startPosRight = 2;
 	int startPosHopper = 3;
-	int startNothing = 4;
+	int startPosBaseline = 4;
+	int startNothing = 5;
 	int startPosState = startPosLeft;
 	
 	int endPosBoiler = 0;
@@ -38,11 +39,12 @@ public class AutonSelector {
 		colorStates[colorStateRed] = "R";
 		colorStates[colorStateBlue] = "B";
 		
-		startPosStates = new String[5];
+		startPosStates = new String[6];
 		startPosStates[startPosLeft] = "L";
 		startPosStates[startPosCenter] = "C";
 		startPosStates[startPosRight] = "R";
 		startPosStates[startPosHopper] = "H";
+		startPosStates[startPosBaseline] = "B";
 		startPosStates[startNothing] = "N";
 		
 		endPosStates = new String[4];

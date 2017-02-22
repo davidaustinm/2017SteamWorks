@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.networktables.*;
 
 import org.usfirst.frc.team4003.robot.commands.*;
 import org.usfirst.frc.team4003.robot.subsystems.*;
+import org.usfirst.frc.team4003.robot.utilities.Acceleration;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,7 +29,7 @@ import org.usfirst.frc.team4003.robot.subsystems.*;
  */
 public class Robot extends IterativeRobot {
 
-	private static final int BEATERSUBSYSTEM = 0;
+	//private static final int BEATERSUBSYSTEM = 0;
 	// subsystems
 	public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static TalonDriveTrain driveTrain;
@@ -239,6 +240,9 @@ public class Robot extends IterativeRobot {
 				sensors.setBumperOffset(-3);
 				autonomousCommand = new DriveToRedBoilerHopper();
 				break;
+			case("B"):
+				autonomousCommand = new DriveToPoint(120, 0, new Acceleration(0.1, 0.5, 0.02), false, 20);
+				break;
 			default:
 				autonomousCommand = new DoNothing();
 		}
@@ -285,6 +289,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
+		(new HomeClimbDrum(HomeClimbDrum.VERTICAL)).start();
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();

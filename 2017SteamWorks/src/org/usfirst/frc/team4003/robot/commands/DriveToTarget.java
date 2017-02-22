@@ -15,6 +15,7 @@ public class DriveToTarget extends DriveToPoint {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super(0, 0, accelerate, false, slowDistance);
+    	slowDistance = 20;
     }
 
     // Called just before this Command runs the first time
@@ -28,7 +29,7 @@ public class DriveToTarget extends DriveToPoint {
     	SmartDashboard.putNumber("targetX", target[0]);
     	SmartDashboard.putNumber("targetY", target[1]);
     	*/
-    	if(Double.isNaN(target[0])){
+    	if(Double.isNaN(target[0]) || lastDistance < 35){
     		return;
     	}
     	targetX = target[0];

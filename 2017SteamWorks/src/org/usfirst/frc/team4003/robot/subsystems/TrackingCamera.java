@@ -82,8 +82,8 @@ public class TrackingCamera extends Subsystem implements Runnable {
         	}
         	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get(GEAR_CAM).toString() + " --set-ctrl exposure_auto=1");
         	Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get(INTAKE_CAM).toString() + "  --set-ctrl exposure_auto=1");
-			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get(GEAR_CAM).toString() + "  --set-ctrl exposure_absolute=30");
-			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get(INTAKE_CAM).toString() + "  --set-ctrl exposure_absolute=400");
+			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get(GEAR_CAM).toString() + "  --set-ctrl exposure_absolute=400");
+			Runtime.getRuntime().exec("/usr/bin/v4l2-ctl -d /dev/video" + cameraHash.get(INTAKE_CAM).toString() + "  --set-ctrl exposure_absolute=30");
 			// TODO: Set tracking camera exposures IF we have one.
 			
 		} catch (IOException e) {
