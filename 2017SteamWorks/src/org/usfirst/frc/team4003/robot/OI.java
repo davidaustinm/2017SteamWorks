@@ -20,7 +20,6 @@ public class OI {
 	XboxTrigger backupDistance = new XboxTrigger(driver, XboxTrigger.LB);
 	//XboxTrigger trackingOn = new XboxTrigger(driver, XboxTrigger.);
 	//XboxTrigger trackingOff = new XboxTrigger(driver, XboxTrigger.B);
-	XboxTrigger toggleCamera = new XboxTrigger(driver, XboxTrigger.X);
 	XboxTrigger shiftHigh = new XboxTrigger(driver, XboxTrigger.DPADUP);		//Done -- Shift to high speed
 	XboxTrigger shiftLow = new XboxTrigger(driver, XboxTrigger.DPADDOWN);		//Done -- Shift to low speed
 	//XboxTrigger intakeDivert = new XboxTrigger(operator, XboxTrigger.B);		//Done -- Changes flipper to low goal and opens hopper
@@ -32,11 +31,15 @@ public class OI {
 	XboxTrigger driveToTarget = new XboxTrigger(driver, XboxTrigger.B);			//Done
 	XboxTrigger feedHopper = new XboxTrigger(operator, XboxTrigger.A);
 	XboxTrigger feedLowBoiler = new XboxTrigger(operator, XboxTrigger.B);
+	XboxTrigger slowDriveOn = new XboxTrigger(driver, XboxTrigger.Y);
+	XboxTrigger slowDriveOff = new XboxTrigger(driver, XboxTrigger.X);
+	XboxTrigger tankDrive = new XboxTrigger(driver, XboxTrigger.DPADRIGHT);
+	XboxTrigger arcadeDrive = new XboxTrigger(driver, XboxTrigger.DPADLEFT);
 	
 	public OI() {
 		
 		//trackingOn.whenActive(new ToggleTracking(true));		Tracking
-		toggleCamera.whenActive(new ToggleCameraCommand());
+		//toggleCamera.whenActive(new ToggleCameraCommand());
 		
 		shiftHigh.whenActive(new ShiftToggle(true));
 		shiftLow.whenActive(new ShiftToggle(false));
@@ -49,6 +52,11 @@ public class OI {
 		feedHopper.whenActive(new FeedHopper());
 		feedLowBoiler.whenActive(new FeedLowBoiler());
 		backupDistance.whenActive(new BackupLoadGear());
+		slowDriveOn.whenActive(new SlowDriveCommand(0.5));
+		slowDriveOff.whenActive(new SlowDriveCommand(.8));
+		arcadeDrive.whenActive(new ArcadeDrive());
+		tankDrive.whenActive(new TankDrive());
+		
 	}
 
 }
