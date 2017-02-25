@@ -35,6 +35,7 @@ public class OI {
 	XboxTrigger slowDriveOff = new XboxTrigger(driver, XboxTrigger.X);
 	XboxTrigger tankDrive = new XboxTrigger(driver, XboxTrigger.DPADRIGHT);
 	XboxTrigger arcadeDrive = new XboxTrigger(driver, XboxTrigger.DPADLEFT);
+	XboxTrigger shooterOn = new XboxTrigger(operator, XboxTrigger.LT);
 	
 	public OI() {
 		
@@ -56,6 +57,8 @@ public class OI {
 		slowDriveOff.whenActive(new SlowDriveCommand(.8));
 		arcadeDrive.whenActive(new ArcadeDrive());
 		tankDrive.whenActive(new TankDrive());
+		shooterOn.whenActive(new ShooterToggle(true));
+		shooterOn.whenInactive(new ShooterToggle(false));
 		
 	}
 

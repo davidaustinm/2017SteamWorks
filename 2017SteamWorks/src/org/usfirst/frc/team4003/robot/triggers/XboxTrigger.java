@@ -24,6 +24,8 @@ public class XboxTrigger extends Trigger {
     public static final int DPADSE = 13;
     public static final int DPADSW = 14;
     public static final int DPADNW = 15;
+    public static final int LT = 16;
+    public static final int RT = 17;
 	
 	XboxController xbox;
 	int button;
@@ -49,6 +51,8 @@ public class XboxTrigger extends Trigger {
     		case DPADSE: return xbox.getPOV(0) == 135;
     		case DPADSW: return xbox.getPOV(0) == 225;
     		case DPADNW: return xbox.getPOV(0) == 315;
+    		case LT: return Math.abs(xbox.getTriggerAxis(Hand.kLeft)) > 0.5;
+    		case RT: return Math.abs(xbox.getTriggerAxis(Hand.kRight)) > 0.5;
     	}
         return false;
     }

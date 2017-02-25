@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.networktables.*;
 import org.usfirst.frc.team4003.robot.commands.*;
 import org.usfirst.frc.team4003.robot.subsystems.*;
 import org.usfirst.frc.team4003.robot.utilities.Acceleration;
+import org.usfirst.frc.team4003.robot.utilities.AutonInterface;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -67,7 +68,8 @@ public class Robot extends IterativeRobot {
 	public static TrackingCamera trackingCamera;
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-	public static AutonSelector autonSelector = new AutonSelector();
+	public static AutonSelector revAutonSelector = new AutonSelector();
+	public static AutonInterface autonSelector = new DashboardAutonSwitch();
 	
 	static {
 		sensors = new Sensors();
@@ -76,9 +78,9 @@ public class Robot extends IterativeRobot {
 		systemLoad[BEATERSUBYSTEM] = true;
 		systemLoad[REENTRYFEEDSUBSYSTEM] = true;
 		systemLoad[CLIMBSUBSYSTEM] = true;
-		systemLoad[SHOOTERSUBSYSTEM] = false;
+		systemLoad[SHOOTERSUBSYSTEM] = true;
 		systemLoad[SHOOTERFEEDSUBSYSTEM] = false;
-		systemLoad[AGITATOR] = false;
+		systemLoad[AGITATOR] = true;
 		systemLoad[SHIFTERSUBSYSTEM] = true;
 		systemLoad[INTAKEVALVESSYSTEM] = true;
 		systemLoad[GEARRELEASESUBSYSTEM] = true;
@@ -187,7 +189,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		autonSelector.update();
+		revAutonSelector.update();
 	}
 
 	/**
@@ -218,6 +220,10 @@ public class Robot extends IterativeRobot {
 		sensors.resetYaw();
 		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain.setMaxSpeed(0.65); // was 0.65
 		if (systemLoad[INTAKEVALVESSYSTEM]) (new FeedHopper()).start();
+		
+		if (autonSelector.getAllianceColor() != "R" || autonSelector.getAllianceColor() != "B"){
+			autonSelector = revAutonSelector;
+		}
 		
 		int color;
 		if (autonSelector.getAllianceColor() == "R") color = Sensors.RED;

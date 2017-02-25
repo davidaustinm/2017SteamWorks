@@ -1,9 +1,11 @@
 package org.usfirst.frc.team4003.robot.subsystems;
 
+import org.usfirst.frc.team4003.robot.RobotMap;
 import org.usfirst.frc.team4003.robot.commands.ShooterCommand;
 
 import com.ctre.CANTalon;
 import com.ctre.CANTalon.FeedbackDevice;
+import com.ctre.CANTalon.TalonControlMode;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,21 +14,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 public class ShooterSubsystem extends Subsystem {
-	CANTalon master = new CANTalon(3);
-	CANTalon slave = new CANTalon(5);
+	CANTalon master = new CANTalon(RobotMap.SHOOTERMASTER);
+	CANTalon slave = new CANTalon(RobotMap.SHOOTERSLAVE);
 	double SPEED = 2000;
 	public ShooterCommand shooterCommand;
-	public ShooterSubsystem() {
-		master.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		master.changeControlMode(CANTalon.TalonControlMode.Speed);
-		master.configNominalOutputVoltage(0, 0);
+	public ShooterSubsystem() {        
+        master.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+    	master.configNominalOutputVoltage(0, 0);
         master.configPeakOutputVoltage(12, -12);
-        master.configEncoderCodesPerRev(420);
-		master.setF(3.6535);
-		master.setP(3);
+        master.setProfile(0);
+        master.setF(0.0361);
+        master.setI(0);
+        master.setP(0.05);
+        master.setD(0);
+        master.changeControlMode(TalonControlMode.Speed);
+        
 		slave.changeControlMode(CANTalon.TalonControlMode.Follower);
 		slave.set(master.getDeviceID());
 	}
+	
 	public void set(boolean on){
 		if(on) master.set(SPEED);
 		else master.set(0);

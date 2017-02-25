@@ -1,6 +1,8 @@
 package org.usfirst.frc.team4003.robot;
 
-public class AutonSelector {
+import org.usfirst.frc.team4003.robot.utilities.AutonInterface;
+
+public class AutonSelector implements AutonInterface{
 	static final int COLOR = 0;
 	static final int STARTPOS = 1;
 	static final int ENDPOS = 2;
