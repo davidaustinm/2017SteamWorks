@@ -25,7 +25,7 @@ public class DriveToLeftLift extends CommandGroup {
         	switch(Robot.autonSelector.getEndingPosition()) {
         		case "B": {
 	        		addSequential(new DriveBackToPoint(12,-59, new Acceleration(.3,.5,0.02),false,20));
-	        		// then shoot high boiler
+	        		addSequential(new AutoHighBoiler(7000));
 	        		break;
 	        	}
         	
@@ -57,7 +57,7 @@ public class DriveToLeftLift extends CommandGroup {
         	switch(Robot.autonSelector.getEndingPosition()) {
     			case "B": {
     				addSequential(new DriveBackToPoint(20,68, new Acceleration(.3,.5,0.02),false,20));
-	        		// then shoot high boiler
+    				addSequential(new AutoHighBoiler(7000));
 	        		break;
 	        	}
 	    	

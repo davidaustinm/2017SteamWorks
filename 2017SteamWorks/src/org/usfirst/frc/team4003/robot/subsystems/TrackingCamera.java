@@ -11,6 +11,7 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team4003.robot.Robot;
+import org.usfirst.frc.team4003.robot.RobotMap;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -35,7 +36,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	boolean trackingOn = true;
 
 	UsbCamera frontCam;
-	UsbCamera backCam;
+	//UsbCamera backCam;
 	UsbCamera trackingCam;
 
 	boolean frontCamera = true;
@@ -67,11 +68,10 @@ public class TrackingCamera extends Subsystem implements Runnable {
          hsv = new Mat();
          mask = new Mat();
          hierarchy = new Mat();
-         lowerHSV = new Scalar(40,0,60);
-         upperHSV = new Scalar(180,360,300);
+         lowerHSV = new Scalar(60,120,150);
+         upperHSV = new Scalar(100,255,255);
          tracking = new Thread(this);
-         
-                  
+            
          // Set exposure with v4l2-ctl
          // example: /usr/bin/v4l2-ctl --set-ctrl exposure_absolute=3
          try {
@@ -90,13 +90,20 @@ public class TrackingCamera extends Subsystem implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        frontCam = new UsbCamera("front", cameraHash.get(GEAR_CAM));
-        backCam = new UsbCamera("back", cameraHash.get(INTAKE_CAM));  
+        frontCam = new UsbCamera("front", RobotMap.VIEWCAMERA);
+        if (RobotMap.trackingLocal == false) {
+        	frontCam.setResolution(320,240);
+    		frontCam.setFPS(15);
+    		CameraServer.getInstance().startAutomaticCapture(frontCam);
+        } else {
+        	trackingCam = new UsbCamera("track", RobotMap.TRACKINGCAMERA);
+        }
+        //backCam = new UsbCamera("back", cameraHash.get(INTAKE_CAM));  
                  
 	}
 	public void toggleCamera() {
 		synchronized(visionLock) {
-			frontCamera = !frontCamera;
+			//frontCamera = !frontCamera;
 		}
 	}
 
@@ -117,7 +124,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	}
 
 	public void startCamera() {
-		tracking.start();
+		if (RobotMap.trackingLocal) tracking.start();
 	}
 
 	public void run() {
@@ -125,22 +132,23 @@ public class TrackingCamera extends Subsystem implements Runnable {
 		if (isTrackingLocal()) {
 	        trackingCam.setResolution(320, 240);
 	        trackingCam.setFPS(20);
+	        trackingCam.setExposureManual(3);
 	        CameraServer.getInstance().addCamera(trackingCam);
 	        trackingSink = CameraServer.getInstance().getVideo(trackingCam);
 	        trackingSink.grabFrame(source);
 		}
 
 		frontCam.setResolution(320,240);
-        backCam.setResolution(320,240);
+        //backCam.setResolution(320,240);
 
         frontCam.setFPS(20);
-        backCam.setFPS(20);
+        //backCam.setFPS(20);
 
         CameraServer.getInstance().addCamera(frontCam);
-        CameraServer.getInstance().addCamera(backCam);
+        //CameraServer.getInstance().addCamera(backCam);
 
         CvSink frontSink = CameraServer.getInstance().getVideo(frontCam);
-        CvSink backSink = CameraServer.getInstance().getVideo(backCam);
+        //CvSink backSink = CameraServer.getInstance().getVideo(backCam);
 
         CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320,240);
 
@@ -149,7 +157,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 		 */
 
         frontSink.grabFrame(source);
-        backSink.grabFrame(source);
+        //backSink.grabFrame(source);
 
 
         boolean localFrontCamera = true;
@@ -163,11 +171,10 @@ public class TrackingCamera extends Subsystem implements Runnable {
         	if (isTrackingOn() && isTrackingLocal()) {
         		trackingSink.grabFrame(source);
         	} else {
-        		if (localFrontCamera) {
-            		
+        		if (localFrontCamera) {	
             		frontSink.grabFrame(source);
             	} else {
-            		backSink.grabFrame(source);
+            		//backSink.grabFrame(source);
             	}
         	}
             if (isTrackingOn() && isTrackingLocal()) {
@@ -196,7 +203,8 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	}
 	
 	protected boolean isTrackingLocal() {
-		return cameraHash.get(TRACKING_CAM).intValue() > 0;
+		//return cameraHash.get(TRACKING_CAM).intValue() > 0;
+		return RobotMap.trackingLocal;
 	}
 
 	public void setTarget(double x, double y) {
@@ -210,6 +218,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 
 	public double[] getTarget() {
 		synchronized(visionLock) {
+			if (RobotMap.trackingLocal) return new double[] {targetX, targetY};
 			targetX = rdt.getNumber("targetX", Double.NaN);
 			targetY = rdt.getNumber("targetY", Double.NaN);
 			return new double[]{targetX, targetY};

@@ -18,4 +18,7 @@ public class TeleopDriveToTarget extends CommandGroup {
     protected void end(){
     	Robot.trackingCamera.trackingOn(false);
     }
+    protected void interrupted() {
+    	end();
+    }
 }
