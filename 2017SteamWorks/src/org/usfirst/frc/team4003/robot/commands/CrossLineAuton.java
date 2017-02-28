@@ -19,16 +19,16 @@ public class CrossLineAuton extends CommandGroup {
     	addSequential(new WaitForTime(1000));
     	
     	if(position == 1 || position == 3){
-    		addSequential(new DriveToPoint(100, 0, new Acceleration(.2,.5,.04),false, 0));
+    		addSequential(new DriveToPoint(100, 0, new Acceleration(.2,.5,.04),false, 0, 5000));
     	}
     	if(position == 2){
     		if(direction == LEFT){
     			addSequential(new RotateToHeading(45,0,.5,true));
-    			addSequential(new DriveToPoint(100,100, new Acceleration(.2,.5,04)));
+    			addSequential(new DriveToPoint(100,100, new Acceleration(.2,.5,04), 5000));
     		}
     		if(direction == RIGHT){
     			addSequential(new RotateToHeading(-45,.5,0,true));
-    			addSequential(new DriveToPoint(100,-100, new Acceleration(.2,.5,04)));
+    			addSequential(new DriveToPoint(100,-100, new Acceleration(.2,.5,04), 5000));
     		}
     	}
     }

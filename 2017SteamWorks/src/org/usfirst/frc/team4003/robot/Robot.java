@@ -71,6 +71,9 @@ public class Robot extends IterativeRobot {
 	public static AutonSelector revAutonSelector = new AutonSelector();
 	public static AutonInterface autonSelector = new DashboardAutonSwitch();
 	
+	public static ShooterState shooterState = null;
+	public static LowBoilerState lowBoilerState = null;
+	
 	static {
 		sensors = new Sensors();
 		
@@ -247,7 +250,7 @@ public class Robot extends IterativeRobot {
 				autonomousCommand = new DriveToRedBoilerHopper();
 				break;
 			case("B"):
-				autonomousCommand = new DriveToPoint(120, 0, new Acceleration(0.1, 0.5, 0.02), false, 20);
+				autonomousCommand = new DriveToPoint(120, 0, new Acceleration(0.1, 0.5, 0.02), false, 20, 5000);
 				break;
 			default:
 				autonomousCommand = new DoNothing();
@@ -257,8 +260,13 @@ public class Robot extends IterativeRobot {
 		if (systemLoad[GEARRELEASESUBSYSTEM]) {
 			gearReleaseCommand = gearRelease.gearReleaseCommand;
 		}
-		if (systemLoad[SHOOTERSUBSYSTEM]) {
-			shooterCommand = shooter.shooterCommand;
+		if (systemLoad[SHOOTERSUBSYSTEM] && shooterState == null) {
+			shooterState = new ShooterState();
+			shooterState.start();
+		}
+		if (lowBoilerState == null) {
+			lowBoilerState = new LowBoilerState();
+			lowBoilerState.start();
 		}
 	    if (systemLoad[SHIFTERSUBSYSTEM]) {
 			gearShiftCommand = gearShifter.gearShiftCommand;
@@ -307,9 +315,15 @@ public class Robot extends IterativeRobot {
 			gearReleaseCommand = gearRelease.gearReleaseCommand;
 			gearRelease.setState(false);
 		}
-		if (systemLoad[SHOOTERSUBSYSTEM]) {
-			shooterCommand = shooter.shooterCommand;
+		if (systemLoad[SHOOTERSUBSYSTEM] && shooterState == null) {
+			shooterState = new ShooterState();
+			shooterState.start();
 		}
+		if (lowBoilerState == null) {
+			lowBoilerState = new LowBoilerState();
+			lowBoilerState.start();
+		}
+		
 	    if (systemLoad[SHIFTERSUBSYSTEM]) {
 			gearShiftCommand = gearShifter.gearShiftCommand;
 		}
@@ -325,8 +339,8 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopPeriodic() {
 		boolean gearReleaseState = Math.abs(oi.operator.getTriggerAxis(Hand.kRight)) > .5;
-		boolean shooterState = Math.abs(oi.operator.getTriggerAxis(Hand.kLeft)) > .5;
-		if (systemLoad[SHOOTERSUBSYSTEM]) shooterCommand.set(shooterState);
+		//boolean shooterState = Math.abs(oi.operator.getTriggerAxis(Hand.kLeft)) > .5;
+		//if (systemLoad[SHOOTERSUBSYSTEM]) shooterCommand.set(shooterState);
 		if (systemLoad[GEARRELEASESUBSYSTEM]) gearReleaseCommand.set(gearReleaseState);
 		sensors.updatePosition();
 		NetworkTable robotData = NetworkTable.getTable("robotData");

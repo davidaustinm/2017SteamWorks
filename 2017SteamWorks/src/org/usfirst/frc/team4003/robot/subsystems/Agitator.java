@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Agitator extends Subsystem {
+	public AgitatorCommand agitatorCommand;
 	Spark agitator;
 	public Agitator() {
 		agitator = new Spark(RobotMap.AGITATOR);
@@ -23,7 +24,8 @@ public class Agitator extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new AgitatorCommand());
+    	agitatorCommand = new AgitatorCommand();
+        setDefaultCommand(agitatorCommand);
     }
 }
 

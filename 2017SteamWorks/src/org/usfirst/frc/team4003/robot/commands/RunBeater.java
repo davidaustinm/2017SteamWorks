@@ -7,15 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AgitatorCommand extends Command {
-	boolean on = false;
-	public void setOn(boolean on) {
-		this.on = on;
-	}
+public class RunBeater extends Command {
 
-    public AgitatorCommand() {
+    public RunBeater() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.beaters);
     }
 
     // Called just before this Command runs the first time
@@ -24,9 +20,7 @@ public class AgitatorCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double power = 0;
-    	if (on) power = 1;
-    	Robot.agitator.setPower(power);
+    	Robot.beaters.setPower(1);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,10 +30,12 @@ public class AgitatorCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.beaters.setPower(0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

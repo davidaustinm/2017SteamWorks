@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class ReentryFeedSubsystem extends Subsystem {
 	Spark feed;
+	public IntakeFeedCommand feedCommand;
 	public ReentryFeedSubsystem() {
 		feed = new Spark(RobotMap.REENTRYFEED);
 	}
@@ -21,7 +22,8 @@ public class ReentryFeedSubsystem extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new IntakeFeedCommand());
+    	feedCommand = new IntakeFeedCommand();
+        setDefaultCommand(feedCommand);
     }
 }
 

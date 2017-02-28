@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class DriveToBlueBoilerHopper extends CommandGroup {
 
     public DriveToBlueBoilerHopper() {
-    	addSequential(new DriveToPoint(70,0, new Acceleration(.3,.75,0.02),false,10));
+    	addSequential(new DriveToPoint(70,0, new Acceleration(.3,.75,0.02),false,10, 2000));
     	addSequential(new RotateToHeading(85,.50,0));
     	addSequential(new DriveForwardForDistance(12,.5));
     	addSequential(new WaitForTime(1500));

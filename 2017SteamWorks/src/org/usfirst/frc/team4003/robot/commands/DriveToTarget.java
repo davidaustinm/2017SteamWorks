@@ -14,7 +14,7 @@ public class DriveToTarget extends DriveToPoint {
     public DriveToTarget(Acceleration accelerate, double slowDistance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	super(0, 0, accelerate, false, slowDistance);
+    	super(0, 0, accelerate, false, slowDistance, 3000);
     	slowDistance = 20;
     }
 

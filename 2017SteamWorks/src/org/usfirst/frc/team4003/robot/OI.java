@@ -36,6 +36,7 @@ public class OI {
 	XboxTrigger tankDrive = new XboxTrigger(driver, XboxTrigger.DPADRIGHT);
 	XboxTrigger arcadeDrive = new XboxTrigger(driver, XboxTrigger.DPADLEFT);
 	XboxTrigger shooterOn = new XboxTrigger(operator, XboxTrigger.LT);
+	XboxTrigger lowShooterOn = new XboxTrigger(operator, XboxTrigger.RT);
 	
 	public OI() {
 		
@@ -51,14 +52,16 @@ public class OI {
 		switchDirection.whenActive(new SwitchDirection());
 		driveToTarget.whileActive(new TeleopDriveToTarget());
 		feedHopper.whenActive(new FeedHopper());
-		feedLowBoiler.whenActive(new FeedLowBoiler());
+		//feedLowBoiler.whenActive(new FeedLowBoiler());
 		backupDistance.whenActive(new BackupLoadGear());
 		slowDriveOn.whenActive(new SlowDriveCommand(0.5));
 		slowDriveOff.whenActive(new SlowDriveCommand(.8));
 		arcadeDrive.whenActive(new ArcadeDrive());
 		tankDrive.whenActive(new TankDrive());
-		shooterOn.whenActive(new ShooterToggle(true));
-		shooterOn.whenInactive(new ShooterToggle(false));
+		shooterOn.whileActive(new TeleopShootHigh());
+		lowShooterOn.whileActive(new TeleopShootLow());
+		//shooterOn.whenActive(new ShooterToggle(true));
+		//shooterOn.whenInactive(new ShooterToggle(false));
 		
 	}
 

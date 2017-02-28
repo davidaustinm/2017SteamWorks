@@ -16,7 +16,8 @@ public class FeedHopper extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.intakeValveCommand.setFlipperState(true);
+    	if (Robot.lowBoilerState.isIdle())
+    		Robot.intakeValveCommand.setFlipperState(true);
     	//Robot.intakeValveCommand.setReentryState(false);
     }
 

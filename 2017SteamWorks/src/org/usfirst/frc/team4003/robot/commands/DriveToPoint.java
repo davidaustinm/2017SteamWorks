@@ -19,16 +19,19 @@ public class DriveToPoint extends Command {
 	double addToYaw = 0;
 	PID headingPID = new PID(0.015, 0, 0.005);
 	PID distancePID = null;
-    public DriveToPoint(double x, double y, Acceleration accelerate) {
+	int timeout = 10000;
+	long stopTime;
+    public DriveToPoint(double x, double y, Acceleration accelerate, int timeout) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
+        this.timeout = timeout;
         targetX = x;
         targetY = y;
         this.accelerate = accelerate;
         headingPID.setTarget(0);
     }
-    public DriveToPoint(double x, double y, Acceleration accelerate, boolean coast, double slowDistance) {
-    	this(x,y,accelerate);
+    public DriveToPoint(double x, double y, Acceleration accelerate, boolean coast, double slowDistance,int timeout) {
+    	this(x,y,accelerate, timeout);
     	this.coast = coast;	
     	distancePID = new PID(1/slowDistance, 0,0);
     	distancePID.setTarget(0);
@@ -36,6 +39,7 @@ public class DriveToPoint extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	stopTime  = System.currentTimeMillis() + timeout;
     }
     public double normalizeAngle(double angle){
     	while(angle > 180){
@@ -79,6 +83,7 @@ public class DriveToPoint extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	if (System.currentTimeMillis() >= stopTime) return true;
     	boolean finished = distance>lastDistance;
     	//finished = distance < 2;
     	lastDistance = distance;

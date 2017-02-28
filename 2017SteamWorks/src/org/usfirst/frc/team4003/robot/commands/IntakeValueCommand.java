@@ -26,7 +26,6 @@ public class IntakeValueCommand extends Command {
     }
     
     public void setFlipperState(boolean state) {
-    	Robot.intakeValves.resetTimer();
     	flipperState = state;
     }
     public void setReentryState(boolean state) {

@@ -7,26 +7,20 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AgitatorCommand extends Command {
-	boolean on = false;
-	public void setOn(boolean on) {
-		this.on = on;
-	}
+public class TeleopShootLow extends Command {
 
-    public AgitatorCommand() {
+    public TeleopShootLow() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.lowBoilerState.setOn(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double power = 0;
-    	if (on) power = 1;
-    	Robot.agitator.setPower(power);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,10 +30,12 @@ public class AgitatorCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.lowBoilerState.setOn(false);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }
