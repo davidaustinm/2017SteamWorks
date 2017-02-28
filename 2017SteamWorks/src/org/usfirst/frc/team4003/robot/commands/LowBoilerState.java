@@ -18,6 +18,7 @@ public class LowBoilerState extends Command {
 	boolean on = false;
 	public void setOn(boolean on) {
 		this.on = on;
+		if (on) Robot.shooterState.setOn(false);
 	}
 	public boolean isIdle() {
 		return state == IDLE;
@@ -41,7 +42,7 @@ public class LowBoilerState extends Command {
     			runBeater = new RunBeater();
     			runBeater.start();
     			Robot.intakeFeed.feedCommand.setState(IntakeFeedCommand.FEEDLOW);
-    			Robot.intakeValves.setFlipper(false);
+    			Robot.intakeValves.intakeCommand.setFlipperState(false);
     			state = FEEDON;
     			transitionTime = System.currentTimeMillis() + 500;
     		}
@@ -68,7 +69,7 @@ public class LowBoilerState extends Command {
     		break;
     	case SHOOTEROFF:
     		if (System.currentTimeMillis() >= transitionTime) {
-    			Robot.intakeValves.setFlipper(true);
+    			Robot.intakeValves.intakeCommand.setFlipperState(true);
     			runBeater.cancel();
     			state = IDLE;
     		}

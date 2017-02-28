@@ -49,7 +49,11 @@ public class ShooterState extends Command {
     		}
     		break;
     	case SHOOTERON:
-    		if (Robot.shooter.isAtSpeed()) {
+    		if (on == false) {
+    			Robot.shooter.set(false);
+    			state = IDLE;
+    		}
+    		else if (Robot.shooter.isAtSpeed()) {
     			state = FEEDON;
     			Robot.intakeFeed.feedCommand.setState(IntakeFeedCommand.FEEDSHOOTER);
     			transitionTime = System.currentTimeMillis() + 300;

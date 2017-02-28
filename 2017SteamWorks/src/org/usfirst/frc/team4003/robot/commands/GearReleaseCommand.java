@@ -22,9 +22,11 @@ public class GearReleaseCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	/*
     	boolean trigger = Math.abs(Robot.oi.operator.getTriggerAxis(Hand.kRight)) > .5;
     	if (trigger != lastTrigger) set(trigger);
     	lastTrigger = trigger;
+    	*/
     	//System.out.println(on);
     	Robot.gearRelease.set();
     }

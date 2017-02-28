@@ -338,10 +338,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		boolean gearReleaseState = Math.abs(oi.operator.getTriggerAxis(Hand.kRight)) > .5;
+		//oolean gearReleaseState = Math.abs(oi.operator.getTriggerAxis(Hand.kRight)) > .5;
 		//boolean shooterState = Math.abs(oi.operator.getTriggerAxis(Hand.kLeft)) > .5;
 		//if (systemLoad[SHOOTERSUBSYSTEM]) shooterCommand.set(shooterState);
-		if (systemLoad[GEARRELEASESUBSYSTEM]) gearReleaseCommand.set(gearReleaseState);
+		//if (systemLoad[GEARRELEASESUBSYSTEM]) gearReleaseCommand.set(gearReleaseState);
 		sensors.updatePosition();
 		NetworkTable robotData = NetworkTable.getTable("robotData");
 		robotData.putNumber("robotX", sensors.getXCoordinate());
