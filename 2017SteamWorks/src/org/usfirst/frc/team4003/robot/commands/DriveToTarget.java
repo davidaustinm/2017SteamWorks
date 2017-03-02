@@ -20,7 +20,12 @@ public class DriveToTarget extends DriveToPoint {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	target = Robot.trackingCamera.getTarget();
+        //targetX = target[0];
+        //targetY = target[1];
     }
+    
+
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
@@ -29,7 +34,8 @@ public class DriveToTarget extends DriveToPoint {
     	SmartDashboard.putNumber("targetX", target[0]);
     	SmartDashboard.putNumber("targetY", target[1]);
     	*/
-    	if(Double.isNaN(target[0]) || lastDistance < 35){
+    	if(Double.isNaN(target[0]) || lastDistance < 50){
+    		super.execute();
     		return;
     	}
     	targetX = target[0];

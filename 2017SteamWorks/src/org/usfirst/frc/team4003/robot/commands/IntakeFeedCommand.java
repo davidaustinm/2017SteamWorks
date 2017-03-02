@@ -22,11 +22,12 @@ public class IntakeFeedCommand extends Command {
     protected void initialize() {
     }
 
+    double SPEED = 0.75;
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double power = 0;
-    	if (state == FEEDLOW) power = 0.5;
-    	if (state == FEEDSHOOTER) power = -0.5;
+    	if (state == FEEDLOW) power = SPEED;
+    	if (state == FEEDSHOOTER) power = -SPEED;
     	Robot.intakeFeed.setPower(power);
     }
     

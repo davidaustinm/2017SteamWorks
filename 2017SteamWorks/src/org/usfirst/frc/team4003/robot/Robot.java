@@ -255,7 +255,9 @@ public class Robot extends IterativeRobot {
 			default:
 				autonomousCommand = new DoNothing();
 		}
-		System.out.println("Color: " + color);
+		if (color == Sensors.BLUE) System.out.println("Color: blue " + color);
+		else System.out.println("Color: red " + color);
+		//autonomousCommand = new DriveToLeftLift();
 		System.out.println(autonomousCommand);
 		if (systemLoad[GEARRELEASESUBSYSTEM]) {
 			gearReleaseCommand = gearRelease.gearReleaseCommand;

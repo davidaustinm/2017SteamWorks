@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterSubsystem extends Subsystem {
 	CANTalon master = new CANTalon(RobotMap.SHOOTERMASTER);
 	CANTalon slave = new CANTalon(RobotMap.SHOOTERSLAVE);
-	double SPEED = 2000;
+	double SPEED = 3500;
 	public ShooterCommand shooterCommand;
 	public ShooterSubsystem() {        
         master.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
@@ -49,7 +49,7 @@ public class ShooterSubsystem extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new ShooterCommand());
     	shooterCommand = new ShooterCommand();
-    	setDefaultCommand(shooterCommand);
+    	//setDefaultCommand(shooterCommand);
         
     }
     public double getSpeed() {

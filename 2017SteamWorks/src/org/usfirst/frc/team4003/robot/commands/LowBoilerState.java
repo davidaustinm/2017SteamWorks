@@ -36,6 +36,7 @@ public class LowBoilerState extends Command {
     long transitionTime = System.currentTimeMillis();
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	//System.out.println(state);
     	switch(state) {
     	case IDLE:
     		if (on && Robot.shooterState.isIdle()) {

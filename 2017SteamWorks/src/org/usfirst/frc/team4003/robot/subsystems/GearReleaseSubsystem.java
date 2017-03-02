@@ -24,6 +24,7 @@ public class GearReleaseSubsystem extends Subsystem {
 		this.state = state;
 	}
 	public void set() {
+		//System.out.println(state);
 		gearRelease.set(state);
 	}
 

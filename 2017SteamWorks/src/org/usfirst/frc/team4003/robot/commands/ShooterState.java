@@ -41,6 +41,7 @@ public class ShooterState extends Command {
    // Called repeatedly when this Command is scheduled to run
     long transitionTime = System.currentTimeMillis();
     protected void execute() {
+    	//System.out.println(state);
     	switch (state) {
     	case IDLE:
     		if (on && Robot.lowBoilerState.isIdle()) {
@@ -79,7 +80,7 @@ public class ShooterState extends Command {
     			transitionTime= System.currentTimeMillis() + 300;
     		}
     		break;
-    	case SHOOTEROFF:
+    	case FEEDOFF:
     		if (System.currentTimeMillis() >= transitionTime) {
     			Robot.shooter.set(false);
     			state = IDLE;

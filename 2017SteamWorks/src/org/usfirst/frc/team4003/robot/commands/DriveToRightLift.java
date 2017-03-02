@@ -35,11 +35,11 @@ public class DriveToRightLift extends CommandGroup {
     	} else {
     		System.out.println("RightLiftBlue");
         	//addSequential(new DriveToPoint(53, 0, new Acceleration(.2, .55, 0.02), true, 15));
-    		addSequential(new DriveToPoint(47, 0, new Acceleration(.2, .55, 0.02), true, 15, 2000));
+    		addSequential(new DriveToPoint(42, 0, new Acceleration(.2, .55, 0.02), true, 15, 2000));
         	addSequential(new RotateToHeading(55, 0, .5));
         	//addSequential(new DriveToTarget(new Acceleration(.3, .3, 0), 5));
         	//addSequential( new DriveToPoint(106,47, new Acceleration(.2, .4, 0.02),true, 15));
-        	addSequential( new DriveToPoint(103,47, new Acceleration(.2, .4, 0.02),true, 15, 2000));
+        	addSequential( new DriveToPoint(95,50, new Acceleration(.2, .4, 0.02),true, 15, 2000));
         	addSequential(new GearReleaseToggle(true));
         	addSequential(new WaitForTime(1000));
         	addSequential(new SwitchDirection());

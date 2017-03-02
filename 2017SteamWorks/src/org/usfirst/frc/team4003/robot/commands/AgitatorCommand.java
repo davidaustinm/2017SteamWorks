@@ -15,7 +15,7 @@ public class AgitatorCommand extends Command {
 
     public AgitatorCommand() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.agitator);
     }
 
     // Called just before this Command runs the first time
@@ -25,7 +25,7 @@ public class AgitatorCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double power = 0;
-    	if (on) power = 0.8;
+    	if (on) power = 0.4;
     	Robot.agitator.setPower(power);
     }
 
