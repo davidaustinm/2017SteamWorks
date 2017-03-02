@@ -13,7 +13,7 @@ public class TeleopDriveToTarget extends CommandGroup {
     public TeleopDriveToTarget() {
     	addSequential(new ToggleTracking(true));
     	addSequential(new WaitForGearTarget());
-    	addSequential(new DriveToTarget(new Acceleration(.3, .3, 0), 5));
+    	addSequential(new DriveToTarget(new Acceleration(.3, .3, 0), 20));
     }
     protected void end(){
     	Robot.trackingCamera.trackingOn(false);

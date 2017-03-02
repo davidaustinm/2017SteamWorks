@@ -91,15 +91,15 @@ public class AutonSelector implements AutonInterface{
 	}
 	
 	public String getAllianceColor() {
-		//return colorStates[colorState];
-		return "B";
+		return colorStates[colorState];
+		//return "B";
 	}
 	public String getStartingPosition() {
-		//return startPosStates[startPosState];
-		return "C";
+		return startPosStates[startPosState];
+		//return "C";
 	}
 	public String getEndingPosition() {
-		//return endPosStates[endPosState];
-		return "G";
+		return endPosStates[endPosState];
+		//return "G";
 	}
 }
