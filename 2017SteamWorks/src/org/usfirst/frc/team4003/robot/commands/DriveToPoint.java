@@ -53,6 +53,7 @@ public class DriveToPoint extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if (Double.isNaN(targetX)) return;
     	double currentX = Robot.sensors.getXCoordinate(); 
     	double currentY = Robot.sensors.getYCoordinate();
     	double changeInY = targetY-currentY;
@@ -66,6 +67,9 @@ public class DriveToPoint extends Command {
     	//SmartDashboard.putNumber("x", currentX);
     	//SmartDashboard.putNumber("y", currentY);
     	//SmartDashboard.putNumber("distance", distance);
+    	if (Double.isNaN(targetX) == false) SmartDashboard.putNumber("PiTargetX", targetX);
+		if (Double.isNaN(targetY) == false) SmartDashboard.putNumber("PiTargetY", targetY);
+		System.out.println(targetX + " " + targetY);
     	
     	double correction = headingPID.getCorrection(beta);
     	if (correction>0.1) correction = 0.1;

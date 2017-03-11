@@ -11,35 +11,40 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveToTarget extends DriveToPoint {
 	double[] target;
+	long stopTime;
     public DriveToTarget(Acceleration accelerate, double slowDistance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super(0, 0, accelerate, false, slowDistance, 3000);
-    	slowDistance = 20;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	target = Robot.trackingCamera.getTarget();
-        //targetX = target[0];
-        //targetY = target[1];
+        targetX = target[0];
+        targetY = target[1];
+    	stopTime = System.currentTimeMillis() + 2500;
     }
     
 
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     	target = Robot.trackingCamera.getTarget();
+    	
+    	//SmartDashboard.putNumber("targetX", target[0]);
+    	//SmartDashboard.putNumber("targetY", target[1]);
     	/*
-    	SmartDashboard.putNumber("targetX", target[0]);
-    	SmartDashboard.putNumber("targetY", target[1]);
-    	*/
-    	if(Double.isNaN(target[0]) || lastDistance < 50){
+    	if(Double.isNaN(target[0]) || lastDistance < 30){
     		super.execute();
     		return;
     	}
-    	targetX = target[0];
-    	targetY = target[1];
+    	double offset = 2.5;
+    	double angle = Math.toRadians(Robot.sensors.getYaw() - 90);
+    	targetX = target[0] + offset*Math.cos(angle);
+    	targetY = target[1] + offset*Math.sin(angle);
+    	*/
     	super.execute();
     }
 
@@ -48,7 +53,7 @@ public class DriveToTarget extends DriveToPoint {
     	double changeInX = targetX - Robot.sensors.getXCoordinate();
     	double changeInY = targetY - Robot.sensors.getYCoordinate();
     	double distance = Math.sqrt(Math.pow(changeInX, 2) + Math.pow(changeInY, 2));
-        return distance < 5;
+        return distance < 5 || System.currentTimeMillis() >= stopTime;
     }
 
     // Called once after isFinished returns true

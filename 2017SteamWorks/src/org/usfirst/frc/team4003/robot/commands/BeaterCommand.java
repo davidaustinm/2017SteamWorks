@@ -21,7 +21,13 @@ public class BeaterCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.beaters.setPower(-Robot.oi.operator.getY(Hand.kLeft));
+    	double power = -Robot.oi.operator.getY(Hand.kLeft);
+    	//System.out.println(power);
+    	if (Math.abs(power) < .4){
+    		power = 0;
+    	}
+    	
+    	Robot.beaters.setPower(power);
     }
 
     // Make this return true when this Command no longer needs to run execute()

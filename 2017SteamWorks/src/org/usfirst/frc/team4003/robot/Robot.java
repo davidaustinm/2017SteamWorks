@@ -69,7 +69,8 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
 	public static AutonSelector revAutonSelector = new AutonSelector();
-	public static AutonInterface autonSelector = new DashboardAutonSwitch();
+	//public static AutonInterface autonSelector = new DashboardAutonSwitch();
+	public static AutonInterface autonSelector = new AutonSwitch();
 	
 	public static ShooterState shooterState = null;
 	public static LowBoilerState lowBoilerState = null;
@@ -193,6 +194,10 @@ public class Robot extends IterativeRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		revAutonSelector.update();
+		/*
+		System.out.println(autonSelector.getAllianceColor()+autonSelector.getStartingPosition()+
+				autonSelector.getEndingPosition());
+				*/
 	}
 
 	/**
@@ -218,16 +223,24 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
+		System.out.println("in autonomous init");
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
 		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain.setMaxSpeed(0.65); // was 0.65
 		if (systemLoad[INTAKEVALVESSYSTEM]) (new FeedHopper()).start();
 		
-		if (autonSelector.getAllianceColor() != "R" || autonSelector.getAllianceColor() != "B"){
-			autonSelector = revAutonSelector;
+		//String allColor = autonSelector.getAllianceColor();
+		System.out.println(autonSelector.getAllianceColor()+autonSelector.getStartingPosition()+
+				autonSelector.getEndingPosition());
+		/*
+		System.out.println("Start: " + autonSelector.getStartingPosition()+"x");
+		System.out.println("End: " + autonSelector.getEndingPosition()+"x");
+		if (allColor != "R" && allColor != "B") {
+			System.out.println("swapping auton selector");
+			//autonSelector = revAutonSelector;
 		}
-		
+		*/
 		int color;
 		if (autonSelector.getAllianceColor() == "R") color = Sensors.RED;
 		else color = Sensors.BLUE;
@@ -278,8 +291,9 @@ public class Robot extends IterativeRobot {
 		}
 			
 		//autonomousCommand = new DriveToRedBoilerHopper();
-		if (autonomousCommand != null)
+		if (autonomousCommand != null) {
 			autonomousCommand.start();
+		}
 	}
 
 	/** 
@@ -317,14 +331,14 @@ public class Robot extends IterativeRobot {
 			gearReleaseCommand = gearRelease.gearReleaseCommand;
 			gearRelease.setState(false);
 		}
-		if (systemLoad[SHOOTERSUBSYSTEM] && shooterState == null) {
-			shooterState = new ShooterState();
-			shooterState.start();
-		}
-		if (lowBoilerState == null) {
-			lowBoilerState = new LowBoilerState();
-			lowBoilerState.start();
-		}
+		shooterState = null;
+		shooterState = new ShooterState();
+		shooterState.start();
+		
+		lowBoilerState = null;
+		lowBoilerState = new LowBoilerState();
+		lowBoilerState.start();
+		
 		
 	    if (systemLoad[SHIFTERSUBSYSTEM]) {
 			gearShiftCommand = gearShifter.gearShiftCommand;
@@ -333,6 +347,7 @@ public class Robot extends IterativeRobot {
 			intakeValveCommand = intakeValves.intakeCommand;
 			(new FeedHopper()).start();
 		}
+		lowBoilerState.setIdle();
 	}
 
 	/**
@@ -349,8 +364,12 @@ public class Robot extends IterativeRobot {
 		robotData.putNumber("robotX", sensors.getXCoordinate());
 		robotData.putNumber("robotY", sensors.getYCoordinate());
 		robotData.putNumber("robotYaw", sensors.getYaw());
-		SmartDashboard.putNumber("PiTargetX", robotData.getNumber("targetX", Double.NaN));
-		SmartDashboard.putNumber("PiTargetY", robotData.getNumber("targetY", Double.NaN));
+		double targetX = robotData.getNumber("targetX", -10000);
+		double targetY = robotData.getNumber("targetY", -10000);
+		//System.out.println(targetX + " " + targetY);
+		//System.out.println(targetX + " " + targetY);
+		//if (Double.isNaN(targetX) == false) SmartDashboard.putNumber("PiTargetX", targetX);
+		//if (Double.isNaN(targetY) == false) SmartDashboard.putNumber("PiTargetY", targetY);
 		SmartDashboard.putNumber("X Coordinate", sensors.getXCoordinate());
 		SmartDashboard.putNumber("Y Coordinate", sensors.getYCoordinate());
 		//SmartDashboard.putNumber("shooterspeed", shooter.getSpeed());

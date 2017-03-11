@@ -34,6 +34,9 @@ public class LowBoilerOnForTime extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.lowBoilerState.setOn(false);
+    	Robot.agitator.agitatorCommand.setOn(false);
+    	Robot.intakeFeed.feedCommand.setState(IntakeFeedCommand.IDLE);
+    	Robot.intakeValves.intakeCommand.setFlipperState(true);
     }
 
     // Called when another command which requires one or more of the same

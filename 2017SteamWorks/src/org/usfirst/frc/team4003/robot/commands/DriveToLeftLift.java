@@ -14,12 +14,12 @@ public class DriveToLeftLift extends CommandGroup {
     	if(Robot.sensors.isAllianceColorRed()){
     		System.out.println("Left lift red");
     		//addSequential(new DriveToPoint(62,0, new Acceleration(.1,.6,.02),true, 20,2000));
-    		addSequential(new DriveToPoint(52,0, new Acceleration(.1,.6,.02),true, 20,2000));
+    		addSequential(new DriveToPoint(62,0, new Acceleration(.1,.6,.02),true, 20,2000));
         	addSequential(new RotateToHeading(55,0,0.5,false));
         	addSequential(new WaitForTime(100));
       
         	//addSequential(new DriveToPoint(100,26, new Acceleration(.2,.3,.04),false,10,1500));
-        	addSequential(new DriveToPoint(91,30, new Acceleration(.2,.3,.04),false,10,1500));
+        	addSequential(new DriveToPoint(91.5,30, new Acceleration(.2,.3,.04),false,10,1500));
         	addSequential(new GearReleaseToggle(true));
         	addSequential(new WaitForTime(1000));
         	addSequential(new SwitchDirection());
@@ -35,6 +35,13 @@ public class DriveToLeftLift extends CommandGroup {
 	        		addSequential(new DriveBackToPoint(85, -73, new Acceleration(0.3,0.5, 0.02), false, 15, 3000));
 	        		break;
 	        	}
+	        	case "G": {
+	        		//addSequential(new DriveForwardForDistance(10,0.4));
+	        		addSequential(new RotateToHeading(150,0,0.6,false));
+	        		addSequential(new DriveBackToPoint(170, -20, new Acceleration(.3,0.5,0.02),false,20,10000));
+	        		addSequential(new DriveBackToPoint(380, 120, new Acceleration(.3,0.5,0.02),true,20,10000));
+	        		break;
+	        	}
 	        	default:
 	        	case "L": {
 	        		addSequential(new DriveBackToPoint(14, -61, new Acceleration(.3,.5,0.02),false,20, 3000));
@@ -48,12 +55,12 @@ public class DriveToLeftLift extends CommandGroup {
     	}else{
     		System.out.println("Left lift blue");
     		//addSequential(new DriveToPoint(75,0, new Acceleration(.2,.6,.04),true, 20,2000));
-    		addSequential(new DriveToPoint(65,0, new Acceleration(.2,.6,.04),true, 20,2000));
+    		addSequential(new DriveToPoint(63,0, new Acceleration(.2,.6,.04),true, 20,2000));
         	addSequential(new RotateToHeading(-55,.5,0,false));
         	addSequential(new WaitForTime(100));
         	
         	//addSequential(new DriveToPoint(109,-27, new Acceleration(.2,.3,.04),false,10,1500));
-        	addSequential(new DriveToPoint(98,-27, new Acceleration(.2,.3,.04),false,10,1500));
+        	addSequential(new DriveToPoint(95,-27, new Acceleration(.2,.3,.04),false,10,1500));
         	addSequential(new GearReleaseToggle(true));
         	addSequential(new WaitForTime(1000));
         	addSequential(new SwitchDirection());
@@ -69,9 +76,17 @@ public class DriveToLeftLift extends CommandGroup {
 	        		addSequential(new DriveBackToPoint(85, 70, new Acceleration(0.3,0.5, 0.02), false, 20, 3000));
 	        		break;
 	        	}
+	        	case "G": {
+	        		//addSequential(new DriveForwardForDistance(10,0.4));
+	        		addSequential(new RotateToHeading(-150,0.6,0,false));
+	        		addSequential(new DriveBackToPoint(170, 20, new Acceleration(.3,0.5,0.02),false,20,10000));
+	        		addSequential(new DriveBackToPoint(380, -120, new Acceleration(.3,0.5,0.02),true,20,10000));
+	        		
+	        		break;
+	        	}
 	        	default:
 	        	case "L": {
-	        		addSequential(new DriveBackToPoint(17, 65, new Acceleration(.3,.5,0.02),false,20, 3000));
+	        		addSequential(new DriveBackToPoint(12, 61, new Acceleration(.3,.5,0.02),false,20, 3000));
 	        		addSequential(new LowBoilerOnForTime(7000));
 	        		break;
 	        	}

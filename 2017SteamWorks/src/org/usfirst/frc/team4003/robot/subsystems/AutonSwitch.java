@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class AutonSwitch extends Subsystem implements AutonInterface{
 	DigitalInput[] switches;
 	public AutonSwitch() {
-		/*
+		
 		switches = new DigitalInput[] {
-			new DigitalInput(12), // switch 6 -- 0
+			new DigitalInput(23), // switch 6 -- 0
 			new DigitalInput(13), // switch 5 -- 1
-			new DigitalInput(18), // switch 4 -- 2
-			new DigitalInput(19), // switch 3 -- 3
-			new DigitalInput(20), // switch 2 -- 4
-			new DigitalInput(21)  // switch 1 -- 5
+			new DigitalInput(19), // switch 4 -- 2
+			new DigitalInput(20), // switch 3 -- 3
+			new DigitalInput(21), // switch 2 -- 4
+			new DigitalInput(22)  // switch 1 -- 5
 		};
-		*/
+		/*
 		switches = new DigitalInput[] {
 				new DigitalInput(4), // switch 6 -- 0
 				new DigitalInput(5), // switch 5 -- 1
@@ -29,7 +29,7 @@ public class AutonSwitch extends Subsystem implements AutonInterface{
 				new DigitalInput(8), // switch 2 -- 4
 				new DigitalInput(9)  // switch 1 -- 5
 			};
-		
+		*/
 	}
 	
 	public boolean[] getSwitches() {

@@ -19,6 +19,7 @@ public class BeaterSubsystem extends Subsystem {
 	}
 	
 	public void setPower(double power) {
+		//System.out.println("    " + power);
 		beaters.set(power);
 	}
 

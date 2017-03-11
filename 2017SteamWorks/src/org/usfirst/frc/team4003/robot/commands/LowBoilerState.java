@@ -77,6 +77,13 @@ public class LowBoilerState extends Command {
     		break;
     	}
     }
+    
+    public void setIdle() {
+    	Robot.agitator.agitatorCommand.setOn(false);
+    	Robot.intakeFeed.feedCommand.setState(IntakeFeedCommand.IDLE);
+    	Robot.intakeValves.intakeCommand.setFlipperState(true);
+    	state = IDLE;
+    }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

@@ -34,6 +34,9 @@ public class ShootHighForTime extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.shooterState.setOn(false);
+    	Robot.agitator.agitatorCommand.setOn(false);
+    	Robot.intakeFeed.feedCommand.setState(IntakeFeedCommand.IDLE);
+    	Robot.shooter.set(false);
     }
 
     // Called when another command which requires one or more of the same

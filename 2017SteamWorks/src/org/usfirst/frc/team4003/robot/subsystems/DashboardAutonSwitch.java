@@ -18,15 +18,25 @@ public class DashboardAutonSwitch extends Subsystem implements AutonInterface {
         //setDefaultCommand(new MySpecialCommand());
     }
     public String getAllianceColor() {
-		return SmartDashboard.getString("DB/String 0", "");
+    	String string = SmartDashboard.getString("DB/String 3", "");
+    	if (string.length() == 0) return "";
+    	string = string.substring(0, 1);
+    	return "B";
+		//return string;
 		//return "R";
 	}
 	public String getStartingPosition() {
-		return SmartDashboard.getString("DB/String 1", "N");
+		String string = SmartDashboard.getString("DB/String 1", "N");
+		if (string.length() == 0) return "";
+		string = string.substring(0, 1);
+		return string;
 		//return "L";
 	}
 	public String getEndingPosition() {
-		return SmartDashboard.getString("DB/String 2", "B");
+		String string = SmartDashboard.getString("DB/String 2", "B");
+		if (string.length() == 0) return "";
+		string = string.substring(0, 1);
+		return string;
 		//return "G";
 	}
 }

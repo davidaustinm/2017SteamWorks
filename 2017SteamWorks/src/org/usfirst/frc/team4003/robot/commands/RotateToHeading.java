@@ -15,6 +15,7 @@ public class RotateToHeading extends Command {
 	PID headingPID = new PID(0.1,0,0.105);
 	double leftSpeed, rightSpeed;
 	boolean coast = false;
+	long stopTime;
     public RotateToHeading(double degrees, double leftSpeed, double rightSpeed) {
     	this.degrees = degrees;
     	headingPID.setTarget(degrees);
@@ -34,8 +35,11 @@ public class RotateToHeading extends Command {
     	while (x < -180) x += 360;
     	return x;
     }
+    
+    protected void initialize() {
+    	stopTime = System.currentTimeMillis() + 2500;
+    }
 
-    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//double error = normalizeAngle(degrees - Robot.sensors.getYaw());
     	double correction = headingPID.getCorrection(Robot.sensors.getYaw());
@@ -48,6 +52,7 @@ public class RotateToHeading extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	if (System.currentTimeMillis() >= stopTime) return true;
     	return Math.abs(Robot.sensors.getYaw() - degrees) < 3;
     }
 
