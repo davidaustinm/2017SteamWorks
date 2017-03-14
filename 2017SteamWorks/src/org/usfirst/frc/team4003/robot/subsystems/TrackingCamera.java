@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
@@ -40,11 +41,12 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	UsbCamera trackingCam;
 
 	boolean frontCamera = true;
-	double targetX = Double.NaN;
-	double targetY = Double.NaN;
+	public static double NOTFOUND = -10000;
+	double targetX = NOTFOUND;
+	double targetY = NOTFOUND;
 	double cameraOffset = 10;
 	public static Hashtable<String, Integer> cameraHash;
-
+	
 
 	protected static final String INTAKE_CAM = "C920";
 	protected static final String GEAR_CAM = "046d:0825";
@@ -111,8 +113,8 @@ public class TrackingCamera extends Subsystem implements Runnable {
 		synchronized(visionLock) {
 			trackingOn = on;
 			if(on == false) {
-				targetX = Double.NaN;
-				targetY = Double.NaN;
+				targetX = NOTFOUND;
+				targetY = NOTFOUND;
 			}
 		}
 	}
@@ -124,10 +126,73 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	}
 
 	public void startCamera() {
-		if (RobotMap.trackingLocal) tracking.start();
+		//if (RobotMap.trackingLocal) tracking.start();
+		tracking.start();
+	}
+	
+	public void run() {
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(1);
+        camera.setResolution(320, 240);
+        camera.setFPS(15);
+        
+        CvSink cvSink = CameraServer.getInstance().getVideo();
+        CvSource outputStream = CameraServer.getInstance().putVideo("Camera", 640, 480);
+        
+        Mat source = new Mat();
+        Mat output = new Mat();
+        
+        int margin = 50;
+        Point bl = new Point(50, 240);
+        Point tl = new Point(50, 0);
+        Point br = new Point(320-margin, 240);
+        Point tr = new Point(320-margin, 0);
+        Scalar green = new Scalar(0,255,0);
+        /*
+        Scalar red = new Scalar(0,0,255);
+        Scalar magenta = new Scalar(255,0,255);
+        */
+        while(!Thread.interrupted()) {
+            cvSink.grabFrame(source);
+            Imgproc.line(source, tl, bl, green, 3);
+            Imgproc.line(source, tr, br, green, 3);
+            //Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+            outputStream.putFrame(source);
+        }	
+	}
+	
+	double focalLength = 500; // measured camera focal length
+	public double[] getTargetPosition() {
+		if (RobotMap.trackingLocal == false) {
+			double[] targetInfo = Robot.udpServer.getTargetInfo();
+			if (targetInfo[0] == -1) return new double[] {NOTFOUND, NOTFOUND};
+			double pegX;
+			if (targetInfo[1] == -1) pegX = (double) targetInfo[0];
+			else pegX = (targetInfo[0] + targetInfo[1])/2.0;
+			double rightWidth = (double) targetInfo[2];
+			
+			double distanceToTarget = 2.0* focalLength / rightWidth;
+			//System.out.println(distanceToTarget);
+			double distanceToCenterPix = 159.5 - pegX;
+			double distanceToCenterInches = 2.0 * distanceToCenterPix / rightWidth;
+			double horizontalDistance  = Math.sqrt(Math.pow(distanceToTarget,2) - 
+					Math.pow(distanceToCenterInches,2));
+			        
+			double xCoord = Robot.sensors.getXCoordinate();
+			double yCoord = Robot.sensors.getYCoordinate();
+			double yaw = Math.toRadians(Robot.sensors.getYaw());
+			double yawp90 = yaw + Math.PI/2;
+			        
+			double targetX = xCoord + horizontalDistance * Math.cos(yaw);
+			double targetY = yCoord + horizontalDistance * Math.sin(yaw);
+			targetX += distanceToCenterInches * Math.cos(yawp90);
+			targetY += distanceToCenterInches * Math.sin(yawp90);
+			
+			return new double[] {targetX, targetY};	
+		}
+		return new double[] {NOTFOUND, NOTFOUND};
 	}
 
-	public void run() {
+	public void oldrun() {
 		CvSink trackingSink = null;
 		if (isTrackingLocal()) {
 	        trackingCam.setResolution(320, 240);
@@ -219,18 +284,14 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	public double[] getTarget() {
 		synchronized(visionLock) {
 			if (RobotMap.trackingLocal) return new double[] {targetX, targetY};
-			targetX = rdt.getNumber("targetX", Double.NaN);
-			targetY = rdt.getNumber("targetY", Double.NaN);
+			targetX = rdt.getNumber("targetX", NOTFOUND);
+			targetY = rdt.getNumber("targetY", NOTFOUND);
 			return new double[]{targetX, targetY};
 		}
 	}
 	public void analyzeFrontContours(ArrayList<MatOfPoint> contours, double poseX, double poseY, double poseYaw) {
-		if(contours.size() < 2){
-			/*
-			SmartDashboard.putNumber("angle", Double.NaN);
-			SmartDashboard.putNumber("distance", Double.NaN);
-			*/
-			setTarget(Double.NaN, Double.NaN);
+		if(contours.size() < 2) {
+			setTarget(NOTFOUND, NOTFOUND);
 			return;
 		}
 

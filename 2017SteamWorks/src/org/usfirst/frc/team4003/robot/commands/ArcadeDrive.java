@@ -24,16 +24,19 @@ public class ArcadeDrive extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    double alpha = 0.6;
+    double alpham1 = 1-alpha;
     protected void execute() {
     	double yValues = Robot.oi.driver.getY(Hand.kLeft);
     	double xValues = Robot.oi.driver.getX(Hand.kRight)*1;
-    	double power = (0.2 * yValues) + (0.8 * lastYPower);
+    	double power = (alpha * yValues) + (alpham1 * lastYPower);
     	
     	if (Math.abs(yValues) <= 0.15) {
     		power = (0.3 * yValues) + (0.7 * lastYPower);
     		
     	}
     	
+    	//System.out.println(power + " " + xValues);
     	Robot.driveTrain.arcadeDrive(-power, -xValues, true);
     	lastYPower = power;
     }

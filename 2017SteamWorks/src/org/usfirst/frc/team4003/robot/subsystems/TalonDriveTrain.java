@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.hal.FRCNetComm.tResourceType;
  */
 public class TalonDriveTrain extends Subsystem {
 	CANTalon left1, left2, left3, right1, right2, right3;
+	
 	int switchCount = 0;
 	double yLimit, xLimit;
 	double maxSpeed = 1;

@@ -24,8 +24,8 @@ public class OI {
 	XboxTrigger driveToTarget = new XboxTrigger(driver, XboxTrigger.B);			//Done
 	XboxTrigger slowDriveOn = new XboxTrigger(driver, XboxTrigger.Y);
 	XboxTrigger slowDriveOff = new XboxTrigger(driver, XboxTrigger.X);
-	XboxTrigger tankDrive = new XboxTrigger(driver, XboxTrigger.DPADRIGHT);
-	XboxTrigger arcadeDrive = new XboxTrigger(driver, XboxTrigger.DPADLEFT);
+	XboxTrigger bumpRight = new XboxTrigger(driver, XboxTrigger.DPADRIGHT);
+	XboxTrigger bumpLeft = new XboxTrigger(driver, XboxTrigger.DPADLEFT);
 	
 	//XboxTrigger trackingOn = new XboxTrigger(driver, XboxTrigger.);
 	//XboxTrigger trackingOff = new XboxTrigger(driver, XboxTrigger.B);
@@ -50,16 +50,18 @@ public class OI {
 		shiftLow.whenActive(new ShiftToggle(false));
 		switchDirection.whenActive(new SwitchDirection());
 		driveToTarget.whileActive(new TeleopDriveToTarget());
-		backupDistance.whenActive(new BackupLoadGear());
-		slowDriveOn.whenActive(new SlowDriveCommand(0.5));
+		backupDistance.whileActive(new BackupLoadGear());
+		slowDriveOn.whenActive(new SlowDriveCommand(0.3));
 		slowDriveOff.whenActive(new SlowDriveCommand(.8));
-		arcadeDrive.whenActive(new ArcadeDrive());
-		tankDrive.whenActive(new TankDrive());
-		//intakeDivert.whenActive(new IntakeValveToggle(RobotMap.INTAKEFLIPPER, true));
-		//intakeDivert.whenActive(new IntakeValveToggle(RobotMap.INTAKEREENTRY, true));
+		bumpRight.whenActive(new ShortTurn(ShortTurn.RIGHT, 100, 0.5));
+		bumpLeft.whenActive(new ShortTurn(ShortTurn.LEFT, 100, 0.5));
+		// not needed any more, replaced by short turns
+		//arcadeDrive.whenActive(new ArcadeDrive());
+		//tankDrive.whenActive(new TankDrive());
 		
 		//operator
 		
+		/* take out this comment !!!
 		homeClimbHorizontal.whenActive(new HomeClimbDrum(HomeClimbDrum.HORIZONTAL));
 		homeClimbVertical.whenActive(new HomeClimbDrum(HomeClimbDrum.VERTICAL));
 		
@@ -67,6 +69,9 @@ public class OI {
 		feedLowBoiler.whileActive(new TeleopShootLow());
 		shooterOn.whileActive(new TeleopShootHigh());
 		gearRelease.whileActive(new PlaceGear());
+		*/
+		
+		// don't worry about these
 		//shooterOn.whenActive(new ShooterToggle(true));
 		//shooterOn.whenInactive(new ShooterToggle(false));
 		

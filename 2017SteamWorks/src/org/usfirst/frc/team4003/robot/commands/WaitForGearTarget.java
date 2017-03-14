@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
+import org.usfirst.frc.team4003.robot.subsystems.TrackingCamera;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -24,8 +25,8 @@ public class WaitForGearTarget extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double [] target = Robot.trackingCamera.getTarget();
-        return !Double.isNaN(target[0]);
+    	double [] target = Robot.trackingCamera.getTargetPosition();
+        return target[0] != TrackingCamera.NOTFOUND;
     }
 
     // Called once after isFinished returns true

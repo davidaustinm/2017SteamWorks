@@ -20,6 +20,7 @@ import org.usfirst.frc.team4003.robot.commands.*;
 import org.usfirst.frc.team4003.robot.subsystems.*;
 import org.usfirst.frc.team4003.robot.utilities.Acceleration;
 import org.usfirst.frc.team4003.robot.utilities.AutonInterface;
+import org.usfirst.frc.team4003.robot.utilities.UDPServer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,7 +34,9 @@ public class Robot extends IterativeRobot {
 	//private static final int BEATERSUBSYSTEM = 0;
 	// subsystems
 	public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	public static TalonDriveTrain driveTrain;
+	// change this !
+	//public static TalonDriveTrain driveTrain;
+	public static FrisbeeTestDrive driveTrain;
 	public static Sensors sensors;
 	public static ShooterSubsystem shooter;
 	public static Pneunamatics solenoid;;
@@ -74,22 +77,25 @@ public class Robot extends IterativeRobot {
 	
 	public static ShooterState shooterState = null;
 	public static LowBoilerState lowBoilerState = null;
+	public static UDPServer udpServer = null;
 	
 	static {
 		sensors = new Sensors();
 		
 		systemLoad[DRIVETRAINSUBSYSTEM] = true;
-		systemLoad[BEATERSUBYSTEM] = true;
-		systemLoad[REENTRYFEEDSUBSYSTEM] = true;
-		systemLoad[CLIMBSUBSYSTEM] = true;
-		systemLoad[SHOOTERSUBSYSTEM] = true;
-		systemLoad[SHOOTERFEEDSUBSYSTEM] = false;
-		systemLoad[AGITATOR] = true;
-		systemLoad[SHIFTERSUBSYSTEM] = true;
-		systemLoad[INTAKEVALVESSYSTEM] = true;
-		systemLoad[GEARRELEASESUBSYSTEM] = true;
+		systemLoad[BEATERSUBYSTEM] = false; // true
+		systemLoad[REENTRYFEEDSUBSYSTEM] = false; // true
+		systemLoad[CLIMBSUBSYSTEM] = false; // true
+		systemLoad[SHOOTERSUBSYSTEM] = false; // true
+		systemLoad[SHOOTERFEEDSUBSYSTEM] = false; // keep this one false
+		systemLoad[AGITATOR] = false; // true
+		systemLoad[SHIFTERSUBSYSTEM] = false; // true
+		systemLoad[INTAKEVALVESSYSTEM] = false; // true
+		systemLoad[GEARRELEASESUBSYSTEM] = false; // true
 		
-		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new TalonDriveTrain();
+		// change this!
+		//if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new TalonDriveTrain();
+		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new FrisbeeTestDrive();
 		if (systemLoad[BEATERSUBYSTEM]) beaters = new BeaterSubsystem();
 		if (systemLoad[REENTRYFEEDSUBSYSTEM]) intakeFeed = new ReentryFeedSubsystem();
 		if (systemLoad[CLIMBSUBSYSTEM]) climbDrum = new ClimbDrumSubsystem();
@@ -115,6 +121,8 @@ public class Robot extends IterativeRobot {
 		}
 		if (systemLoad[AGITATOR]) agitator = new Agitator();
 		if (systemLoad[SHOOTERFEEDSUBSYSTEM]) shooterFeed = new ShooterFeed();
+		
+		
 	}
 
 	/**
@@ -126,6 +134,8 @@ public class Robot extends IterativeRobot {
 		Compressor c = new Compressor(0);
 		c.setClosedLoopControl(true);
 		c.start();
+		
+		if (RobotMap.trackingLocal == false) udpServer = new UDPServer();
 		
 		oi = new OI();
 		chooser.addDefault("Default Auto", new ExampleCommand());
@@ -275,11 +285,13 @@ public class Robot extends IterativeRobot {
 		if (systemLoad[GEARRELEASESUBSYSTEM]) {
 			gearReleaseCommand = gearRelease.gearReleaseCommand;
 		}
-		if (systemLoad[SHOOTERSUBSYSTEM] && shooterState == null) {
+		if (systemLoad[SHOOTERSUBSYSTEM]) {
+			shooterState = null;
 			shooterState = new ShooterState();
 			shooterState.start();
 		}
-		if (lowBoilerState == null) {
+		if (systemLoad[BEATERSUBYSTEM]) {
+			lowBoilerState = null;
 			lowBoilerState = new LowBoilerState();
 			lowBoilerState.start();
 		}
@@ -290,7 +302,7 @@ public class Robot extends IterativeRobot {
 			intakeValveCommand = intakeValves.intakeCommand;
 		}
 			
-		//autonomousCommand = new DriveToRedBoilerHopper();
+		autonomousCommand = new ShootThenGear();
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
 		}
@@ -319,7 +331,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
-		(new HomeClimbDrum(HomeClimbDrum.VERTICAL)).start();
+		if (systemLoad[CLIMBSUBSYSTEM]) (new HomeClimbDrum(HomeClimbDrum.VERTICAL)).start();
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
@@ -331,6 +343,7 @@ public class Robot extends IterativeRobot {
 			gearReleaseCommand = gearRelease.gearReleaseCommand;
 			gearRelease.setState(false);
 		}
+		/*
 		shooterState = null;
 		shooterState = new ShooterState();
 		shooterState.start();
@@ -338,6 +351,18 @@ public class Robot extends IterativeRobot {
 		lowBoilerState = null;
 		lowBoilerState = new LowBoilerState();
 		lowBoilerState.start();
+		*/
+		
+		if (systemLoad[SHOOTERSUBSYSTEM]) {
+			shooterState = null;
+			shooterState = new ShooterState();
+			shooterState.start();
+		}
+		if (systemLoad[BEATERSUBYSTEM]) {
+			lowBoilerState = null;
+			lowBoilerState = new LowBoilerState();
+			lowBoilerState.start();
+		}
 		
 		
 	    if (systemLoad[SHIFTERSUBSYSTEM]) {
@@ -347,7 +372,7 @@ public class Robot extends IterativeRobot {
 			intakeValveCommand = intakeValves.intakeCommand;
 			(new FeedHopper()).start();
 		}
-		lowBoilerState.setIdle();
+		if (systemLoad[BEATERSUBYSTEM]) lowBoilerState.setIdle();
 	}
 
 	/**
@@ -378,7 +403,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Yaw", sensors.getYaw());
 		SmartDashboard.putNumber("Right Encoder", sensors.getRightDriveEncoder());
 		SmartDashboard.putNumber("Left Encoder", sensors.getLeftDriveEncoder());
+		
 		*/
+		//double[] target = trackingCamera.getTargetPosition();
 		Scheduler.getInstance().run();
 	}
 

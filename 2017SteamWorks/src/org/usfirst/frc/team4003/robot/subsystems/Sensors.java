@@ -26,7 +26,9 @@ public class Sensors extends Subsystem {
 	double XCoordinate = 0;
 	double YCoordinate = 0;
 	double lastLeftEncoder = 0, lastRightEncoder = 0;
-	double EncoderTicPerInch = 6;		//tested at 600 tics over 100 inches
+	// change this!
+	//double EncoderTicPerInch = 6;		//tested at 600 tics over 100 inches
+	double EncoderTicPerInch = 33;
 	double bumperOffset = 3;
 	
 	public void setBumperOffset(double bo) {
@@ -50,9 +52,11 @@ public class Sensors extends Subsystem {
 	
 	public Sensors (){
 		leftDrive = new Encoder(RobotMap.LEFTDRIVEENCODERA, RobotMap.LEFTDRIVEENCODERB);
-		leftDrive.setReverseDirection(true);
+		//leftDrive.setReverseDirection(true);
+		leftDrive.setReverseDirection(false);
 		rightDrive = new Encoder(RobotMap.RIGHTDRIVEENCODERA, RobotMap.RIGHTDRIVEENCODERB);
-		rightDrive.setReverseDirection(false);
+		//rightDrive.setReverseDirection(false);
+		rightDrive.setReverseDirection(true);
 		navX = new AHRS(SerialPort.Port.kMXP);
 		horizontalDrumSwitch = new DigitalInput(RobotMap.HORIZONTALDRUMSWITCH);
 		verticalDrumSwitch = new DigitalInput(RobotMap.VERTICALDRUMSWITCH);

@@ -12,10 +12,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveToTarget extends DriveToPoint {
 	double[] target;
 	long stopTime;
-    public DriveToTarget(Acceleration accelerate, double slowDistance) {
+	int timeOut;
+    public DriveToTarget(Acceleration accelerate, double slowDistance, int timeOut) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	super(0, 0, accelerate, false, slowDistance, 3000);
+    	this.timeOut = timeOut;
+    	maxCorrection = 0.2;
     }
 
     // Called just before this Command runs the first time
@@ -23,29 +26,26 @@ public class DriveToTarget extends DriveToPoint {
     	target = Robot.trackingCamera.getTarget();
         targetX = target[0];
         targetY = target[1];
-    	stopTime = System.currentTimeMillis() + 2500;
+    	stopTime = System.currentTimeMillis() + timeOut;
     }
     
-
-
     // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+    protected void execute() {	
+    	target = Robot.trackingCamera.getTargetPosition();
     	
-    	target = Robot.trackingCamera.getTarget();
+    	SmartDashboard.putNumber("targetX", target[0]);
+    	SmartDashboard.putNumber("targetY", target[1]);
     	
-    	//SmartDashboard.putNumber("targetX", target[0]);
-    	//SmartDashboard.putNumber("targetY", target[1]);
-    	/*
-    	if(Double.isNaN(target[0]) || lastDistance < 30){
+    	if(Double.isNaN(target[0]) || lastDistance < 20){
     		super.execute();
     		return;
     	}
-    	double offset = 2.5;
-    	double angle = Math.toRadians(Robot.sensors.getYaw() - 90);
-    	targetX = target[0] + offset*Math.cos(angle);
-    	targetY = target[1] + offset*Math.sin(angle);
-    	*/
+    	
+    	targetX = target[0];
+    	targetY = target[1];
+    	
     	super.execute();
+    	System.out.println(distance);
     }
 
     // Make this return true when this Command no longer needs to run execute()

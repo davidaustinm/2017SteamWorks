@@ -7,33 +7,35 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class BackupLoadGear extends Command {
-	double initialX, initialY;
-	double DISTANCE = 8;
+public class ShortTurn extends Command {
+	public static final int LEFT = 0;
+	public static final int RIGHT = 1;
+	int time, direction;
+	double speed;
+	long stopTime;
 
-    public BackupLoadGear() {
+    public ShortTurn(int direction, int time, double speed) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
+        this.direction = direction;
+        this.time = time;
+        this.speed = speed;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	initialX = Robot.sensors.getXCoordinate();
-    	initialY = Robot.sensors.getYCoordinate();
+    	stopTime = System.currentTimeMillis() + time;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.setPower(-.3, -.3);
+    	if (direction == LEFT) Robot.driveTrain.setPower(speed, 0);
+    	else Robot.driveTrain.setPower(0, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	double changeInX, changeInY;
-    	changeInX = Robot.sensors.getXCoordinate() - initialX;
-    	changeInY = Robot.sensors.getYCoordinate() - initialY;
-    	double distance = Math.sqrt(Math.pow(changeInX, 2) + Math.pow(changeInY, 2));
-        return  distance >= DISTANCE;
+        return System.currentTimeMillis() >= stopTime;
     }
 
     // Called once after isFinished returns true

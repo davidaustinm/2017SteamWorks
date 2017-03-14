@@ -21,6 +21,7 @@ public class DriveToPoint extends Command {
 	PID distancePID = null;
 	int timeout = 10000;
 	long stopTime;
+	double maxCorrection;
     public DriveToPoint(double x, double y, Acceleration accelerate, int timeout) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
@@ -29,6 +30,7 @@ public class DriveToPoint extends Command {
         targetY = y;
         this.accelerate = accelerate;
         headingPID.setTarget(0);
+        maxCorrection = 0.1;
     }
     public DriveToPoint(double x, double y, Acceleration accelerate, boolean coast, double slowDistance,int timeout) {
     	this(x,y,accelerate, timeout);
@@ -52,6 +54,7 @@ public class DriveToPoint extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    
     protected void execute() {
     	if (Double.isNaN(targetX)) return;
     	double currentX = Robot.sensors.getXCoordinate(); 
@@ -69,11 +72,11 @@ public class DriveToPoint extends Command {
     	//SmartDashboard.putNumber("distance", distance);
     	if (Double.isNaN(targetX) == false) SmartDashboard.putNumber("PiTargetX", targetX);
 		if (Double.isNaN(targetY) == false) SmartDashboard.putNumber("PiTargetY", targetY);
-		System.out.println(targetX + " " + targetY);
+		//System.out.println(targetX + " " + targetY);
     	
     	double correction = headingPID.getCorrection(beta);
-    	if (correction>0.1) correction = 0.1;
-    	if (correction<-0.1) correction = -0.1;
+    	if (correction>maxCorrection) correction = maxCorrection;
+    	if (correction<-maxCorrection) correction = -maxCorrection;
     	double speed = accelerate.getSpeed();
     	double speedFactor = 1;
     	if (distancePID != null) {
