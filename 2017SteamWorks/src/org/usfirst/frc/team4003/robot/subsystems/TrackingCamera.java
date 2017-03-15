@@ -44,7 +44,6 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	public static double NOTFOUND = -10000;
 	double targetX = NOTFOUND;
 	double targetY = NOTFOUND;
-	double cameraOffset = 10;
 	public static Hashtable<String, Integer> cameraHash;
 	
 
@@ -161,6 +160,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	}
 	
 	double focalLength = 500; // measured camera focal length
+	double cameraOffset = 6.5;
 	public double[] getTargetPosition() {
 		if (RobotMap.trackingLocal == false) {
 			double[] targetInfo = Robot.udpServer.getTargetInfo();
@@ -174,6 +174,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 			//System.out.println(distanceToTarget);
 			double distanceToCenterPix = 159.5 - pegX;
 			double distanceToCenterInches = 2.0 * distanceToCenterPix / rightWidth;
+			distanceToCenterInches += cameraOffset;
 			double horizontalDistance  = Math.sqrt(Math.pow(distanceToTarget,2) - 
 					Math.pow(distanceToCenterInches,2));
 			        
