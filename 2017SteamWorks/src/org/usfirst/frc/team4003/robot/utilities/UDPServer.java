@@ -47,7 +47,7 @@ public class UDPServer implements Runnable {
 	        String sentence = new String(receivePacket.getData(), 0, receivePacket.getLength());
 	        //System.out.println("Raw sentence: " + sentence);
 	        String[] tokens = sentence.split(" ");
-	        //System.out.println("RECEIVED: " + tokens[0] + " " + tokens[1] + " " + tokens[2]);
+	        System.out.println("RECEIVED: " + tokens[0] + " " + tokens[1] + " " + tokens[2]);
 	        double left = Double.valueOf(tokens[0]);
 	        double right = Double.valueOf(tokens[1]);
 	        double width = Double.valueOf(tokens[2]);

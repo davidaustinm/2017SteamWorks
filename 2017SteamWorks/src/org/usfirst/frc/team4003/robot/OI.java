@@ -65,8 +65,8 @@ public class OI {
 		homeClimbHorizontal.whenActive(new HomeClimbDrum(HomeClimbDrum.HORIZONTAL));
 		homeClimbVertical.whenActive(new HomeClimbDrum(HomeClimbDrum.VERTICAL));
 		
-		feedHopper.whenActive(new FeedHopper());
-		feedLowBoiler.whileActive(new TeleopShootLow());
+		//feedHopper.whenActive(new FeedHopper());
+		feedLowBoiler.whileActive(new LoadHopper());
 		shooterOn.whileActive(new TeleopShootHigh());
 		gearRelease.whileActive(new PlaceGear());
 		*/

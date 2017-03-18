@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
+import org.usfirst.frc.team4003.robot.subsystems.TrackingCamera;
 import org.usfirst.frc.team4003.robot.utilities.Acceleration;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -36,7 +37,7 @@ public class DriveToTarget extends DriveToPoint {
     	SmartDashboard.putNumber("targetX", target[0]);
     	SmartDashboard.putNumber("targetY", target[1]);
     	
-    	if(Double.isNaN(target[0]) || lastDistance < 20){
+    	if(target[0] == TrackingCamera.NOTFOUND || lastDistance < 28){
     		super.execute();
     		return;
     	}

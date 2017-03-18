@@ -35,8 +35,8 @@ public class Robot extends IterativeRobot {
 	// subsystems
 	public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	// change this !
-	//public static TalonDriveTrain driveTrain;
-	public static FrisbeeTestDrive driveTrain;
+	public static TalonDriveTrain driveTrain;
+	//public static FrisbeeTestDrive driveTrain;
 	public static Sensors sensors;
 	public static ShooterSubsystem shooter;
 	public static Pneunamatics solenoid;;
@@ -83,19 +83,19 @@ public class Robot extends IterativeRobot {
 		sensors = new Sensors();
 		
 		systemLoad[DRIVETRAINSUBSYSTEM] = true;
-		systemLoad[BEATERSUBYSTEM] = false; // true
-		systemLoad[REENTRYFEEDSUBSYSTEM] = false; // true
-		systemLoad[CLIMBSUBSYSTEM] = false; // true
-		systemLoad[SHOOTERSUBSYSTEM] = false; // true
+		systemLoad[BEATERSUBYSTEM] = true; // true
+		systemLoad[REENTRYFEEDSUBSYSTEM] = true; // true
+		systemLoad[CLIMBSUBSYSTEM] = true; // true
+		systemLoad[SHOOTERSUBSYSTEM] = true; // true
 		systemLoad[SHOOTERFEEDSUBSYSTEM] = false; // keep this one false
-		systemLoad[AGITATOR] = false; // true
-		systemLoad[SHIFTERSUBSYSTEM] = false; // true
-		systemLoad[INTAKEVALVESSYSTEM] = false; // true
-		systemLoad[GEARRELEASESUBSYSTEM] = false; // true
+		systemLoad[AGITATOR] = true; // true
+		systemLoad[SHIFTERSUBSYSTEM] = true; // true
+		systemLoad[INTAKEVALVESSYSTEM] = true; // true
+		systemLoad[GEARRELEASESUBSYSTEM] = true; // true
 		
 		// change this!
-		//if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new TalonDriveTrain();
-		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new FrisbeeTestDrive();
+		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new TalonDriveTrain();
+		//if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new FrisbeeTestDrive();
 		if (systemLoad[BEATERSUBYSTEM]) beaters = new BeaterSubsystem();
 		if (systemLoad[REENTRYFEEDSUBSYSTEM]) intakeFeed = new ReentryFeedSubsystem();
 		if (systemLoad[CLIMBSUBSYSTEM]) climbDrum = new ClimbDrumSubsystem();
@@ -254,6 +254,7 @@ public class Robot extends IterativeRobot {
 		int color;
 		if (autonSelector.getAllianceColor() == "R") color = Sensors.RED;
 		else color = Sensors.BLUE;
+		
 		sensors.setAllianceColor(color);
 		
 		switch(autonSelector.getStartingPosition()) {
@@ -389,10 +390,13 @@ public class Robot extends IterativeRobot {
 		robotData.putNumber("robotX", sensors.getXCoordinate());
 		robotData.putNumber("robotY", sensors.getYCoordinate());
 		robotData.putNumber("robotYaw", sensors.getYaw());
-		double targetX = robotData.getNumber("targetX", -10000);
-		double targetY = robotData.getNumber("targetY", -10000);
-		//System.out.println(targetX + " " + targetY);
-		//System.out.println(targetX + " " + targetY);
+		double[] target = trackingCamera.getTargetPosition();
+		
+		double targetX = target[0];
+		double targetY = target[1];
+		//SmartDashboard.putNumber("PiTargetX", targetX);
+		//SmartDashboard.putNumber("PiTargetY", targetY);
+		System.out.println(targetX + " " + targetY);
 		//if (Double.isNaN(targetX) == false) SmartDashboard.putNumber("PiTargetX", targetX);
 		//if (Double.isNaN(targetY) == false) SmartDashboard.putNumber("PiTargetY", targetY);
 		SmartDashboard.putNumber("X Coordinate", sensors.getXCoordinate());

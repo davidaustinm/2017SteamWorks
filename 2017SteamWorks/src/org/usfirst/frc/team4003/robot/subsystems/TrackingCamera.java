@@ -91,6 +91,8 @@ public class TrackingCamera extends Subsystem implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+         
+        /*
         frontCam = new UsbCamera("front", RobotMap.VIEWCAMERA);
         if (RobotMap.trackingLocal == false) {
         	frontCam.setResolution(320,240);
@@ -99,6 +101,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
         } else {
         	trackingCam = new UsbCamera("track", RobotMap.TRACKINGCAMERA);
         }
+        */
         //backCam = new UsbCamera("back", cameraHash.get(INTAKE_CAM));  
                  
 	}
@@ -164,7 +167,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	public double[] getTargetPosition() {
 		if (RobotMap.trackingLocal == false) {
 			double[] targetInfo = Robot.udpServer.getTargetInfo();
-			if (targetInfo[0] == -1) return new double[] {NOTFOUND, NOTFOUND};
+			if (targetInfo[1] == -1) return new double[] {NOTFOUND, NOTFOUND};
 			double pegX;
 			if (targetInfo[1] == -1) pegX = (double) targetInfo[0];
 			else pegX = (targetInfo[0] + targetInfo[1])/2.0;

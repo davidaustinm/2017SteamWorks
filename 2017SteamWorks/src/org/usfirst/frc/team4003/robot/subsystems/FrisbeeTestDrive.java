@@ -30,7 +30,15 @@ public class FrisbeeTestDrive extends Subsystem {
 			leftPower *= maxSpeed;
 			rightPower *= maxSpeed;
 		}
-		
+		/*
+		double tmp = leftPower;
+		leftPower = rightPower;
+		rightPower = tmp;
+		*/
+		/*
+		leftPower *= -1;
+		rightPower *= -1;
+		*/
 		left1.set(leftPower);
 		left2.set(leftPower);
 		right1.set(rightPower);
@@ -129,7 +137,7 @@ public class FrisbeeTestDrive extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new ArcadeDrive());
+        setDefaultCommand(new TankDrive());
     	
     }
     
