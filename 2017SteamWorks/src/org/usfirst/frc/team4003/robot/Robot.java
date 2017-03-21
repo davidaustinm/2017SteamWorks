@@ -202,8 +202,13 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
+		/*
+		System.out.println(autonSelector.getAllianceColor() + " " + 
+				autonSelector.getStartingPosition() + " " + 
+				autonSelector.getEndingPosition());
+				*/
 		Scheduler.getInstance().run();
-		revAutonSelector.update();
+		//revAutonSelector.update();
 		/*
 		System.out.println(autonSelector.getAllianceColor()+autonSelector.getStartingPosition()+
 				autonSelector.getEndingPosition());
@@ -233,7 +238,7 @@ public class Robot extends IterativeRobot {
 		 */
 
 		// schedule the autonomous command (example)
-		System.out.println("in autonomous init");
+		//System.out.println("in autonomous init");
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
@@ -270,8 +275,9 @@ public class Robot extends IterativeRobot {
 				else autonomousCommand = new DriveToRightLift();
 				break;
 			case("H"):
-				sensors.setBumperOffset(-3);
-				autonomousCommand = new DriveToRedBoilerHopper();
+				//sensors.setBumperOffset(-3);
+				//autonomousCommand = new DriveToRedBoilerHopper();
+				autonomousCommand = new ShootThenGear();
 				break;
 			case("B"):
 				autonomousCommand = new DriveToPoint(120, 0, new Acceleration(0.1, 0.5, 0.02), false, 20, 5000);
@@ -279,8 +285,10 @@ public class Robot extends IterativeRobot {
 			default:
 				autonomousCommand = new DoNothing();
 		}
+		/*
 		if (color == Sensors.BLUE) System.out.println("Color: blue " + color);
 		else System.out.println("Color: red " + color);
+		*/
 		//autonomousCommand = new DriveToLeftLift();
 		System.out.println(autonomousCommand);
 		if (systemLoad[GEARRELEASESUBSYSTEM]) {
@@ -330,6 +338,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		shooter.resetSpeed();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		if (systemLoad[CLIMBSUBSYSTEM]) (new HomeClimbDrum(HomeClimbDrum.VERTICAL)).start();
@@ -396,7 +405,7 @@ public class Robot extends IterativeRobot {
 		double targetY = target[1];
 		//SmartDashboard.putNumber("PiTargetX", targetX);
 		//SmartDashboard.putNumber("PiTargetY", targetY);
-		System.out.println(targetX + " " + targetY);
+		//System.out.println(targetX + " " + targetY);
 		//if (Double.isNaN(targetX) == false) SmartDashboard.putNumber("PiTargetX", targetX);
 		//if (Double.isNaN(targetY) == false) SmartDashboard.putNumber("PiTargetY", targetY);
 		SmartDashboard.putNumber("X Coordinate", sensors.getXCoordinate());

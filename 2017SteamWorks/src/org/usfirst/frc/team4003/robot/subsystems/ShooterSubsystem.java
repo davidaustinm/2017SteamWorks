@@ -17,6 +17,8 @@ public class ShooterSubsystem extends Subsystem {
 	CANTalon master = new CANTalon(RobotMap.SHOOTERMASTER);
 	CANTalon slave = new CANTalon(RobotMap.SHOOTERSLAVE);
 	double SPEED = 3500;
+	double BLUESPEED = 4000;
+	double speed = SPEED;
 	public ShooterCommand shooterCommand;
 	public ShooterSubsystem() {        
         master.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
@@ -31,6 +33,14 @@ public class ShooterSubsystem extends Subsystem {
         
 		slave.changeControlMode(CANTalon.TalonControlMode.Follower);
 		slave.set(master.getDeviceID());
+	}
+	
+	public void setBlueSpeed() {
+		speed = BLUESPEED;
+	}
+	
+	public void resetSpeed() {
+		speed = SPEED;
 	}
 	
 	public void set(boolean on){

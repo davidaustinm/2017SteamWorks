@@ -25,7 +25,7 @@ public class AgitatorCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double power = 0;
-    	if (on) power = 0.4;
+    	if (on) power = 0.8;
     	Robot.agitator.setPower(power);
     }
 

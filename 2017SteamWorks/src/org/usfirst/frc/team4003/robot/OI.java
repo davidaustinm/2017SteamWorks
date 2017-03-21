@@ -61,7 +61,7 @@ public class OI {
 		
 		//operator
 		
-		/* take out this comment !!!
+		
 		homeClimbHorizontal.whenActive(new HomeClimbDrum(HomeClimbDrum.HORIZONTAL));
 		homeClimbVertical.whenActive(new HomeClimbDrum(HomeClimbDrum.VERTICAL));
 		
@@ -69,7 +69,7 @@ public class OI {
 		feedLowBoiler.whileActive(new LoadHopper());
 		shooterOn.whileActive(new TeleopShootHigh());
 		gearRelease.whileActive(new PlaceGear());
-		*/
+		
 		
 		// don't worry about these
 		//shooterOn.whenActive(new ShooterToggle(true));

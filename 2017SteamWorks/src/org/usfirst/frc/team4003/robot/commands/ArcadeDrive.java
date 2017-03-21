@@ -30,11 +30,12 @@ public class ArcadeDrive extends Command {
     	double yValues = Robot.oi.driver.getY(Hand.kLeft);
     	double xValues = Robot.oi.driver.getX(Hand.kRight)*1;
     	if (Math.abs(yValues) < 0.1) yValues = 0;
+    	if (Math.abs(xValues) < 0.1) xValues = 0;
     	
     	double power = (alpha * yValues) + (alpham1 * lastYPower);
     	
     	if (Math.abs(yValues) <= 0.15) {
-    		power = (0.3 * yValues) + (0.7 * lastYPower);
+    		power = (1 * yValues) + (0 * lastYPower);
     		
     	}
     	

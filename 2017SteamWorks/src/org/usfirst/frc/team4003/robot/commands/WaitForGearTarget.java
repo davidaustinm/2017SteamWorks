@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class WaitForGearTarget extends Command {
-
+	long stopTime;
     public WaitForGearTarget() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -17,6 +17,7 @@ public class WaitForGearTarget extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	stopTime = System.currentTimeMillis() + 1000;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -26,7 +27,7 @@ public class WaitForGearTarget extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	double [] target = Robot.trackingCamera.getTargetPosition();
-        return target[0] != TrackingCamera.NOTFOUND;
+        return target[0] != TrackingCamera.NOTFOUND || System.currentTimeMillis() >= stopTime;
     }
 
     // Called once after isFinished returns true

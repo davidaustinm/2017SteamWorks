@@ -133,7 +133,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	}
 	
 	public void run() {
-		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(1);
+		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
         camera.setResolution(320, 240);
         camera.setFPS(15);
         
@@ -163,7 +163,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	}
 	
 	double focalLength = 500; // measured camera focal length
-	double cameraOffset = 6.5;
+	double cameraOffset = 4; // 5.75
 	public double[] getTargetPosition() {
 		if (RobotMap.trackingLocal == false) {
 			double[] targetInfo = Robot.udpServer.getTargetInfo();

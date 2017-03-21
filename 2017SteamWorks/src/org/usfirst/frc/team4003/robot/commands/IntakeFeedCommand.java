@@ -22,7 +22,7 @@ public class IntakeFeedCommand extends Command {
     protected void initialize() {
     }
 
-    double SPEED = 0.75;
+    double SPEED = 0.90;
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double power = 0;
