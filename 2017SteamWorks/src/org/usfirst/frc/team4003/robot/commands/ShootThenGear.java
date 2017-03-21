@@ -20,7 +20,8 @@ public class ShootThenGear extends CommandGroup {
     		group.addSequential(new AutonDriveToTarget());
     		//group.addSequential(new DriveToPoint(160, -20, new Acceleration(0.4, 0.4, 0), false, 15, 3000));
     		addSequential(group);
-    		addSequential(new PlaceGear());
+    		addSequential(new GearReleaseToggle(true));
+    		//addSequential(new PlaceGear());
     		
     		addSequential(new SwitchDirection());
     		addSequential(new WaitForTime(1000));
@@ -39,7 +40,8 @@ public class ShootThenGear extends CommandGroup {
     		group.addSequential(new AutonDriveToTarget());
     		//group.addSequential(new DriveToPoint(76, 133, new Acceleration(0.4, 0.4, 0), false, 15, 3000));
     		addSequential(group);
-    		addSequential(new PlaceGear());
+    		addSequential(new GearReleaseToggle(true));
+    		//addSequential(new PlaceGear());
     		
     		addSequential(new SwitchDirection());
     		addSequential(new WaitForTime(1000));
