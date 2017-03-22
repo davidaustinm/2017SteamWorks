@@ -19,7 +19,9 @@ public class DriveToLeftLift extends CommandGroup {
         	addSequential(new WaitForTime(100));
       
         	//addSequential(new DriveToPoint(100,26, new Acceleration(.2,.3,.04),false,10,1500));
-        	addSequential(new DriveToPoint(91.5,30, new Acceleration(.2,.3,.04),false,10,1500));
+        	
+        	addSequential(new AutonDriveToTarget());
+        	//addSequential(new DriveToPoint(91.5,30, new Acceleration(.2,.3,.04),false,10,1500));
         	addSequential(new GearReleaseToggle(true));
         	addSequential(new WaitForTime(1000));
         	addSequential(new SwitchDirection());
@@ -60,7 +62,9 @@ public class DriveToLeftLift extends CommandGroup {
         	addSequential(new WaitForTime(100));
         	
         	//addSequential(new DriveToPoint(109,-27, new Acceleration(.2,.3,.04),false,10,1500));
-        	addSequential(new DriveToPoint(95,-27, new Acceleration(.2,.3,.04),false,10,1500));
+        	
+        	addSequential(new AutonDriveToTarget());
+        	//addSequential(new DriveToPoint(97,-27, new Acceleration(.2,.3,.04),false,10,1500));
         	addSequential(new GearReleaseToggle(true));
         	addSequential(new WaitForTime(1000));
         	addSequential(new SwitchDirection());

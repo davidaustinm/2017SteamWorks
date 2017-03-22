@@ -14,7 +14,7 @@ public class DriveToMiddleLift extends CommandGroup {
     	if(Robot.sensors.isAllianceColorRed()){
     		System.out.println("Drive to middle red");
     		//addSequential(new DriveToPoint(78,0, new Acceleration(.2,.5,.04),false, 20));
-    		addSequential(new DriveToPoint(77,0, new Acceleration(.2,.45,.04),false, 20,3000));
+    		addSequential(new DriveToPoint(79,0, new Acceleration(.2,.45,.04),false, 20,3000));
         	//addSequential(new DriveToTarget(new Acceleration(.2,.3,0), 10));
         	addSequential(new GearReleaseToggle(true));
         	addSequential(new WaitForTime(1500));

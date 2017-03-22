@@ -202,11 +202,11 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		/*
+		
 		System.out.println(autonSelector.getAllianceColor() + " " + 
 				autonSelector.getStartingPosition() + " " + 
 				autonSelector.getEndingPosition());
-				*/
+				
 		Scheduler.getInstance().run();
 		//revAutonSelector.update();
 		/*
@@ -311,7 +311,7 @@ public class Robot extends IterativeRobot {
 			intakeValveCommand = intakeValves.intakeCommand;
 		}
 			
-		autonomousCommand = new ShootThenGear();
+		//autonomousCommand = new ShootThenGear();
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
 		}
@@ -346,8 +346,8 @@ public class Robot extends IterativeRobot {
 		sensors.resetPosition();
 		sensors.resetYaw();
 		if (systemLoad[DRIVETRAINSUBSYSTEM]) {
-			driveTrain.setMaxSpeed(.8);
-			if (driveTrain.getSwitchCount() == 0) driveTrain.switchDirection();
+			driveTrain.setMaxSpeed(.47);
+			if (driveTrain.getSwitchCount() == 1) driveTrain.switchDirection();
 		}
 		if (systemLoad[GEARRELEASESUBSYSTEM]) {
 			gearReleaseCommand = gearRelease.gearReleaseCommand;

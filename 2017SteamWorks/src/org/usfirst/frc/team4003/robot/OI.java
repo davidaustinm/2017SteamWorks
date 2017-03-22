@@ -51,10 +51,10 @@ public class OI {
 		switchDirection.whenActive(new SwitchDirection());
 		driveToTarget.whileActive(new TeleopDriveToTarget());
 		backupDistance.whileActive(new BackupLoadGear());
-		slowDriveOn.whenActive(new SlowDriveCommand(0.3));
-		slowDriveOff.whenActive(new SlowDriveCommand(.8));
-		bumpRight.whenActive(new ShortTurn(ShortTurn.RIGHT, 100, 0.5));
-		bumpLeft.whenActive(new ShortTurn(ShortTurn.LEFT, 100, 0.5));
+		//slowDriveOn.whenActive(new SlowDriveCommand(0.3));
+		//slowDriveOff.whenActive(new SlowDriveCommand(.8));
+		bumpRight.whenActive(new ShortTurn(ShortTurn.LEFT, 100, 0.5));
+		bumpLeft.whenActive(new ShortTurn(ShortTurn.RIGHT, 100, 0.5));
 		// not needed any more, replaced by short turns
 		//arcadeDrive.whenActive(new ArcadeDrive());
 		//tankDrive.whenActive(new TankDrive());

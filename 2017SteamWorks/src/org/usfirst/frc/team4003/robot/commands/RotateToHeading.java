@@ -16,6 +16,7 @@ public class RotateToHeading extends Command {
 	double leftSpeed, rightSpeed;
 	boolean coast = false;
 	long stopTime;
+	int timeout = 2500;
     public RotateToHeading(double degrees, double leftSpeed, double rightSpeed) {
     	this.degrees = degrees;
     	headingPID.setTarget(degrees);
@@ -25,6 +26,17 @@ public class RotateToHeading extends Command {
         this.leftSpeed = leftSpeed;
         this.rightSpeed = rightSpeed;
     }
+    public RotateToHeading(double degrees, double leftSpeed, double rightSpeed, int timeout) {
+    	this.degrees = degrees;
+    	headingPID.setTarget(degrees);
+    	//headingPID.setTarget(0);
+        // Use requires() here to declare subsystem dependencies
+        requires(Robot.driveTrain);
+        this.leftSpeed = leftSpeed;
+        this.rightSpeed = rightSpeed;
+        this.timeout = timeout;
+    }
+    
     public RotateToHeading(double degrees, double leftSpeed, double rightSpeed, boolean coast) {
     	this(degrees, leftSpeed, rightSpeed);
     	this.coast = coast;
@@ -37,7 +49,7 @@ public class RotateToHeading extends Command {
     }
     
     protected void initialize() {
-    	stopTime = System.currentTimeMillis() + 2500;
+    	stopTime = System.currentTimeMillis() + timeout;
     }
 
     protected void execute() {

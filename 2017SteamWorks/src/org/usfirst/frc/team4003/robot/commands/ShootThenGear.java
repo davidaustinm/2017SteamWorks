@@ -12,10 +12,10 @@ public class ShootThenGear extends CommandGroup {
 
     public ShootThenGear() {
     	if(Robot.sensors.isAllianceColorRed()){
-    		addParallel(new ShootHighForTime(3000));
+    		addParallel(new ShootHighForTime(4000));
     		CommandGroup group = new CommandGroup();
     		group.addSequential(new WaitForTime(3000));
-    		group.addSequential(new DriveToPoint(100,-33,new Acceleration(.2,.5,.02),true, 15, 5000));
+    		group.addSequential(new DriveToPoint(90,-15,new Acceleration(.2,.5,.02),true, 15, 5000));
     		group.addSequential(new RotateToHeading(7,0,.5));
     		group.addSequential(new AutonDriveToTarget());
     		//group.addSequential(new DriveToPoint(160, -20, new Acceleration(0.4, 0.4, 0), false, 15, 3000));
@@ -34,8 +34,11 @@ public class ShootThenGear extends CommandGroup {
     		Robot.shooter.setBlueSpeed();
     		addParallel(new ShootHighForTime(3000));
     		CommandGroup group = new CommandGroup();
-    		group.addSequential(new RotateToHeading(40, 0.65, 0), 1500);
-    		group.addSequential(new DriveToPoint(20, 105, new Acceleration(0.4, 0.5, 0.01), false, 15, 2000));
+    		group.addSequential(new WaitForTime(3000));
+    		group.addSequential(new RotateToHeading(40, 0.65, 0, 300));
+    		group.addSequential(new DriveToPoint(20,20, new Acceleration(0.3, 0.4, 0.02), false, 1, 2000));
+    		group.addSequential(new RotateToHeading(70, 0, 0.7), 1500);
+    		group.addSequential(new DriveToPoint(30, 68, new Acceleration(0.4, 0.4, 0.01), false, 15, 2000));
     		group.addSequential(new RotateToHeading(30, 0.6, 0));
     		group.addSequential(new AutonDriveToTarget());
     		//group.addSequential(new DriveToPoint(76, 133, new Acceleration(0.4, 0.4, 0), false, 15, 3000));

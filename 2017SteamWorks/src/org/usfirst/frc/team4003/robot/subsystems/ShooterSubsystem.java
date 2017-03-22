@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ShooterSubsystem extends Subsystem {
 	CANTalon master = new CANTalon(RobotMap.SHOOTERMASTER);
 	CANTalon slave = new CANTalon(RobotMap.SHOOTERSLAVE);
-	double SPEED = 3500;
+	double SPEED = 3550;
 	double BLUESPEED = 4000;
 	double speed = SPEED;
 	public ShooterCommand shooterCommand;
