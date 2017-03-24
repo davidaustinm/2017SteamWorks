@@ -44,7 +44,7 @@ public class TalonDriveTrain extends Subsystem {
 	}
 	
 	public void setPower(double left, double right) {
-		if(Math.abs(Robot.oi.driver.getTriggerAxis(Hand.kLeft)) > .5){
+		if(Math.abs(Robot.oi.driver.getTriggerAxis(Hand.kLeft)) > .5 || Robot.inAuton){
 			left *= maxSpeed;
 			right *= maxSpeed;
 		}

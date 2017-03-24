@@ -163,7 +163,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	}
 	
 	double focalLength = 500; // measured camera focal length
-	double cameraOffset = 5.75; // 5.75
+	double cameraOffset = 5; // 5.75
 	public double[] getTargetPosition() {
 		if (RobotMap.trackingLocal == false) {
 			double[] targetInfo = Robot.udpServer.getTargetInfo();

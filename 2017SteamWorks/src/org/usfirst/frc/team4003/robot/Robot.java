@@ -79,6 +79,8 @@ public class Robot extends IterativeRobot {
 	public static LowBoilerState lowBoilerState = null;
 	public static UDPServer udpServer = null;
 	
+	public static boolean inAuton = false;
+	
 	static {
 		sensors = new Sensors();
 		
@@ -202,11 +204,11 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		
+		/*
 		System.out.println(autonSelector.getAllianceColor() + " " + 
 				autonSelector.getStartingPosition() + " " + 
 				autonSelector.getEndingPosition());
-				
+				*/
 		Scheduler.getInstance().run();
 		//revAutonSelector.update();
 		/*
@@ -239,6 +241,8 @@ public class Robot extends IterativeRobot {
 
 		// schedule the autonomous command (example)
 		//System.out.println("in autonomous init");
+		
+		inAuton = true;
 		sensors.resetEncoder();
 		sensors.resetPosition();
 		sensors.resetYaw();
@@ -338,6 +342,7 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		inAuton = false;
 		shooter.resetSpeed();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
