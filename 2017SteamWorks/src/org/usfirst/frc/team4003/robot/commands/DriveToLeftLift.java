@@ -14,8 +14,8 @@ public class DriveToLeftLift extends CommandGroup {
     	if(Robot.sensors.isAllianceColorRed()){
     		System.out.println("Left lift red");
     		//addSequential(new DriveToPoint(62,0, new Acceleration(.1,.6,.02),true, 20,2000));
-    		addSequential(new DriveToPoint(62,0, new Acceleration(.1,.6,.02),true, 20,2000));
-        	addSequential(new RotateToHeading(55,0,0.5,false));
+    		addSequential(new DriveToPoint(60,0, new Acceleration(.1,.55,.02),true, 20,2000));
+        	addSequential(new RotateToHeading(55,0,0.6,false));
         	addSequential(new WaitForTime(100));
       
         	//addSequential(new DriveToPoint(100,26, new Acceleration(.2,.3,.04),false,10,1500));
@@ -57,8 +57,8 @@ public class DriveToLeftLift extends CommandGroup {
     	}else{
     		System.out.println("Left lift blue");
     		//addSequential(new DriveToPoint(75,0, new Acceleration(.2,.6,.04),true, 20,2000));
-    		addSequential(new DriveToPoint(63,0, new Acceleration(.2,.6,.04),true, 20,2000));
-        	addSequential(new RotateToHeading(-55,.5,0,false));
+    		addSequential(new DriveToPoint(57,0, new Acceleration(.2,.55,.04),true, 20,2000));
+        	addSequential(new RotateToHeading(-55,.6,0,false));
         	addSequential(new WaitForTime(100));
         	
         	//addSequential(new DriveToPoint(109,-27, new Acceleration(.2,.3,.04),false,10,1500));

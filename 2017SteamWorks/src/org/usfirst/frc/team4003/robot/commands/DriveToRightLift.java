@@ -15,7 +15,7 @@ public class DriveToRightLift extends CommandGroup {
     		System.out.println("RightLiftRed");
     		//addSequential(new DriveToPoint(50, 0, new Acceleration(.2, .55, 0.02), true, 15));
     		addSequential(new DriveToPoint(49, 0, new Acceleration(.2, .55, 0.02), true, 15, 2000));
-        	addSequential(new RotateToHeading(-55, 0.5, 0));
+        	addSequential(new RotateToHeading(-55, 0.65, 0));
         	//addSequential(new DriveToTarget(new Acceleration(.3, .3, 0), 5));
         	//addSequential( new DriveToPoint(105,-49, new Acceleration(.2, .4, 0.02),true, 10, 2000));
         	
@@ -37,8 +37,8 @@ public class DriveToRightLift extends CommandGroup {
     	} else {
     		System.out.println("RightLiftBlue");
         	//addSequential(new DriveToPoint(53, 0, new Acceleration(.2, .55, 0.02), true, 15));
-    		addSequential(new DriveToPoint(47, 0, new Acceleration(.2, .55, 0.02), true, 15, 2000));
-        	addSequential(new RotateToHeading(55, 0, .5));
+    		addSequential(new DriveToPoint(45, 0, new Acceleration(.2, .55, 0.02), true, 15, 2000));
+        	addSequential(new RotateToHeading(55, 0, .65));
         	//addSequential(new DriveToTarget(new Acceleration(.3, .3, 0), 5));
         	//addSequential( new DriveToPoint(106,47, new Acceleration(.2, .4, 0.02),true, 15));
         	

@@ -34,7 +34,7 @@ public class OI {
 	//XboxTrigger gearReleaseClose = new XboxTrigger(operator, XboxTrigger.Y);
 	XboxTrigger homeClimbHorizontal = new XboxTrigger(operator, XboxTrigger.RB);//Done
 	XboxTrigger homeClimbVertical = new XboxTrigger(operator, XboxTrigger.LB);	//Done
-	XboxTrigger feedHopper = new XboxTrigger(operator, XboxTrigger.A);
+	XboxTrigger unjammer = new XboxTrigger(operator, XboxTrigger.A);
 	XboxTrigger feedLowBoiler = new XboxTrigger(operator, XboxTrigger.B);
 	XboxTrigger shooterOn = new XboxTrigger(operator, XboxTrigger.LT);
 	XboxTrigger gearRelease = new XboxTrigger(operator, XboxTrigger.RT);
@@ -69,6 +69,7 @@ public class OI {
 		feedLowBoiler.whileActive(new LoadHopper());
 		shooterOn.whileActive(new TeleopShootHigh());
 		gearRelease.whileActive(new PlaceGear());
+		unjammer.whileActive(new Unjam());
 		
 		
 		// don't worry about these
