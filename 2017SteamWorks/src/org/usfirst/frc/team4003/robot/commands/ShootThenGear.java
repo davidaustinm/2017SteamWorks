@@ -12,11 +12,11 @@ public class ShootThenGear extends CommandGroup {
 
     public ShootThenGear() {
     	if(Robot.sensors.isAllianceColorRed()){
-    		addParallel(new ShootHighForTime(4000));
+    		addParallel(new ShootHighForTime(5000));
     		CommandGroup group = new CommandGroup();
-    		group.addSequential(new WaitForTime(3000));
-    		group.addSequential(new DriveToPoint(90,-15,new Acceleration(.2,.5,.02),true, 15, 5000));
-    		group.addSequential(new RotateToHeading(7,0,.5));
+    		group.addSequential(new WaitForTime(5000));
+    		group.addSequential(new DriveToPoint(90,-18,new Acceleration(.2,.4,.02),true, 15, 5000));
+    		group.addSequential(new RotateToHeading(7,0,.6));
     		group.addSequential(new AutonDriveToTarget());
     		//group.addSequential(new DriveToPoint(160, -20, new Acceleration(0.4, 0.4, 0), false, 15, 3000));
     		addSequential(group);

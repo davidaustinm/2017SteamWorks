@@ -397,7 +397,7 @@ public class Robot extends IterativeRobot {
 			intakeValveCommand = intakeValves.intakeCommand;
 			(new FeedHopper()).start();
 		}
-		if (systemLoad[BEATERSUBYSTEM]) lowBoilerState.setIdle();
+		//if (systemLoad[BEATERSUBYSTEM]) lowBoilerState.setIdle();
 	}
 
 	/**

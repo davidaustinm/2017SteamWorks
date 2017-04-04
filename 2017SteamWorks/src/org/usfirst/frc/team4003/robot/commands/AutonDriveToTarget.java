@@ -11,7 +11,7 @@ public class AutonDriveToTarget extends CommandGroup {
 
     public AutonDriveToTarget() {
     	addSequential(new WaitForGearTarget());
-    	addSequential(new DriveToTarget(new Acceleration(0.3, 0.4, 0.02), 20, 3500));
+    	addSequential(new DriveToTarget(new Acceleration(0.3, 0.4, 0.02), 20, 2000));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
