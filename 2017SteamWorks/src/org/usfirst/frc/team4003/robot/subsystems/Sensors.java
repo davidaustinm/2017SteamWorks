@@ -27,8 +27,8 @@ public class Sensors extends Subsystem {
 	double YCoordinate = 0;
 	double lastLeftEncoder = 0, lastRightEncoder = 0;
 	// change this! (done)
-	double EncoderTicPerInch = 6;		//tested at 600 tics over 100 inches
-	//double EncoderTicPerInch = 33;
+	//double EncoderTicPerInch = 6;		//tested at 600 tics over 100 inches
+	double EncoderTicPerInch = 33;
 	double bumperOffset = 3;
 	
 	public void setBumperOffset(double bo) {

@@ -133,9 +133,9 @@ public class TrackingCamera extends Subsystem implements Runnable {
 	}
 	
 	public void run() {
-		UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
-        camera.setResolution(320, 240);
-        camera.setFPS(15);
+		//UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
+        //camera.setResolution(320, 240);
+        //camera.setFPS(15);
         
         CvSink cvSink = CameraServer.getInstance().getVideo();
         CvSource outputStream = CameraServer.getInstance().putVideo("Camera", 640, 480);

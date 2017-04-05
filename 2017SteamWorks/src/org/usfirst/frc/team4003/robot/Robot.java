@@ -36,8 +36,8 @@ public class Robot extends IterativeRobot {
 	// subsystems
 	public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	// change this !
-	public static TalonDriveTrain driveTrain;
-	//public static FrisbeeTestDrive driveTrain;
+	//public static TalonDriveTrain driveTrain;
+	public static FrisbeeTestDrive driveTrain;
 	public static Sensors sensors;
 	public static ShooterSubsystem shooter;
 	public static Pneunamatics solenoid;;
@@ -84,7 +84,7 @@ public class Robot extends IterativeRobot {
 	
 	static {
 		sensors = new Sensors();
-		
+		/* Use this for competition
 		systemLoad[DRIVETRAINSUBSYSTEM] = true;
 		systemLoad[BEATERSUBYSTEM] = true; // true
 		systemLoad[REENTRYFEEDSUBSYSTEM] = true; // true
@@ -95,10 +95,23 @@ public class Robot extends IterativeRobot {
 		systemLoad[SHIFTERSUBSYSTEM] = true; // true
 		systemLoad[INTAKEVALVESSYSTEM] = true; // true
 		systemLoad[GEARRELEASESUBSYSTEM] = true; // true
+		*/
+		
+		// get rid of this for competition
+		systemLoad[DRIVETRAINSUBSYSTEM] = true;
+		systemLoad[BEATERSUBYSTEM] = false; // true
+		systemLoad[REENTRYFEEDSUBSYSTEM] = false; // true
+		systemLoad[CLIMBSUBSYSTEM] = false; // true
+		systemLoad[SHOOTERSUBSYSTEM] = false; // true
+		systemLoad[SHOOTERFEEDSUBSYSTEM] = false; // keep this one false
+		systemLoad[AGITATOR] = false; // true
+		systemLoad[SHIFTERSUBSYSTEM] = false; // true
+		systemLoad[INTAKEVALVESSYSTEM] = false; // true
+		systemLoad[GEARRELEASESUBSYSTEM] = false; // true
 		
 		// change this!
-		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new TalonDriveTrain();
-		//if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new FrisbeeTestDrive();
+		//if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new TalonDriveTrain();
+		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new FrisbeeTestDrive();
 		if (systemLoad[BEATERSUBYSTEM]) beaters = new BeaterSubsystem();
 		if (systemLoad[REENTRYFEEDSUBSYSTEM]) intakeFeed = new ReentryFeedSubsystem();
 		if (systemLoad[CLIMBSUBSYSTEM]) climbDrum = new ClimbDrumSubsystem();
@@ -278,15 +291,21 @@ public class Robot extends IterativeRobot {
 		
 		switch(autonSelector.getStartingPosition()) {
 			case("L"): 
+				/*
 				if (color == Sensors.RED) autonomousCommand = new DriveToRightLift();
 				else autonomousCommand = new DriveToLeftLift();
+				*/
+				autonomousCommand = new SidePeg(SidePeg.LEFT);
 				break;	
 			case("C"): 
 				autonomousCommand = new DriveToMiddleLift();
 				break;	
 			case("R"):
+				/*
 				if (color == Sensors.RED) autonomousCommand = new DriveToLeftLift();
 				else autonomousCommand = new DriveToRightLift();
+				*/
+				autonomousCommand = new SidePeg(SidePeg.RIGHT);
 				break;
 			case("H"):
 				//sensors.setBumperOffset(-3);
@@ -325,7 +344,7 @@ public class Robot extends IterativeRobot {
 			intakeValveCommand = intakeValves.intakeCommand;
 		}
 			
-		//autonomousCommand = new ShootThenGear();
+		//autonomousCommand = new SidePeg(SidePeg.LEFT);
 		if (autonomousCommand != null) {
 			autonomousCommand.start();
 		}
@@ -353,7 +372,8 @@ public class Robot extends IterativeRobot {
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
 		inAuton = false;
-		shooter.resetSpeed();
+		// put this back in
+		//shooter.resetSpeed();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		if (systemLoad[CLIMBSUBSYSTEM]) (new HomeClimbDrum(HomeClimbDrum.VERTICAL)).start();
@@ -415,7 +435,7 @@ public class Robot extends IterativeRobot {
 		robotData.putNumber("robotY", sensors.getYCoordinate());
 		robotData.putNumber("robotYaw", sensors.getYaw());
 		double[] target = trackingCamera.getTargetPosition();
-		
+		System.out.println(sensors.getLeftDriveEncoder());
 		double targetX = target[0];
 		double targetY = target[1];
 		//SmartDashboard.putNumber("PiTargetX", targetX);

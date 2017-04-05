@@ -46,6 +46,10 @@ public class OI {
 		
 		// driver
 		
+		// get rid of this for competition
+		driveToTarget.whileActive(new TeleopDriveToTarget());
+		
+		/* use this for competition
 		shiftHigh.whenActive(new ShiftToggle(true));
 		shiftLow.whenActive(new ShiftToggle(false));
 		switchDirection.whenActive(new SwitchDirection());
@@ -58,9 +62,11 @@ public class OI {
 		// not needed any more, replaced by short turns
 		//arcadeDrive.whenActive(new ArcadeDrive());
 		//tankDrive.whenActive(new TankDrive());
+		 */
+		 
 		
 		//operator
-		
+		/* use this for competition
 		
 		homeClimbHorizontal.whenActive(new HomeClimbDrum(HomeClimbDrum.HORIZONTAL));
 		homeClimbVertical.whenActive(new HomeClimbDrum(HomeClimbDrum.VERTICAL));
@@ -70,6 +76,7 @@ public class OI {
 		shooterOn.whileActive(new TeleopShootHigh());
 		gearRelease.whileActive(new PlaceGear());
 		unjammer.whileActive(new Unjam());
+		*/
 		
 		
 		// don't worry about these

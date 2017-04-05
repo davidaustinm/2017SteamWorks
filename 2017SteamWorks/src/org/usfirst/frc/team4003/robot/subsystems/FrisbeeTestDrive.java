@@ -17,16 +17,17 @@ public class FrisbeeTestDrive extends Subsystem {
 	Talon left1, left2, right1, right2;
 	double speedScale = .75;
 	public FrisbeeTestDrive() {
-		right1 = new Talon(0);
-		right2 = new Talon(1);
-		left1 = new Talon(2);
-		left2 = new Talon(3);
+		left1 = new Talon(0);
+		left2 = new Talon(1);
+		right1 = new Talon(2);
+		right2 = new Talon(3);
 		right1.setInverted(true);
 		right2.setInverted(true);
 	}
 	
 	public void setPower(double leftPower, double rightPower) {
-		if(Math.abs(Robot.oi.driver.getTriggerAxis(Hand.kLeft)) < .5){
+		if(Math.abs(Robot.oi.driver.getTriggerAxis(Hand.kLeft)) > .5 || Robot.inAuton){
+		
 			leftPower *= maxSpeed;
 			rightPower *= maxSpeed;
 		}
