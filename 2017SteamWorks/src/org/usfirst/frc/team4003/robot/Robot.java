@@ -356,12 +356,13 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		sensors.updatePosition();
-		NetworkTable robotData = NetworkTable.getTable("robotData");
-		robotData.putNumber("robotX", sensors.getXCoordinate());
-		robotData.putNumber("robotY", sensors.getYCoordinate());
-		robotData.putNumber("robotYaw", sensors.getYaw());
+		//NetworkTable robotData = NetworkTable.getTable("robotData");
+		//robotData.putNumber("robotX", sensors.getXCoordinate());
+		//robotData.putNumber("robotY", sensors.getYCoordinate());
+		//robotData.putNumber("robotYaw", sensors.getYaw());
 		SmartDashboard.putNumber("X Coordinate", sensors.getXCoordinate());
 		SmartDashboard.putNumber("Y Coordinate", sensors.getYCoordinate());
+		SmartDashboard.putNumber("NavX Yaw", sensors.getYaw());
 		Scheduler.getInstance().run();
 	}
 
@@ -435,7 +436,7 @@ public class Robot extends IterativeRobot {
 		robotData.putNumber("robotY", sensors.getYCoordinate());
 		robotData.putNumber("robotYaw", sensors.getYaw());
 		double[] target = trackingCamera.getTargetPosition();
-		System.out.println(sensors.getLeftDriveEncoder());
+		//System.out.println(sensors.getLeftDriveEncoder());
 		double targetX = target[0];
 		double targetY = target[1];
 		//SmartDashboard.putNumber("PiTargetX", targetX);

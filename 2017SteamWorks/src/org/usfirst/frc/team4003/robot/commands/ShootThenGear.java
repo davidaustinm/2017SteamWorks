@@ -18,10 +18,9 @@ public class ShootThenGear extends CommandGroup {
     		group.addSequential(new DriveToPoint(90,-18,new Acceleration(.2,.4,.02),true, 15, 5000));
     		group.addSequential(new RotateToHeading(7,0,.6));
     		group.addSequential(new AutonDriveToTarget());
-    		//group.addSequential(new DriveToPoint(160, -20, new Acceleration(0.4, 0.4, 0), false, 15, 3000));
+    		// leave out group.addSequential(new DriveToPoint(160, -20, new Acceleration(0.4, 0.4, 0), false, 15, 3000));
     		addSequential(group);
     		addSequential(new GearReleaseToggle(true));
-    		//addSequential(new PlaceGear());
     		
     		addSequential(new SwitchDirection());
     		addSequential(new WaitForTime(1000));
@@ -39,12 +38,11 @@ public class ShootThenGear extends CommandGroup {
     		group.addSequential(new DriveToPoint(20,20, new Acceleration(0.3, 0.4, 0.02), false, 1, 2000));
     		group.addSequential(new RotateToHeading(70, 0, 0.7), 1500);
     		group.addSequential(new DriveToPoint(30, 68, new Acceleration(0.4, 0.4, 0.01), false, 15, 2000));
-    		group.addSequential(new RotateToHeading(30, 0.6, 0));
+    		group.addSequential(new RotateToHeading(35, 0.6, 0));
     		group.addSequential(new AutonDriveToTarget());
     		//group.addSequential(new DriveToPoint(76, 133, new Acceleration(0.4, 0.4, 0), false, 15, 3000));
     		addSequential(group);
     		addSequential(new GearReleaseToggle(true));
-    		//addSequential(new PlaceGear());
     		
     		addSequential(new SwitchDirection());
     		addSequential(new WaitForTime(1000));

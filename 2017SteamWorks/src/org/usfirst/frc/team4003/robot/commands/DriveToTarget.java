@@ -46,7 +46,7 @@ public class DriveToTarget extends DriveToPoint {
     	targetY = target[1];
     	
     	super.execute();
-    	System.out.println(distance);
+    	//System.out.println(distance);
     }
 
     // Make this return true when this Command no longer needs to run execute()

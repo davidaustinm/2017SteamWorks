@@ -22,7 +22,7 @@ public class AutoRotateToTarget extends Command {
         requires(Robot.driveTrain);
         this.direction = direction;
         this.angle = angle;
-        rotatePID = new PID(0.4,0,0);
+        rotatePID = new PID(0.01,0,0);
         rotatePID.setTarget(159.5);
     }
 
@@ -41,6 +41,7 @@ public class AutoRotateToTarget extends Command {
     		return;
     	}
     	pegX = (target[0] + target[1])/2.0;
+    	System.out.println(pegX);
     	double correction = rotatePID.getCorrection(pegX);
     	if (correction > 1) correction = 1;
     	else if (correction < -1) correction = -1;
@@ -50,8 +51,14 @@ public class AutoRotateToTarget extends Command {
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    double tolerance = 5;
     protected boolean isFinished() {
-        return Math.abs(pegX - 159.5) < 10 || System.currentTimeMillis() >= stopTime;
+    	if (System.currentTimeMillis() >= stopTime) return true;
+    	if (direction == LEFT && Robot.sensors.getYaw() > angle) return true;
+    	if (direction == RIGHT && Robot.sensors.getYaw() < angle) return true;
+    	if (direction == LEFT && pegX < 159.5 + tolerance && pegX > 0) return true;
+    	if (direction == RIGHT && pegX > 159.5 - tolerance) return true;
+        return false; 
     }
 
     // Called once after isFinished returns true

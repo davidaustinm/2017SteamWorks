@@ -20,6 +20,9 @@ public class SidePeg extends CommandGroup {
     	} else {
     		addSequential(new RotateToHeading(-50, .5, .5));
     	}
+    	//if (side == RIGHT) addSequential(new AutoRotateToTarget(AutoRotateToTarget.LEFT, 55));
+    	//else addSequential(new AutoRotateToTarget(AutoRotateToTarget.RIGHT, -55));
+    	
     	addSequential(new AutonDriveToTarget());
     	//addSequential(new GearReleaseToggle(true));
     	addSequential(new WaitForTime(1000));
