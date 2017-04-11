@@ -24,7 +24,7 @@ public class SidePeg extends CommandGroup {
     	//else addSequential(new AutoRotateToTarget(AutoRotateToTarget.RIGHT, -55));
     	
     	addSequential(new AutonDriveToTarget());
-    	//addSequential(new GearReleaseToggle(true));
+    	addSequential(new GearReleaseToggle(true));
     	addSequential(new WaitForTime(1000));
     	addSequential(new SwitchDirection());
     	addSequential(new DriveForwardForDistance(7, .4));

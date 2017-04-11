@@ -31,9 +31,9 @@ public class ShootThenGear extends CommandGroup {
     		
     	} else {
     		Robot.shooter.setBlueSpeed();
-    		addParallel(new ShootHighForTime(3000));
+    		addParallel(new ShootHighForTime(5000));
     		CommandGroup group = new CommandGroup();
-    		group.addSequential(new WaitForTime(3000));
+    		group.addSequential(new WaitForTime(5000));
     		group.addSequential(new RotateToHeading(40, 0.65, 0, 300));
     		group.addSequential(new DriveToPoint(20,20, new Acceleration(0.3, 0.4, 0.02), false, 1, 2000));
     		group.addSequential(new RotateToHeading(70, 0, 0.7), 1500);

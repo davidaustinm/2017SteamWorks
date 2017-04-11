@@ -36,8 +36,8 @@ public class Robot extends IterativeRobot {
 	// subsystems
 	public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	// change this !
-	//public static TalonDriveTrain driveTrain;
-	public static FrisbeeTestDrive driveTrain;
+	public static TalonDriveTrain driveTrain;
+	//public static FrisbeeTestDrive driveTrain;
 	public static Sensors sensors;
 	public static ShooterSubsystem shooter;
 	public static Pneunamatics solenoid;;
@@ -84,7 +84,7 @@ public class Robot extends IterativeRobot {
 	
 	static {
 		sensors = new Sensors();
-		/* Use this for competition
+		// Use this for competition
 		systemLoad[DRIVETRAINSUBSYSTEM] = true;
 		systemLoad[BEATERSUBYSTEM] = true; // true
 		systemLoad[REENTRYFEEDSUBSYSTEM] = true; // true
@@ -95,9 +95,9 @@ public class Robot extends IterativeRobot {
 		systemLoad[SHIFTERSUBSYSTEM] = true; // true
 		systemLoad[INTAKEVALVESSYSTEM] = true; // true
 		systemLoad[GEARRELEASESUBSYSTEM] = true; // true
-		*/
 		
-		// get rid of this for competition
+		
+		/* get rid of this for competition
 		systemLoad[DRIVETRAINSUBSYSTEM] = true;
 		systemLoad[BEATERSUBYSTEM] = false; // true
 		systemLoad[REENTRYFEEDSUBSYSTEM] = false; // true
@@ -108,10 +108,10 @@ public class Robot extends IterativeRobot {
 		systemLoad[SHIFTERSUBSYSTEM] = false; // true
 		systemLoad[INTAKEVALVESSYSTEM] = false; // true
 		systemLoad[GEARRELEASESUBSYSTEM] = false; // true
-		
+		*/
 		// change this!
-		//if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new TalonDriveTrain();
-		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new FrisbeeTestDrive();
+		if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new TalonDriveTrain();
+		//if (systemLoad[DRIVETRAINSUBSYSTEM]) driveTrain = new FrisbeeTestDrive();
 		if (systemLoad[BEATERSUBYSTEM]) beaters = new BeaterSubsystem();
 		if (systemLoad[REENTRYFEEDSUBSYSTEM]) intakeFeed = new ReentryFeedSubsystem();
 		if (systemLoad[CLIMBSUBSYSTEM]) climbDrum = new ClimbDrumSubsystem();
@@ -374,7 +374,7 @@ public class Robot extends IterativeRobot {
 		// this line or comment it out.
 		inAuton = false;
 		// put this back in
-		//shooter.resetSpeed();
+		shooter.resetSpeed();
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 		if (systemLoad[CLIMBSUBSYSTEM]) (new HomeClimbDrum(HomeClimbDrum.VERTICAL)).start();
