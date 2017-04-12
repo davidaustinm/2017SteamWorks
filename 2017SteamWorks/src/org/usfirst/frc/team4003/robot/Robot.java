@@ -44,6 +44,7 @@ public class Robot extends IterativeRobot {
 	public static ShifterSubsystem gearShifter;
 	public static IntakeValves intakeValves;
 	public static GearReleaseSubsystem gearRelease;
+	public static GearIntake gearIntake;
 	public static BeaterSubsystem beaters;
 	public static ReentryFeedSubsystem intakeFeed;
 	public static ClimbDrumSubsystem climbDrum;
@@ -60,8 +61,9 @@ public class Robot extends IterativeRobot {
 	public static int SHIFTERSUBSYSTEM = 7;
 	public static int INTAKEVALVESSYSTEM = 8;
 	public static int GEARRELEASESUBSYSTEM = 9;
+	public static int GEARINTAKESUBSYSTEM = 10;
 	
-	public static boolean[] systemLoad = new boolean[10];
+	public static boolean[] systemLoad = new boolean[11];
 	
 	public static GearReleaseCommand gearReleaseCommand;
 	public static IntakeValueCommand intakeValveCommand;
@@ -95,6 +97,7 @@ public class Robot extends IterativeRobot {
 		systemLoad[SHIFTERSUBSYSTEM] = true; // true
 		systemLoad[INTAKEVALVESSYSTEM] = true; // true
 		systemLoad[GEARRELEASESUBSYSTEM] = true; // true
+		systemLoad[GEARINTAKESUBSYSTEM] = true;
 		
 		
 		/* get rid of this for competition
@@ -137,6 +140,7 @@ public class Robot extends IterativeRobot {
 		}
 		if (systemLoad[AGITATOR]) agitator = new Agitator();
 		if (systemLoad[SHOOTERFEEDSUBSYSTEM]) shooterFeed = new ShooterFeed();
+		if (systemLoad[GEARINTAKESUBSYSTEM]) gearIntake = new GearIntake();
 		
 		
 	}

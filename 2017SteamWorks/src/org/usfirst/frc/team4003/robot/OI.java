@@ -38,6 +38,8 @@ public class OI {
 	XboxTrigger feedLowBoiler = new XboxTrigger(operator, XboxTrigger.B);
 	XboxTrigger shooterOn = new XboxTrigger(operator, XboxTrigger.LT);
 	XboxTrigger gearRelease = new XboxTrigger(operator, XboxTrigger.RT);
+	XboxTrigger gearIntakeDown = new XboxTrigger(operator, XboxTrigger.X);
+	XboxTrigger gearIntakeUp = new XboxTrigger(operator, XboxTrigger.Y);
 	
 	public OI() {
 		
@@ -74,6 +76,8 @@ public class OI {
 		shooterOn.whileActive(new TeleopShootHigh());
 		gearRelease.whileActive(new PlaceGear());
 		unjammer.whileActive(new Unjam());
+		gearIntakeUp.whenActive(new GearIntakeState(true));
+		gearIntakeDown.whenActive(new GearIntakeState(false));
 		
 		
 		// don't worry about these

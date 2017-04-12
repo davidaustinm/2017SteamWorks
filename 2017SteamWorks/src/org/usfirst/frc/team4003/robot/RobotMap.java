@@ -35,6 +35,7 @@ public class RobotMap {
 	public static final int INTAKEFLIPPER = 2;
 	public static final int INTAKEREENTRY = 3;	//Reentry is on the same tube as the flipper
 	public static final int GEARRELEASE = 1;
+	public static final int GEARINTAKE = 4;
 	
 	// camera ids
 	public static final int VIEWCAMERA = 0;
