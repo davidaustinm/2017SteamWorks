@@ -26,6 +26,7 @@ public class AgitatorCommand extends Command {
     protected void execute() {
     	double power = 0;
     	if (on) power = 0.8;
+    	if (Robot.inAuton && Robot.sensors.isAllianceColorRed() == false) power = 0.5;
     	Robot.agitator.setPower(power);
     }
 
