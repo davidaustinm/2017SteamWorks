@@ -129,7 +129,7 @@ public class TrackingCamera extends Subsystem implements Runnable {
 
 	public void startCamera() {
 		//if (RobotMap.trackingLocal) tracking.start();
-		tracking.start();
+		//tracking.start();
 	}
 	
 	public void run() {
