@@ -74,7 +74,7 @@ public class Robot extends IterativeRobot {
 	public static TrackingCamera trackingCamera;
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-	public static AutonSelector revAutonSelector = new AutonSelector();
+	//public static AutonSelector revAutonSelector = new AutonSelector();
 	//public static AutonInterface autonSelector = new DashboardAutonSwitch();
 	public static AutonInterface autonSelector = new AutonSwitch();
 	
@@ -347,7 +347,7 @@ public class Robot extends IterativeRobot {
 		if (systemLoad[INTAKEVALVESSYSTEM]) {
 			intakeValveCommand = intakeValves.intakeCommand;
 		}
-			
+		System.out.println("auton: " + autonomousCommand);
 		//autonomousCommand = new SidePeg(SidePeg.LEFT);
 		if (autonomousCommand != null) {
 			autonomousCommand.start();

@@ -12,8 +12,9 @@ public class SidePeg extends CommandGroup {
 	public static int LEFT = 0;
 	public static int RIGHT = 1;
     public SidePeg(int side) {
-    	
-    	addSequential(new DriveToPoint(70, 0, new Acceleration(.1, .55, 0.02), false, 10, 3000));
+    	System.out.println("In side peg");
+    	//addSequential(new DriveToPoint(70, 0, new Acceleration(.1, .55, 0.02), false, 10, 3000));
+    	addSequential(new DriveToPoint(59, 0, new Acceleration(.1, .55, 0.02), false, 10, 3000));
     	addSequential(new WaitForTime(100));
     	if(side == RIGHT) {
     		addSequential(new RotateToHeading(50, .5, .5));
@@ -23,19 +24,19 @@ public class SidePeg extends CommandGroup {
     	//if (side == RIGHT) addSequential(new AutoRotateToTarget(AutoRotateToTarget.LEFT, 55));
     	//else addSequential(new AutoRotateToTarget(AutoRotateToTarget.RIGHT, -55));
     	
-    	addSequential(new AutonDriveToTarget());
+    	addSequential(new AutonDriveToTarget(3000));
     	addSequential(new GearReleaseToggle(true));
     	addSequential(new WaitForTime(1000));
     	addSequential(new SwitchDirection());
     	addSequential(new DriveForwardForDistance(7, .4));
     	
     	if (side == LEFT && Robot.sensors.isAllianceColorRed()) {
-    		addSequential(new RotateToHeading(-150, 0.5, 0));
-        	addSequential(new DriveBackToPoint(360, 0, new Acceleration(0.2, 0.5, 0.02), true, 20, 7000));
+    		addSequential(new RotateToHeading(-170, 0.5, 0));
+        	addSequential(new DriveBackToPoint(360, -20, new Acceleration(0.2, 0.5, 0.02), true, 20, 7000));
     	}
     	if (side == RIGHT && Robot.sensors.isAllianceColorRed() == false) {
-    		addSequential(new RotateToHeading(150, 0, 0.5));
-        	addSequential(new DriveBackToPoint(360, 0, new Acceleration(0.2, 0.5, 0.02), true, 20, 7000));
+    		addSequential(new RotateToHeading(170, 0, 0.5));
+        	addSequential(new DriveBackToPoint(360, 20, new Acceleration(0.2, 0.5, 0.02), true, 20, 7000));
     	}
     	if (side == RIGHT && Robot.sensors.isAllianceColorRed()){
     		addSequential(new RotateToHeading(170,0,0.6,false));

@@ -21,6 +21,8 @@ public class Agitator extends Subsystem {
 	public void setPower(double power) {
 		agitator.set(power);
 	}
+	
+	
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.

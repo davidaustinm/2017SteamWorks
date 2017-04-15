@@ -8,10 +8,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutonDriveToTarget extends CommandGroup {
-
-    public AutonDriveToTarget() {
+	public AutonDriveToTarget() {
+		this(4000);
+	}
+    public AutonDriveToTarget(int timeout) {
     	addSequential(new WaitForGearTarget());
-    	addSequential(new DriveToTarget(new Acceleration(0.3, 0.4, 0.02), 20, 4000));
+    	addSequential(new DriveToTarget(new Acceleration(0.3, 0.4, 0.02), 20, timeout));
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

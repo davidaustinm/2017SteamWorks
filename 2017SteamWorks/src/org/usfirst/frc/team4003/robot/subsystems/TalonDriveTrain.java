@@ -36,7 +36,7 @@ public class TalonDriveTrain extends Subsystem {
 		right3.setInverted(true);
 		
 		yLimit = 1;
-		xLimit = .75;
+		xLimit = .8;
 	}
 	
 	public void setMaxSpeed(double speed){

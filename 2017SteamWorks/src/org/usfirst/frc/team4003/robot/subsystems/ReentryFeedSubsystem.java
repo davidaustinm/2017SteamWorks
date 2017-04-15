@@ -17,7 +17,7 @@ public class ReentryFeedSubsystem extends Subsystem {
 	}
 	
 	public void setPower(double power) {
-		feed.set(power);
+		feed.set(-power);
 	}
 
     public void initDefaultCommand() {
