@@ -44,6 +44,12 @@ public class SidePeg extends CommandGroup {
     		addSequential(new DriveBackToPoint(380, 160, new Acceleration(.3,0.5,0.02),true,20,10000));
     	}
     	if (side == LEFT && Robot.sensors.isAllianceColorRed() == false) {
+    		if (Robot.autonSelector.getEndingPosition() == "B"){
+    			addSequential(new DriveBackToPoint(20,34, new Acceleration(.3,.5,0.02),false,20, 3000));
+    			addSequential(new ShootHighForTime(7000));
+    			return;
+    		}
+    		
     		addSequential(new RotateToHeading(-170,0.6,0,false));
     		addSequential(new DriveBackToPoint(170, -20, new Acceleration(.3,0.5,0.02),false,20,10000));
     		addSequential(new DriveBackToPoint(380, -160, new Acceleration(.3,0.5,0.02),true,20,10000));
