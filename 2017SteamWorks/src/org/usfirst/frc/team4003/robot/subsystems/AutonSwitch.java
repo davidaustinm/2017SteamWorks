@@ -80,6 +80,7 @@ public class AutonSwitch extends Subsystem implements AutonInterface{
 	}
 	public String getEndingPosition() {
 		int value = getInt(new int[]{5,6});
+		System.out.println("value = " + value);
 		return endPosStates[value];
 		//return "G";
 	}

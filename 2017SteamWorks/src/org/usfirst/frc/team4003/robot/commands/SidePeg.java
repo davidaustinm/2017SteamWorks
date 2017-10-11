@@ -45,7 +45,7 @@ public class SidePeg extends CommandGroup {
     	}
     	if (side == LEFT && Robot.sensors.isAllianceColorRed() == false) {
     		if (Robot.autonSelector.getEndingPosition() == "B"){
-    			addSequential(new DriveBackToPoint(20,34, new Acceleration(.3,.5,0.02),false,20, 3000));
+    			addSequential(new DriveBackToPoint(12,30, new Acceleration(.3,.5,0.02),false,20, 3000));
     			addSequential(new ShootHighForTime(7000));
     			return;
     		}

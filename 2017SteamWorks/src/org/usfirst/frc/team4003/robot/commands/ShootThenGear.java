@@ -15,19 +15,23 @@ public class ShootThenGear extends CommandGroup {
     		addParallel(new ShootHighForTime(5000));
     		CommandGroup group = new CommandGroup();
     		group.addSequential(new WaitForTime(5000));
-    		group.addSequential(new DriveToPoint(90,-18,new Acceleration(.2,.4,.02),true, 15, 5000));
-    		group.addSequential(new RotateToHeading(7,0,.6));
+    		group.addSequential(new DriveToPoint(90,-15,new Acceleration(.2,.4,.02),true, 15, 5000));
+    		//group.addSequential(new DriveToPoint(90,-18,new Acceleration(.2,.4,.02),true, 15, 5000));
+    		group.addSequential(new RotateToHeading(6,0,.6));
     		group.addSequential(new AutonDriveToTarget(2500));
     		// leave out group.addSequential(new DriveToPoint(160, -20, new Acceleration(0.4, 0.4, 0), false, 15, 3000));
     		addSequential(group);
-    		addSequential(new GearReleaseToggle(true));
     		
-    		addSequential(new SwitchDirection());
-    		addSequential(new WaitForTime(1000));
-    		addSequential(new DriveForwardForDistance(7,0.4));
-    		addSequential(new RotateToHeading(75,0,0.6,false));
-    		addSequential(new DriveBackToPoint(300, -200, new Acceleration(.3,0.5,0.02),true,20,10000));
-    		
+    		boolean shoot = false;
+    		if (shoot) {
+	    		addSequential(new GearReleaseToggle(true));
+	    		
+	    		addSequential(new SwitchDirection());
+	    		addSequential(new WaitForTime(1000));
+	    		addSequential(new DriveForwardForDistance(7,0.4));
+	    		addSequential(new RotateToHeading(75,0,0.6,false));
+	    		addSequential(new DriveBackToPoint(300, -200, new Acceleration(.3,0.5,0.02),true,20,10000));
+    		}
     		
     	} else {
     		Robot.shooter.setBlueSpeed();
